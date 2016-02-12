@@ -22,8 +22,6 @@
 		46880B8219C43A67006E1F66 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7A19C43A67006E1F66 /* HelloWorld.png */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
-		46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */; };
-		46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10017EB989F00D1A890 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FB17EB989F00D1A890 /* AppController.mm */; };
 		503AE10117EB989F00D1A890 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FC17EB989F00D1A890 /* main.m */; };
@@ -63,6 +61,36 @@
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
+		CD51CD101C6C598800207DC2 /* SceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD51CD0E1C6C598800207DC2 /* SceneManager.cpp */; };
+		CD51CD111C6C598800207DC2 /* SceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD51CD0E1C6C598800207DC2 /* SceneManager.cpp */; };
+		CD51CD141C6C599C00207DC2 /* SpriteManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD51CD121C6C599C00207DC2 /* SpriteManager.cpp */; };
+		CD51CD151C6C599C00207DC2 /* SpriteManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD51CD121C6C599C00207DC2 /* SpriteManager.cpp */; };
+		CD536FD41C4002390011671C /* StartBg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD536FC51C4002390011671C /* StartBg.cpp */; };
+		CD536FD51C4002390011671C /* StartBg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD536FC51C4002390011671C /* StartBg.cpp */; };
+		CD536FE61C452E400011671C /* StartController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD536FE41C452E400011671C /* StartController.cpp */; };
+		CD536FE71C452E400011671C /* StartController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD536FE41C452E400011671C /* StartController.cpp */; };
+		CD536FEF1C453BFD0011671C /* StartScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD536FEB1C453BFD0011671C /* StartScene.cpp */; };
+		CD536FF01C453BFD0011671C /* StartScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD536FEB1C453BFD0011671C /* StartScene.cpp */; };
+		CD58E8031C52815000806605 /* BaseSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD58E8011C52815000806605 /* BaseSprite.cpp */; };
+		CD58E8041C52815000806605 /* BaseSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD58E8011C52815000806605 /* BaseSprite.cpp */; };
+		CD58E8081C528FD700806605 /* BaseScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD58E8061C528FD700806605 /* BaseScene.cpp */; };
+		CD58E8091C528FD700806605 /* BaseScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD58E8061C528FD700806605 /* BaseScene.cpp */; };
+		CDCD2A121C678C22007F3A09 /* image in Resources */ = {isa = PBXBuildFile; fileRef = CDCD2A111C678C22007F3A09 /* image */; };
+		CDCD2A131C678C22007F3A09 /* image in Resources */ = {isa = PBXBuildFile; fileRef = CDCD2A111C678C22007F3A09 /* image */; };
+		CDCD2A2C1C69C74A007F3A09 /* CommonSetting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCD2A2A1C69C74A007F3A09 /* CommonSetting.cpp */; };
+		CDCD2A2D1C69C74A007F3A09 /* CommonSetting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCD2A2A1C69C74A007F3A09 /* CommonSetting.cpp */; };
+		CDCD2A301C69CB86007F3A09 /* SoundsButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCD2A2E1C69CB86007F3A09 /* SoundsButton.cpp */; };
+		CDCD2A311C69CB86007F3A09 /* SoundsButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCD2A2E1C69CB86007F3A09 /* SoundsButton.cpp */; };
+		CDCD2A381C69CFF0007F3A09 /* SettingBg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCD2A361C69CFF0007F3A09 /* SettingBg.cpp */; };
+		CDCD2A391C69CFF0007F3A09 /* SettingBg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCD2A361C69CFF0007F3A09 /* SettingBg.cpp */; };
+		CDCD2A3D1C6A110C007F3A09 /* SettingBackButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCD2A3B1C6A110C007F3A09 /* SettingBackButton.cpp */; };
+		CDCD2A3E1C6A110C007F3A09 /* SettingBackButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCD2A3B1C6A110C007F3A09 /* SettingBackButton.cpp */; };
+		CDCD2A421C6A1637007F3A09 /* SettingButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCD2A401C6A1637007F3A09 /* SettingButton.cpp */; };
+		CDCD2A431C6A1637007F3A09 /* SettingButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCD2A401C6A1637007F3A09 /* SettingButton.cpp */; };
+		CDCE35A91C47CB5900056B8B /* StartButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCE35A71C47CB5900056B8B /* StartButton.cpp */; };
+		CDCE35AA1C47CB5900056B8B /* StartButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCE35A71C47CB5900056B8B /* StartButton.cpp */; };
+		CDD091DC1C623113008C19B2 /* MusicButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD091DA1C623113008C19B2 /* MusicButton.cpp */; };
+		CDD091DD1C623113008C19B2 /* MusicButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD091DA1C623113008C19B2 /* MusicButton.cpp */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
@@ -100,6 +128,13 @@
 			remoteGlobalIDString = A07A4C241783777C0073F6A7;
 			remoteInfo = "cocos2dx iOS";
 		};
+		CD37E5131C3AA159007B843E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 507B40FD1C31BDD30067B53E;
+			remoteInfo = "libcocos2d tvOS";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -115,8 +150,6 @@
 		46880B7A19C43A67006E1F66 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
-		46880B8719C43A87006E1F66 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE0FA17EB989F00D1A890 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ios/AppController.h; sourceTree = SOURCE_ROOT; };
@@ -157,6 +190,35 @@
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CD51CD0E1C6C598800207DC2 /* SceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneManager.cpp; sourceTree = "<group>"; };
+		CD51CD0F1C6C598800207DC2 /* SceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneManager.h; sourceTree = "<group>"; };
+		CD51CD121C6C599C00207DC2 /* SpriteManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteManager.cpp; sourceTree = "<group>"; };
+		CD51CD131C6C599C00207DC2 /* SpriteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteManager.h; sourceTree = "<group>"; };
+		CD536FC51C4002390011671C /* StartBg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StartBg.cpp; sourceTree = "<group>"; };
+		CD536FC61C4002390011671C /* StartBg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartBg.h; sourceTree = "<group>"; };
+		CD536FE41C452E400011671C /* StartController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StartController.cpp; sourceTree = "<group>"; };
+		CD536FE51C452E400011671C /* StartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartController.h; sourceTree = "<group>"; };
+		CD536FEB1C453BFD0011671C /* StartScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StartScene.cpp; sourceTree = "<group>"; };
+		CD536FEC1C453BFD0011671C /* StartScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartScene.h; sourceTree = "<group>"; };
+		CD58E8011C52815000806605 /* BaseSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseSprite.cpp; sourceTree = "<group>"; };
+		CD58E8021C52815000806605 /* BaseSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSprite.h; sourceTree = "<group>"; };
+		CD58E8061C528FD700806605 /* BaseScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseScene.cpp; sourceTree = "<group>"; };
+		CD58E8071C528FD700806605 /* BaseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseScene.h; sourceTree = "<group>"; };
+		CDCD2A111C678C22007F3A09 /* image */ = {isa = PBXFileReference; lastKnownFileType = folder; path = image; sourceTree = "<group>"; };
+		CDCD2A2A1C69C74A007F3A09 /* CommonSetting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonSetting.cpp; sourceTree = "<group>"; };
+		CDCD2A2B1C69C74A007F3A09 /* CommonSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonSetting.h; sourceTree = "<group>"; };
+		CDCD2A2E1C69CB86007F3A09 /* SoundsButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundsButton.cpp; sourceTree = "<group>"; };
+		CDCD2A2F1C69CB86007F3A09 /* SoundsButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundsButton.h; sourceTree = "<group>"; };
+		CDCD2A361C69CFF0007F3A09 /* SettingBg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingBg.cpp; sourceTree = "<group>"; };
+		CDCD2A371C69CFF0007F3A09 /* SettingBg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingBg.h; sourceTree = "<group>"; };
+		CDCD2A3B1C6A110C007F3A09 /* SettingBackButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingBackButton.cpp; sourceTree = "<group>"; };
+		CDCD2A3C1C6A110C007F3A09 /* SettingBackButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingBackButton.h; sourceTree = "<group>"; };
+		CDCD2A401C6A1637007F3A09 /* SettingButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingButton.cpp; sourceTree = "<group>"; };
+		CDCD2A411C6A1637007F3A09 /* SettingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingButton.h; sourceTree = "<group>"; };
+		CDCE35A71C47CB5900056B8B /* StartButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StartButton.cpp; sourceTree = "<group>"; };
+		CDCE35A81C47CB5900056B8B /* StartButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartButton.h; sourceTree = "<group>"; };
+		CDD091DA1C623113008C19B2 /* MusicButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MusicButton.cpp; sourceTree = "<group>"; };
+		CDD091DB1C623113008C19B2 /* MusicButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicButton.h; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -237,6 +299,7 @@
 			children = (
 				1AC6FAF9180E9839004C840B /* libcocos2d Mac.a */,
 				1AC6FB07180E9839004C840B /* libcocos2d iOS.a */,
+				CD37E5141C3AA159007B843E /* libcocos2d tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -284,6 +347,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CDCD2A111C678C22007F3A09 /* image */,
 				521A8EA819F11F5000D177D7 /* fonts */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
 				46880B7619C43A67006E1F66 /* CloseNormal.png */,
@@ -297,10 +361,14 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				CD51CD0C1C6C596B00207DC2 /* Manager */,
+				CDCD2A291C69C74A007F3A09 /* Db */,
+				CD536FC31C4002390011671C /* Controller */,
+				CD536FE81C453BFD0011671C /* GameScene */,
+				CD536FC41C4002390011671C /* GameSprite */,
+				CD536FC21C4002390011671C /* Config */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
-				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
-				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -352,6 +420,76 @@
 			name = Icons;
 			path = ios;
 			sourceTree = SOURCE_ROOT;
+		};
+		CD51CD0C1C6C596B00207DC2 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				CD51CD0E1C6C598800207DC2 /* SceneManager.cpp */,
+				CD51CD0F1C6C598800207DC2 /* SceneManager.h */,
+				CD51CD121C6C599C00207DC2 /* SpriteManager.cpp */,
+				CD51CD131C6C599C00207DC2 /* SpriteManager.h */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		CD536FC21C4002390011671C /* Config */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		CD536FC31C4002390011671C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CD536FE41C452E400011671C /* StartController.cpp */,
+				CD536FE51C452E400011671C /* StartController.h */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		CD536FC41C4002390011671C /* GameSprite */ = {
+			isa = PBXGroup;
+			children = (
+				CD536FC51C4002390011671C /* StartBg.cpp */,
+				CD536FC61C4002390011671C /* StartBg.h */,
+				CDCE35A71C47CB5900056B8B /* StartButton.cpp */,
+				CDCE35A81C47CB5900056B8B /* StartButton.h */,
+				CD58E8011C52815000806605 /* BaseSprite.cpp */,
+				CD58E8021C52815000806605 /* BaseSprite.h */,
+				CDD091DA1C623113008C19B2 /* MusicButton.cpp */,
+				CDD091DB1C623113008C19B2 /* MusicButton.h */,
+				CDCD2A2E1C69CB86007F3A09 /* SoundsButton.cpp */,
+				CDCD2A2F1C69CB86007F3A09 /* SoundsButton.h */,
+				CDCD2A361C69CFF0007F3A09 /* SettingBg.cpp */,
+				CDCD2A371C69CFF0007F3A09 /* SettingBg.h */,
+				CDCD2A3B1C6A110C007F3A09 /* SettingBackButton.cpp */,
+				CDCD2A3C1C6A110C007F3A09 /* SettingBackButton.h */,
+				CDCD2A401C6A1637007F3A09 /* SettingButton.cpp */,
+				CDCD2A411C6A1637007F3A09 /* SettingButton.h */,
+			);
+			path = GameSprite;
+			sourceTree = "<group>";
+		};
+		CD536FE81C453BFD0011671C /* GameScene */ = {
+			isa = PBXGroup;
+			children = (
+				CD536FEB1C453BFD0011671C /* StartScene.cpp */,
+				CD536FEC1C453BFD0011671C /* StartScene.h */,
+				CD58E8061C528FD700806605 /* BaseScene.cpp */,
+				CD58E8071C528FD700806605 /* BaseScene.h */,
+			);
+			path = GameScene;
+			sourceTree = "<group>";
+		};
+		CDCD2A291C69C74A007F3A09 /* Db */ = {
+			isa = PBXGroup;
+			children = (
+				CDCD2A2A1C69C74A007F3A09 /* CommonSetting.cpp */,
+				CDCD2A2B1C69C74A007F3A09 /* CommonSetting.h */,
+			);
+			path = Db;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -441,6 +579,13 @@
 			remoteRef = 1AC6FB06180E9839004C840B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		CD37E5141C3AA159007B843E /* libcocos2d tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libcocos2d tvOS.a";
+			remoteRef = CD37E5131C3AA159007B843E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -448,6 +593,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDCD2A121C678C22007F3A09 /* image in Resources */,
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
@@ -482,6 +628,7 @@
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
 				3EACC99019EE6D4300EB3C5E /* res in Resources */,
 				521A8EAA19F11F5000D177D7 /* fonts in Resources */,
+				CDCD2A131C678C22007F3A09 /* image in Resources */,
 				46880B7C19C43A67006E1F66 /* CloseNormal.png in Resources */,
 				46880B7E19C43A67006E1F66 /* CloseSelected.png in Resources */,
 			);
@@ -494,10 +641,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD58E8031C52815000806605 /* BaseSprite.cpp in Sources */,
+				CDCD2A2C1C69C74A007F3A09 /* CommonSetting.cpp in Sources */,
+				CDCD2A3D1C6A110C007F3A09 /* SettingBackButton.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
-				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				CDCD2A301C69CB86007F3A09 /* SoundsButton.cpp in Sources */,
+				CD536FD41C4002390011671C /* StartBg.cpp in Sources */,
+				CD536FEF1C453BFD0011671C /* StartScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				CD58E8081C528FD700806605 /* BaseScene.cpp in Sources */,
+				CDD091DC1C623113008C19B2 /* MusicButton.cpp in Sources */,
+				CD51CD141C6C599C00207DC2 /* SpriteManager.cpp in Sources */,
+				CDCD2A381C69CFF0007F3A09 /* SettingBg.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
+				CD51CD101C6C598800207DC2 /* SceneManager.cpp in Sources */,
+				CDCD2A421C6A1637007F3A09 /* SettingButton.cpp in Sources */,
+				CD536FE61C452E400011671C /* StartController.cpp in Sources */,
+				CDCE35A91C47CB5900056B8B /* StartButton.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -506,9 +666,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDCE35AA1C47CB5900056B8B /* StartButton.cpp in Sources */,
+				CDCD2A311C69CB86007F3A09 /* SoundsButton.cpp in Sources */,
+				CD58E8041C52815000806605 /* BaseSprite.cpp in Sources */,
+				CD536FF01C453BFD0011671C /* StartScene.cpp in Sources */,
+				CD51CD151C6C599C00207DC2 /* SpriteManager.cpp in Sources */,
 				46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				CDCD2A391C69CFF0007F3A09 /* SettingBg.cpp in Sources */,
+				CD536FE71C452E400011671C /* StartController.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
-				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				CDCD2A431C6A1637007F3A09 /* SettingButton.cpp in Sources */,
+				CDCD2A3E1C6A110C007F3A09 /* SettingBackButton.cpp in Sources */,
+				CD58E8091C528FD700806605 /* BaseScene.cpp in Sources */,
+				CDCD2A2D1C69C74A007F3A09 /* CommonSetting.cpp in Sources */,
+				CD536FD51C4002390011671C /* StartBg.cpp in Sources */,
+				CDD091DD1C623113008C19B2 /* MusicButton.cpp in Sources */,
+				CD51CD111C6C598800207DC2 /* SceneManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,6 +721,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(SRCROOT)/../Classes",
 					"$(SRCROOT)/../cocos2d/cocos/platform/ios",
 					"$(SRCROOT)/../cocos2d/cocos/platform/ios/Simulation",
 				);
@@ -583,6 +757,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(SRCROOT)/../Classes",
 					"$(SRCROOT)/../cocos2d/cocos/platform/ios",
 					"$(SRCROOT)/../cocos2d/cocos/platform/ios/Simulation",
 				);
@@ -622,6 +797,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/cocos/platform/mac",
 					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
+					"$(SRCROOT)/../Classes",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
@@ -653,6 +829,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/cocos/platform/mac",
 					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
+					"$(SRCROOT)/../Classes",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
