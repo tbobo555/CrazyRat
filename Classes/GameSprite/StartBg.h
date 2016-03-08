@@ -13,6 +13,8 @@ namespace GameSprite
     {
     public:
         StartBg();
+    private:
+        const static std::string originImage;
     };
 
 }

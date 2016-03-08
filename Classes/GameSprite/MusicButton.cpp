@@ -1,11 +1,12 @@
 #include "MusicButton.h"
 
 namespace GameSprite {
-    MusicButton::MusicButton() : BaseSprite::BaseSprite()
+    const std::string MusicButton::originImage = "image/MusicBtn.png";
+    
+    MusicButton::MusicButton() : BaseSprite::BaseSprite(MusicButton::originImage)
     {
         Size visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
-        this->sprite->setTexture("image/MusicBtn.png");
         float x = origin.x + visibleSize.width / 2 - this->sprite->getContentSize().width * 0.6;
         float y = origin.y + visibleSize.height / 2;
         this->sprite->setPosition(Vec2(x, y));
@@ -30,8 +31,7 @@ namespace GameSprite {
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
-        if (rect.containsPoint(locationInNode))
-        {
+        if (rect.containsPoint(locationInNode)) {
             log("MusicButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
             target->setScale(1.2);
             return true;

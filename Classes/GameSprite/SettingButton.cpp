@@ -2,12 +2,13 @@
 
 namespace GameSprite
 {
-    SettingButton::SettingButton() : BaseSprite()
+    const std::string SettingButton::originImage = "image/SettingBtn.png";
+    
+    SettingButton::SettingButton() : BaseSprite(SettingButton::originImage)
     {
         //Size visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-        this->sprite->setTexture("image/SettingBtn.png");
         this->sprite->setPosition(Vec2(
                                        origin.x + this->sprite->getContentSize().width * 0.6,
                                        origin.y + this->sprite->getContentSize().height * 0.6));
@@ -35,8 +36,7 @@ namespace GameSprite
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
         
-        if (rect.containsPoint(locationInNode))
-        {
+        if (rect.containsPoint(locationInNode)) {
             log("SettingButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
             target->setScale(1.2);
             return true;

@@ -2,14 +2,13 @@
 
 namespace GameSprite
 {
-    SettingBg::SettingBg() : BaseSprite()
+    const std::string SettingBg::originImage = "image/CustomBg.png";
+    
+    SettingBg::SettingBg() : BaseSprite(SettingBg::originImage)
     {
         Size visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-        this->sprite->setTexture("image/BG.png");
         this->sprite->setOpacity(200);
-        this->sprite->setColor(Color3B(255, 0, 0));
         this->sprite->setPosition(Vec2(origin.x + visibleSize.width / 2,
                                        origin.y + visibleSize.height / 2));
         this->addEventListner();
@@ -33,8 +32,7 @@ namespace GameSprite
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
-        if (rect.containsPoint(locationInNode))
-        {
+        if (rect.containsPoint(locationInNode)) {
             log("SettingBg began... x = %f, y = %f", locationInNode.x, locationInNode.y);
             return true;
         }

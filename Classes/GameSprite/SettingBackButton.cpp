@@ -2,11 +2,12 @@
 
 namespace GameSprite
 {
-    SettingBackButton::SettingBackButton() : BaseSprite()
+    const std::string SettingBackButton::originImage = "image/BackBtn.png";
+    
+    SettingBackButton::SettingBackButton() : BaseSprite(SettingBackButton::originImage)
     {
         Size visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
-        this->sprite->setTexture("image/BackBtn.png");
         float x = origin.x + this->sprite->getContentSize().width * 0.6;
         float y = origin.y + visibleSize.height - this->sprite->getContentSize().height * 0.6;
         this->sprite->setPosition(Vec2(x, y));
@@ -31,8 +32,7 @@ namespace GameSprite
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
-        if (rect.containsPoint(locationInNode))
-        {
+        if (rect.containsPoint(locationInNode)) {
             log("SettingBackButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
             target->setScale(1.2);
             return true;

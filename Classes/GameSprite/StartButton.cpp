@@ -2,16 +2,14 @@
 
 namespace GameSprite
 {
-    StartButton::StartButton() : GameSprite::BaseSprite()
+    const std::string StartButton::originImage = "image/StartBtn.png";
+    
+    StartButton::StartButton() : GameSprite::BaseSprite(StartButton::originImage)
     {
         Size visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
-        this->sprite->setTexture("image/StartBtn.png");
-        this->sprite->setPosition(
-                                  Vec2(origin.x + visibleSize.width / 2.0,
-                                       origin.y + visibleSize.height / 4.0
-                                       )
-                                  );
+        this->sprite->setPosition(Vec2(origin.x + visibleSize.width / 2.0,
+                                       origin.y + visibleSize.height / 4.0));
         this->addEventListner();
     }
     
@@ -34,8 +32,19 @@ namespace GameSprite
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
         
-        if (rect.containsPoint(locationInNode))
-        {
+        if (rect.containsPoint(locationInNode)) {
+            log("Win Size: %f  %f",
+                Director::getInstance()->getWinSize().width, Director::getInstance()->getWinSize().height);
+            log("Win Size In pixels: %f  %f",
+                Director::getInstance()->getWinSizeInPixels().width,
+                Director::getInstance()->getWinSizeInPixels().height);
+            log("View Size: %f  %f",
+                Director::getInstance()->getVisibleSize().width,
+                Director::getInstance()->getVisibleSize().height);
+            log("opengl Size: %f  %f",
+                Director::getInstance()->getOpenGLView()->getFrameSize().width,
+                Director::getInstance()->getOpenGLView()->getFrameSize().height);
+            log("contetn factor: %f  ", Director::getInstance()->getContentScaleFactor());
             log("StartButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
             target->setScale(1.2);
             return true;
