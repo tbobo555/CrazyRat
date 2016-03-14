@@ -3,17 +3,20 @@
 
 #include "BaseSprite.h"
 #include "cocos2d.h"
+#include "Config/ImageConfig.h"
+#include "Config/PositionConfig.h"
 #include "Manager/SceneManager.h"
 #include "Manager/SpriteManager.h"
 
 USING_NS_CC;
 
-namespace GameSprite {
+namespace GameSprite
+{
     class SettingBackButton : public BaseSprite
     {
     public:
         SettingBackButton();
-        void addEventListner();
+        void addEventListener();
     private:
         static bool onTouchBegan(Touch* touch, Event* event);
         static void onTouchEnded(Touch* touch, Event* event);

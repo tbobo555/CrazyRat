@@ -42,7 +42,7 @@ namespace GameSprite
         return this->sprite;
     }
     
-    void BaseSprite::addEventListner()
+    void BaseSprite::addEventListener()
     {
     }
     

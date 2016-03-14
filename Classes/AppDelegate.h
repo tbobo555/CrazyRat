@@ -2,6 +2,9 @@
 #define  _APP_DELEGATE_H_
 
 #include "cocos2d.h"
+#include "Controller/StartController.h"
+
+USING_NS_CC;
 
 /**
 @brief    The cocos2d Application.

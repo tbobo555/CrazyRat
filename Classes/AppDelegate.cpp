@@ -1,7 +1,5 @@
 #include "AppDelegate.h"
-#include "Controller/StartController.h"
 
-USING_NS_CC;
 
 static cocos2d::Size designResolutionSize = cocos2d::Size(1080, 1920);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(1080, 1920);
@@ -64,7 +62,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setContentScaleFactor(scaleFactor);
 
     register_all_packages();
-
+    
     Controller::StartController::run();
     
     return true;

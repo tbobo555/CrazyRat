@@ -3,6 +3,8 @@
 
 #include "cocos2d.h"
 #include "BaseSprite.h"
+#include "Config/ImageConfig.h"
+#include "Config/PositionConfig.h"
 #include "Manager/SceneManager.h"
 #include "Manager/SpriteManager.h"
 
@@ -14,7 +16,7 @@ namespace GameSprite
     {
     public:
         SettingButton();
-        void addEventListner();
+        void addEventListener();
     private:
         static bool onTouchBegan(Touch* touch, Event* event);
         static void onTouchEnded(Touch* touch, Event* event);

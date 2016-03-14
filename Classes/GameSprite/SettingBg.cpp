@@ -1,20 +1,16 @@
 #include "SettingBg.h"
 
 namespace GameSprite
-{
-    const std::string SettingBg::originImage = "image/CustomBg.png";
+{    
+    const std::string SettingBg::originImage = ImageConfig::getInstance()->getImagePath("SettingBg");
     
     SettingBg::SettingBg() : BaseSprite(SettingBg::originImage)
     {
-        Size visibleSize = Director::getInstance()->getVisibleSize();
-        Vec2 origin = Director::getInstance()->getVisibleOrigin();
-        this->sprite->setOpacity(200);
-        this->sprite->setPosition(Vec2(origin.x + visibleSize.width / 2,
-                                       origin.y + visibleSize.height / 2));
-        this->addEventListner();
+        this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("SettingBg"));
+        this->addEventListener();
     }
     
-    void SettingBg::addEventListner()
+    void SettingBg::addEventListener()
     {
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);

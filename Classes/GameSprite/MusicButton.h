@@ -3,15 +3,18 @@
 
 #include "BaseSprite.h"
 #include "cocos2d.h"
+#include "Config/ImageConfig.h"
+#include "Config/PositionConfig.h"
 
 USING_NS_CC;
 
-namespace GameSprite {
+namespace GameSprite
+{
     class MusicButton : public BaseSprite
     {
     public:
         MusicButton();
-        void addEventListner();
+        void addEventListener();
     private:
         static bool onTouchBegan(Touch* touch, Event* event);
         static void onTouchEnded(Touch* touch, Event* event);

@@ -1,19 +1,16 @@
 #include "SoundsButton.h"
 
-namespace GameSprite {
-    const std::string SoundsButton::originImage = "image/SoundsBtn.png";
+namespace GameSprite
+{
+    const std::string SoundsButton::originImage = ImageConfig::getInstance()->getImagePath("SoundsButton");
     
     SoundsButton::SoundsButton() : BaseSprite::BaseSprite(SoundsButton::originImage)
     {
-        Size visibleSize = Director::getInstance()->getVisibleSize();
-        Vec2 origin = Director::getInstance()->getVisibleOrigin();
-        float x = origin.x + visibleSize.width / 2 + this->sprite->getContentSize().width * 0.6;
-        float y = origin.y + visibleSize.height / 2;
-        this->sprite->setPosition(Vec2(x, y));
-        this->addEventListner();
+        this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("SoundsButton"));
+        this->addEventListener();
     }
     
-    void SoundsButton::addEventListner()
+    void SoundsButton::addEventListener()
     {
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);

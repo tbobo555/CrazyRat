@@ -11,14 +11,14 @@ namespace Manager
     {
     public:
         static SpriteManager* getInstance();
-        static BaseSprite* getByKey(std::string key);
-        static void setWithKey(std::string key, BaseSprite* sprite);
-        static void releaseByKey(std::string key);
-        static void resetContainer();
+        BaseSprite* getByKey(std::string key);
+        void setWithKey(std::string key, BaseSprite* sprite);
+        void releaseByKey(std::string key);
+        void resetContainer();
     private:
         SpriteManager();
         static SpriteManager* instance;
-        static std::map<std::string, BaseSprite*> container;
+        std::map<std::string, BaseSprite*> container;
     };
 }
 

@@ -1,19 +1,16 @@
 #include "MusicButton.h"
 
-namespace GameSprite {
-    const std::string MusicButton::originImage = "image/MusicBtn.png";
+namespace GameSprite
+{
+    const std::string MusicButton::originImage = ImageConfig::getInstance()->getImagePath("MusicButton");
     
     MusicButton::MusicButton() : BaseSprite::BaseSprite(MusicButton::originImage)
     {
-        Size visibleSize = Director::getInstance()->getVisibleSize();
-        Vec2 origin = Director::getInstance()->getVisibleOrigin();
-        float x = origin.x + visibleSize.width / 2 - this->sprite->getContentSize().width * 0.6;
-        float y = origin.y + visibleSize.height / 2;
-        this->sprite->setPosition(Vec2(x, y));
-        this->addEventListner();
+        this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("MusicButton"));
+        this->addEventListener();
     }
     
-    void MusicButton::addEventListner()
+    void MusicButton::addEventListener()
     {
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);

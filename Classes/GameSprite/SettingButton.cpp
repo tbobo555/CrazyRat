@@ -2,21 +2,15 @@
 
 namespace GameSprite
 {
-    const std::string SettingButton::originImage = "image/SettingBtn.png";
+    const std::string SettingButton::originImage = ImageConfig::getInstance()->getImagePath("SettingButton");
     
     SettingButton::SettingButton() : BaseSprite(SettingButton::originImage)
     {
-        //Size visibleSize = Director::getInstance()->getVisibleSize();
-        Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-        this->sprite->setPosition(Vec2(
-                                       origin.x + this->sprite->getContentSize().width * 0.6,
-                                       origin.y + this->sprite->getContentSize().height * 0.6));
-        this->addEventListner();
-        
+        this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("SettingButton"));
+        this->addEventListener();
     }
     
-    void SettingButton::addEventListner()
+    void SettingButton::addEventListener()
     {
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);

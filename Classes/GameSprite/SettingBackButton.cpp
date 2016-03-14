@@ -2,19 +2,16 @@
 
 namespace GameSprite
 {
-    const std::string SettingBackButton::originImage = "image/BackBtn.png";
+    
+    const std::string SettingBackButton::originImage = ImageConfig::getInstance()->getImagePath("SettingBackButton");
     
     SettingBackButton::SettingBackButton() : BaseSprite(SettingBackButton::originImage)
     {
-        Size visibleSize = Director::getInstance()->getVisibleSize();
-        Vec2 origin = Director::getInstance()->getVisibleOrigin();
-        float x = origin.x + this->sprite->getContentSize().width * 0.6;
-        float y = origin.y + visibleSize.height - this->sprite->getContentSize().height * 0.6;
-        this->sprite->setPosition(Vec2(x, y));
-        this->addEventListner();
+        this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("SettingBackButton"));
+        this->addEventListener();
     }
     
-    void SettingBackButton::addEventListner()
+    void SettingBackButton::addEventListener()
     {
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);

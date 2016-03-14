@@ -2,18 +2,15 @@
 
 namespace GameSprite
 {
-    const std::string StartButton::originImage = "image/StartBtn.png";
+    const std::string StartButton::originImage = ImageConfig::getInstance()->getImagePath("StartButton");
     
     StartButton::StartButton() : GameSprite::BaseSprite(StartButton::originImage)
     {
-        Size visibleSize = Director::getInstance()->getVisibleSize();
-        Vec2 origin = Director::getInstance()->getVisibleOrigin();
-        this->sprite->setPosition(Vec2(origin.x + visibleSize.width / 2.0,
-                                       origin.y + visibleSize.height / 4.0));
-        this->addEventListner();
+        this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("StartButton"));
+        this->addEventListener();
     }
     
-    void StartButton::addEventListner()
+    void StartButton::addEventListener()
     {
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);

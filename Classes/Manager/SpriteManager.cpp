@@ -2,8 +2,7 @@
 
 namespace Manager
 {
-    SpriteManager* SpriteManager::instance;
-    std::map<std::string, BaseSprite*> SpriteManager::container;
+    SpriteManager* SpriteManager::instance = new SpriteManager();
     
     SpriteManager::SpriteManager(){}
     
@@ -14,25 +13,25 @@ namespace Manager
     
     void SpriteManager::setWithKey(std::string key, BaseSprite *sprite)
     {
-        container[key] = sprite;
+        this->container[key] = sprite;
     }
     
     BaseSprite* SpriteManager::getByKey(std::string key)
     {
-        return container[key];
+        return this->container[key];
     }
     
     void SpriteManager::releaseByKey(std::string key)
     {
-        container[key]->release();
-        container.erase(key);
+        this->container[key]->release();
+        this->container.erase(key);
     }
     
     void SpriteManager::resetContainer()
     {
-        for (auto& kv : container) {
+        for (auto& kv : this->container) {
             delete kv.second;
         }
-        container.clear();
+        this->container.clear();
     }
 }

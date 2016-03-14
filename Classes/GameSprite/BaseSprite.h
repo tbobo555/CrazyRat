@@ -14,7 +14,7 @@ namespace GameSprite
         ~BaseSprite();
         BaseSprite(std::string img);
         void release();
-        virtual void addEventListner();
+        virtual void addEventListener();
         Sprite* getCCSprite();
     protected:
         Sprite* sprite;

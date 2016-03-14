@@ -2,9 +2,7 @@
 
 namespace Manager
 {
-    SceneManager* SceneManager::instance;
-    BaseScene* SceneManager::current;
-    std::map<std::string, BaseScene*> SceneManager::container;
+    SceneManager* SceneManager::instance = new SceneManager();
 
     SceneManager::SceneManager(){}
     
@@ -15,30 +13,30 @@ namespace Manager
     
     void SceneManager::setWithKey(std::string key, BaseScene *scene)
     {
-        container[key] = scene;
+        this->container[key] = scene;
     }
     
     BaseScene* SceneManager::getByKey(std::string key)
     {
-        return container[key];
+        return this->container[key];
     }
     
     BaseScene* SceneManager::getCurrent()
     {
-        return current;
+        return this->current;
     }
     
     void SceneManager::setCurrent(BaseScene *scene)
     {
-        current = scene;
+        this->current = scene;
     }
     
     void SceneManager::resetContainer()
     {
-        for (auto& kv : container) {
+        for (auto& kv : this->container) {
             delete kv.second;
         }
-        container.clear();
+        this->container.clear();
     }
 
 }
