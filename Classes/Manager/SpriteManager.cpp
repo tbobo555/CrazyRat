@@ -18,7 +18,7 @@ namespace Manager
     
     BaseSprite* SpriteManager::getByKey(std::string key)
     {
-        return this->container[key];
+        return this->container.at(key);
     }
     
     void SpriteManager::releaseByKey(std::string key)

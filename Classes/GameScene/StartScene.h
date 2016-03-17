@@ -3,7 +3,6 @@
 
 #include "GameSprite/StartBg.h"
 #include "GameSprite/StartButton.h"
-#include "GameSprite/SettingButton.h"
 #include "BaseScene.h"
 
 namespace GameScene
@@ -15,7 +14,6 @@ namespace GameScene
         void initScene();
         GameSprite::StartBg* startBg;
         GameSprite::StartButton* startButton;
-        GameSprite::SettingButton* settingButton;
     };
 }
 

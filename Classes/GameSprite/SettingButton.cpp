@@ -46,10 +46,11 @@ namespace GameSprite
         Manager::SceneManager* sceneManager = Manager::SceneManager::getInstance();
         Manager::SpriteManager* spriteManager = Manager::SpriteManager::getInstance();
         auto currentScene = sceneManager->getCurrent()->getCCScene();
-        auto settingBg = spriteManager->getByKey("SettingBg")->getCCSprite();
-        auto settingBackButton = spriteManager->getByKey("SettingBackButton")->getCCSprite();
-        auto musicButton = spriteManager->getByKey("MusicButton")->getCCSprite();
-        auto soundsButton = spriteManager->getByKey("SoundsButton")->getCCSprite();
+        auto settingBg = spriteManager->getByKey("SettingMenu_SettingBg")->getCCSprite();
+        auto settingBackButton = spriteManager->getByKey(
+            "SettingMenu_SettingBackButton")->getCCSprite();
+        auto musicButton = spriteManager->getByKey("SettingMenu_MusicButton")->getCCSprite();
+        auto soundsButton = spriteManager->getByKey("SettingMenu_SoundsButton")->getCCSprite();
         currentScene->addChild(settingBg, 100, 1);
         currentScene->addChild(settingBackButton, 101, 2);
         currentScene->addChild(musicButton, 101, 3);

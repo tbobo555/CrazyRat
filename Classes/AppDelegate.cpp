@@ -63,8 +63,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     register_all_packages();
     
-    Controller::StartController::run();
-    
+    Controller::GameController* controller = Controller::GameController::getInstance();
+    controller->loadStaticResourcesForSettingMenu();
+    controller->loadStaticResourcesForStartScene();
+    controller->loadStaticResourcesForSelectionScene();
+    controller->runStartScene();
     return true;
 }
 

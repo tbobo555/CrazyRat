@@ -10,7 +10,6 @@ namespace GameScene
     {
         this->scene->addChild(this->startBg->getCCSprite(), 0);
         this->scene->addChild(this->startButton->getCCSprite(), 1);
-        this->scene->addChild(this->settingButton->getCCSprite(), 1);
     }
     
 }

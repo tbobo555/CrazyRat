@@ -1,4 +1,5 @@
 #include "StartButton.h"
+#include "Controller/GameController.h"
 
 namespace GameSprite
 {
@@ -53,6 +54,7 @@ namespace GameSprite
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         target->setScale(1.0);
+        Controller::GameController::getInstance()->startSceneToSelectionScene();
     }
     
     void StartButton::onTouchMoved(Touch* touch, Event* event)

@@ -18,7 +18,7 @@ namespace Manager
     
     BaseScene* SceneManager::getByKey(std::string key)
     {
-        return this->container[key];
+        return this->container.at(key);
     }
     
     BaseScene* SceneManager::getCurrent()
