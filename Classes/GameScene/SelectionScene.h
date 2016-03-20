@@ -9,6 +9,8 @@
 #include "GameSprite/StarSprite.h"
 #include "Db/CommonSetting.h"
 #include "Config/PositionConfig.h"
+#include "Lib/TextureCreator.h"
+#include "Config/ImageConfig.h" 
 
 USING_NS_CC;
 

@@ -58,12 +58,12 @@ Vec2 PositionConfig::getStagePosition(std::string key)
 {
     if (this->stagePosition.empty()) {
         this->stagePosition = {
-            {"Stage1", Vec2(165, 1100)},
-            {"Stage2", Vec2(550, 1100)},
-            {"Stage3", Vec2(930, 1100)},
-            {"Stage4", Vec2(165, 650)},
-            {"Stage5", Vec2(550, 650)},
-            {"Stage6", Vec2(930, 650)},
+            {"Stage0", Vec2(165, 1100)},
+            {"Stage1", Vec2(550, 1100)},
+            {"Stage2", Vec2(930, 1100)},
+            {"Stage3", Vec2(165, 650)},
+            {"Stage4", Vec2(550, 650)},
+            {"Stage5", Vec2(930, 650)},
         };
     }
     
