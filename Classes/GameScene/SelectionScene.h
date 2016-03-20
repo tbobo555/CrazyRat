@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "BaseScene.h"
-#include "GameSprite/StartBg.h"
+#include "GameSprite/SelectionBg.h"
 #include "GameSprite/StageButton.h"
 #include "GameSprite/MasterSprite.h"
 #include "GameSprite/StarSprite.h"
@@ -19,7 +19,7 @@ namespace GameScene
     public:
         SelectionScene();
         void initScene();
-        GameSprite::StartBg* startBg;
+        GameSprite::SelectionBg* selectionBg;
         std::vector<GameSprite::StageButton*> stageButtonVector;
         GameSprite::MasterSprite* masterSprite;
         std::vector<GameSprite::StarSprite*> starSpriteVector;

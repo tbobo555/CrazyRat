@@ -2,10 +2,9 @@
 #include "Controller/GameController.h"
 
 namespace GameSprite
-{
-    const std::string StartButton::originImage = ImageConfig::getInstance()->getImagePath("StartButton");
-    
-    StartButton::StartButton() : GameSprite::BaseSprite(StartButton::originImage)
+{    
+    StartButton::StartButton() :
+    GameSprite::BaseSprite(ImageConfig::getInstance()->getImagePath("StartButton"))
     {
         this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("StartButton"));
         this->addEventListener();

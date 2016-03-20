@@ -1,10 +1,9 @@
 #include "SettingButton.h"
 
 namespace GameSprite
-{
-    const std::string SettingButton::originImage = ImageConfig::getInstance()->getImagePath("SettingButton");
-    
-    SettingButton::SettingButton() : BaseSprite(SettingButton::originImage)
+{    
+    SettingButton::SettingButton() :
+    BaseSprite(ImageConfig::getInstance()->getImagePath("SettingButton"))
     {
         this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("SettingButton"));
         this->addEventListener();

@@ -1,10 +1,9 @@
 #include "SoundsButton.h"
 
 namespace GameSprite
-{
-    const std::string SoundsButton::originImage = ImageConfig::getInstance()->getImagePath("SoundsButton");
-    
-    SoundsButton::SoundsButton() : BaseSprite::BaseSprite(SoundsButton::originImage)
+{    
+    SoundsButton::SoundsButton() :
+    BaseSprite::BaseSprite(ImageConfig::getInstance()->getImagePath("SoundsButton"))
     {
         this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("SoundsButton"));
         this->addEventListener();

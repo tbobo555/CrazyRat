@@ -1,10 +1,9 @@
 #include "StageButton.h"
 
 namespace GameSprite
-{
-    const std::string StageButton::originImage = ImageConfig::getInstance()->getImagePath("StageButton");
-    
-    StageButton::StageButton() : BaseSprite(StageButton::originImage)
+{    
+    StageButton::StageButton() :
+    BaseSprite(ImageConfig::getInstance()->getImagePath("StageButton"))
     {
         this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("StageButton"));
     }

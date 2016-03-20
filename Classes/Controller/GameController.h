@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "GameSprite/StartBg.h"
+#include "GameSprite/SelectionBg.h"
 #include "GameSprite/StartButton.h"
 #include "GameSprite/SettingButton.h"
 #include "GameSprite/SettingBg.h"

@@ -20,7 +20,6 @@ namespace GameSprite
         static void onTouchEnded(Touch *touch, Event *event);
         static void onTouchCanceled(Touch *touch, Event *event);
         static void onTouchMoved(Touch *touch, Event *event);
-        const static std::string originImage;
     };
 }
 

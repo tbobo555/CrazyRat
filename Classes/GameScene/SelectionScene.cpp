@@ -6,7 +6,7 @@ namespace GameScene
     
     void SelectionScene::initScene()
     {
-        this->scene->addChild(this->startBg->getCCSprite(), 0);
+        this->scene->addChild(this->selectionBg->getCCSprite(), 0);
         for (int i = 0; i < this->stageButtonVector.size(); i++) {
             this->scene->addChild(this->stageButtonVector[i]->getCCSprite(), 2);
         }

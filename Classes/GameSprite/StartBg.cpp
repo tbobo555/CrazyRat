@@ -2,9 +2,8 @@
 
 namespace GameSprite
 {
-    const std::string StartBg::originImage = ImageConfig::getInstance()->getImagePath("StartBg");
-    
-    StartBg::StartBg() : GameSprite::BaseSprite(StartBg::originImage)
+    StartBg::StartBg() :
+    GameSprite::BaseSprite(ImageConfig::getInstance()->getImagePath("StartBg"))
     {
         this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("StartBg"));
     }

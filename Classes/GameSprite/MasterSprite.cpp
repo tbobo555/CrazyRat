@@ -3,9 +3,8 @@
 
 namespace GameSprite
 {
-    const std::string MasterSprite::originImage = ImageConfig::getInstance()->getImagePath("MasterSprite");
-    
-    MasterSprite::MasterSprite() : BaseSprite(MasterSprite::originImage)
+    MasterSprite::MasterSprite() :
+    BaseSprite(ImageConfig::getInstance()->getImagePath("MasterSprite"))
     {
         this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("MasterSprite"));
     }

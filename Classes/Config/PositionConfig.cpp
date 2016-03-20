@@ -34,6 +34,7 @@ Vec2 PositionConfig::getBasePsotion(std::string key)
 
         this->basePosition = {
             {"StartBg", center},
+            {"SelectionBg", center},
             {"StartButton", Vec2(center.x, visibleOrigin.y + visibleSize.height / 4.0)},
             {"MusicButton", Vec2(center.x - musicButton.width * 0.6, center.y)},
             {"SoundsButton", Vec2(center.x + soundsButton.width * 0.6, center.y)},

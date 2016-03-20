@@ -2,10 +2,8 @@
 
 namespace GameSprite
 {
-    
-    const std::string SettingBackButton::originImage = ImageConfig::getInstance()->getImagePath("SettingBackButton");
-    
-    SettingBackButton::SettingBackButton() : BaseSprite(SettingBackButton::originImage)
+    SettingBackButton::SettingBackButton() :
+    BaseSprite(ImageConfig::getInstance()->getImagePath("SettingBackButton"))
     {
         this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("SettingBackButton"));
         this->addEventListener();

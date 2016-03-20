@@ -1,10 +1,8 @@
 #include "SettingBg.h"
 
 namespace GameSprite
-{    
-    const std::string SettingBg::originImage = ImageConfig::getInstance()->getImagePath("SettingBg");
-    
-    SettingBg::SettingBg() : BaseSprite(SettingBg::originImage)
+{        
+    SettingBg::SettingBg() : BaseSprite(ImageConfig::getInstance()->getImagePath("SettingBg"))
     {
         this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("SettingBg"));
         this->addEventListener();

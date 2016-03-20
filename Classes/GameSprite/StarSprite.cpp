@@ -1,10 +1,8 @@
 #include "StarSprite.h"
 
 namespace GameSprite
-{
-    const std::string StarSprite::originImage = ImageConfig::getInstance()->getImagePath("StarSprite");
-    
-    StarSprite::StarSprite() : BaseSprite(StarSprite::originImage)
+{    
+    StarSprite::StarSprite() : BaseSprite(ImageConfig::getInstance()->getImagePath("StarSprite"))
     {
         this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("StarSprite"));
     }

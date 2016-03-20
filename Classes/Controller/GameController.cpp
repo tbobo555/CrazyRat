@@ -59,7 +59,7 @@ namespace Controller
     void GameController::loadStaticResourcesForSelectionScene()
     {
         SelectionScene *selectionScene = new SelectionScene();
-        StartBg *startBg = new StartBg();
+        SelectionBg *selectionBg = new SelectionBg();
         MasterSprite *masterSprite = new MasterSprite();
         SceneManager::getInstance()->setWithKey("SelectionScene", selectionScene);
         for (int i = 0; i < 6; i++) {
@@ -79,8 +79,8 @@ namespace Controller
         }
         
         SpriteManager::getInstance()->setWithKey("SelectionScene_MasterSprite", masterSprite);
-        SpriteManager::getInstance()->setWithKey("SelectionScene_StartBg", startBg);
-        selectionScene->startBg = startBg;
+        SpriteManager::getInstance()->setWithKey("SelectionScene_SelectionBg", selectionBg);
+        selectionScene->selectionBg = selectionBg;
         selectionScene->masterSprite = masterSprite;
         selectionScene->initScene();
     }
