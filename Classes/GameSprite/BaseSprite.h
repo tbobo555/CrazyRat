@@ -2,6 +2,7 @@
 #define _GameSprite_BaseSprite_H_
 
 #include "cocos2d.h"
+#include "Lib/TextureCreator.h"
 
 USING_NS_CC;
 
