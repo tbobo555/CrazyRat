@@ -1,5 +1,5 @@
-#ifndef _GameSprite_SettingBg_H_
-#define _GameSprite_SettingBg_H_
+#ifndef _GameSprite_SettingBackground_H_
+#define _GameSprite_SettingBackground_H_
 
 #include "BaseSprite.h"
 #include "cocos2d.h"
@@ -10,10 +10,10 @@ USING_NS_CC;
 
 namespace GameSprite
 {
-    class SettingBg : public BaseSprite
+    class SettingBackground : public BaseSprite
     {
     public:
-        SettingBg();
+        SettingBackground();
         void addEventListener();
     private:
         static bool onTouchBegan(Touch* touch, Event* event);
@@ -23,4 +23,4 @@ namespace GameSprite
     };
 }
 
-#endif /* defined(_GameSprite_SettingBg_H_) */
+#endif /* defined(_GameSprite_SettingBackground_H_) */

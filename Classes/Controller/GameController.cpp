@@ -36,7 +36,7 @@ namespace Controller
     void GameController::loadStaticResourcesForSettingMenu()
     {
         SpriteManager::getInstance()->setWithKey("SettingMenu_SettingButton", new SettingButton());
-        SpriteManager::getInstance()->setWithKey("SettingMenu_SettingBg", new SettingBg());
+        SpriteManager::getInstance()->setWithKey("SettingMenu_SettingBackground", new SettingBackground());
         SpriteManager::getInstance()->setWithKey(
             "SettingMenu_SettingBackButton", new SettingBackButton());
         SpriteManager::getInstance()->setWithKey("SettingMenu_MusicButton", new MusicButton());
@@ -46,12 +46,12 @@ namespace Controller
     void GameController::loadStaticResourcesForStartScene()
     {
         StartScene *startScene = new StartScene();
-        StartBg *startBg = new StartBg();
+        StartBackground *startBackground = new StartBackground();
         StartButton *startButton = new StartButton();
         SceneManager::getInstance()->setWithKey("StartScene", startScene);
-        SpriteManager::getInstance()->setWithKey("StartScene_StartBg", startBg);
+        SpriteManager::getInstance()->setWithKey("StartScene_StartBackground", startBackground);
         SpriteManager::getInstance()->setWithKey("StartScene_StartButton", startButton);
-        startScene->startBg = startBg;
+        startScene->startBackground = startBackground;
         startScene->startButton = startButton;
         startScene->initScene();
     }
@@ -59,29 +59,29 @@ namespace Controller
     void GameController::loadStaticResourcesForSelectionScene()
     {
         SelectionScene *selectionScene = new SelectionScene();
-        SelectionBg *selectionBg = new SelectionBg();
-        MasterSprite *masterSprite = new MasterSprite();
+        SelectionBackground *selectionBackground = new SelectionBackground();
+        Master *master = new Master();
         SceneManager::getInstance()->setWithKey("SelectionScene", selectionScene);
-        for (int i = 0; i < 6; i++) {
+        for (int i = 1; i <= 6; i++) {
             StageButton *stageButton = new StageButton();
             selectionScene->stageButtonVector.push_back(stageButton) ;
             std::stringstream key;
-            key << "SelectionScene_StageButton" << i;
+            key << "SelectionScene_StageButton_" << i;
             SpriteManager::getInstance()->setWithKey(key.str(), stageButton);
         }
         
-        for (int i = 0; i < 18; i++) {
-            StarSprite *starSprite = new StarSprite();
-            selectionScene->starSpriteVector.push_back(starSprite);
+        for (int i = 1; i <= 18; i++) {
+            Star *star = new Star();
+            selectionScene->starVector.push_back(star);
             std::stringstream key;
-            key << "SelectionScene_StarSprite" << i;
-            SpriteManager::getInstance()->setWithKey(key.str(), starSprite);
+            key << "SelectionScene_Star_" << i;
+            SpriteManager::getInstance()->setWithKey(key.str(), star);
         }
         
-        SpriteManager::getInstance()->setWithKey("SelectionScene_MasterSprite", masterSprite);
-        SpriteManager::getInstance()->setWithKey("SelectionScene_SelectionBg", selectionBg);
-        selectionScene->selectionBg = selectionBg;
-        selectionScene->masterSprite = masterSprite;
+        SpriteManager::getInstance()->setWithKey("SelectionScene_Master", master);
+        SpriteManager::getInstance()->setWithKey("SelectionScene_SelectionBackground", selectionBackground);
+        selectionScene->selectionBackground = selectionBackground;
+        selectionScene->master = master;
         selectionScene->initScene();
     }
     
@@ -96,7 +96,7 @@ namespace Controller
     {
         auto scene = SceneManager::getInstance()->getCurrent();
         scene->getCCScene()->removeChild(SpriteManager::getInstance()->getByKey("SettingMenu_SettingButton")->getCCSprite());
-        scene->getCCScene()->removeChild(SpriteManager::getInstance()->getByKey("SettingMenu_SettingBg")->getCCSprite());
+        scene->getCCScene()->removeChild(SpriteManager::getInstance()->getByKey("SettingMenu_SettingBackground")->getCCSprite());
         scene->getCCScene()->removeChild(SpriteManager::getInstance()->getByKey("SettingMenu_SettingBackButton")->getCCSprite());
         scene->getCCScene()->removeChild(SpriteManager::getInstance()->getByKey("SettingMenu_MusicButton")->getCCSprite());
         scene->getCCScene()->removeChild(SpriteManager::getInstance()->getByKey("SettingMenu_SoundsButton")->getCCSprite());

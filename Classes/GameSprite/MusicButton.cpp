@@ -3,7 +3,7 @@
 namespace GameSprite
 {    
     MusicButton::MusicButton() :
-    BaseSprite::BaseSprite(ImageConfig::getInstance()->getImagePath("MusicButton"))
+    BaseSprite::BaseSprite(ImageConfig::getInstance()->getImagePath("MusicOnButton"))
     {
         this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("MusicButton"));
         this->addEventListener();

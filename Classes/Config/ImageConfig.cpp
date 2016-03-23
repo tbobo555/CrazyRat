@@ -14,20 +14,20 @@ std::string ImageConfig::getImagePath(std::string key)
 {
     if (this->imagePath.empty()) {
         this->imagePath = {
-            {"StartBg", "image/Bg.png"},
-            {"SelectionBg", "image/Bg2.png"},
-            {"StartButton", "image/StartBtn.png"},
-            {"MusicButton", "image/MusicBtn.png"},
+            {"StartBackground", "image/StartBackground.png"},
+            {"SelectionBackground", "image/SelectionBackground.png"},
+            {"StartButton", "image/StartButton.png"},
+            {"MusicOnButton", "image/MusicOnButton.png"},
             {"MusicOffButton", "image/MusicOffBtn.png"},
-            {"SoundsButton", "image/SoundsBtn.png"},
-            {"SoundsOffButton", "image/SoundsOffBtn.png"},
-            {"SettingBg", "image/CustomBg.png"},
-            {"SettingBackButton", "image/BackBtn.png"},
-            {"SettingButton", "image/SettingBtn.png"},
-            {"StageButton", "image/StageBtn.png"},
-            {"StageLockedButton", "image/StageLocked.png"},
-            {"MasterSprite", "image/MasterSprite.png"},
-            {"StarSprite", "image/StarSprite.png"},
+            {"SoundsOnButton", "image/SoundsOnButton.png"},
+            {"SoundsOffButton", "image/SoundsOffButton.png"},
+            {"SettingBackground", "image/SettingBackground.png"},
+            {"BackButton", "image/BackButton.png"},
+            {"SettingButton", "image/SettingButton.png"},
+            {"StageButton", "image/StageButton.png"},
+            {"StageLockedButton", "image/StageLockedButton.png"},
+            {"Master", "image/Master.png"},
+            {"Star", "image/Star.png"},
         };
     }
     return this->imagePath.at(key);
@@ -38,20 +38,20 @@ Size ImageConfig::getImageSize(std::string key)
 {
     if (this->imageSize.empty()) {
         this->imageSize = {
-            {"StartBg", Size(1080, 1920)},
-            {"SelectionBg", Size(1080, 1920)},
+            {"StartBackground", Size(1080, 1920)},
+            {"SelectionBackground", Size(1080, 1920)},
             {"StartButton", Size(300, 170)},
-            {"MusicButton", Size(230, 230)},
+            {"MusicOnButton", Size(230, 230)},
             {"MusicOffButton", Size(230, 230)},
-            {"SoundsButton", Size(230, 230)},
+            {"SoundsOnButton", Size(230, 230)},
             {"SoundsOffButton", Size(230, 230)},
-            {"SettingBg", Size(690, 640)},
-            {"SettingBackButton", Size(180, 120)},
+            {"SettingBackground", Size(690, 640)},
+            {"BackButton", Size(180, 120)},
             {"SettingButton", Size(250, 165)},
             {"StageButton", Size(246, 246)},
             {"StageLockedButton", Size(246, 246)},
-            {"MasterSprite", Size(86, 136)},
-            {"StarSprite", Size(76, 76)},
+            {"Master", Size(86, 136)},
+            {"Star", Size(76, 76)},
 
         };
     }

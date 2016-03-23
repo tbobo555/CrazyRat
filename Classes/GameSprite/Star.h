@@ -1,5 +1,5 @@
-#ifndef _GameSprite_StarSprite_H_
-#define _GameSprite_StarSprite_H_
+#ifndef _GameSprite_Star_H_
+#define _GameSprite_Star_H_
 
 #include "cocos2d.h"
 #include "Config/ImageConfig.h"
@@ -10,10 +10,10 @@ USING_NS_CC;
 
 namespace GameSprite
 {
-    class StarSprite : public BaseSprite
+    class Star : public BaseSprite
     {
     public:
-        StarSprite();
+        Star();
         void addEventListener();
     private:
         static bool onTouchBegan(Touch *touch, Event *event);
@@ -23,4 +23,4 @@ namespace GameSprite
     };
 }
 
-#endif /* _GameSprite_StarSprite_H_ */
+#endif /* _GameSprite_Star_H_ */

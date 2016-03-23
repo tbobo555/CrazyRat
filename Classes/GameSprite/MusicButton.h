@@ -14,6 +14,7 @@ namespace GameSprite
     {
     public:
         MusicButton();
+        MusicButton(std::string img);
         void addEventListener();
     private:
         static bool onTouchBegan(Touch* touch, Event* event);

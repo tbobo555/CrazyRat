@@ -1,5 +1,5 @@
-#ifndef _GameSprite_MasterSprite_H_
-#define _GameSprite_MasterSprite_H_
+#ifndef _GameSprite_Master_H_
+#define _GameSprite_Master_H_
 
 #include "BaseSprite.h"
 #include "Config/ImageConfig.h"
@@ -10,10 +10,10 @@ USING_NS_CC;
 
 namespace GameSprite
 {
-    class MasterSprite : public BaseSprite
+    class Master : public BaseSprite
     {
     public:
-        MasterSprite();
+        Master();
         void addEventListener();
     private:
         static bool onTouchBegan(Touch *touch, Event *event);
@@ -24,4 +24,4 @@ namespace GameSprite
 }
 
 
-#endif /* _GameSprite_MasterSprite_H_ */
+#endif /* _GameSprite_Master_H_ */

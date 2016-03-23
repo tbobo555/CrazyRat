@@ -1,7 +1,7 @@
 #ifndef _GameScene_StartScene_H_
 #define _GameScene_StartScene_H_
 
-#include "GameSprite/StartBg.h"
+#include "GameSprite/StartBackground.h"
 #include "GameSprite/StartButton.h"
 #include "BaseScene.h"
 
@@ -12,7 +12,7 @@ namespace GameScene
     public:
         StartScene();
         void initScene();
-        GameSprite::StartBg* startBg;
+        GameSprite::StartBackground* startBackground;
         GameSprite::StartButton* startButton;
     };
 }

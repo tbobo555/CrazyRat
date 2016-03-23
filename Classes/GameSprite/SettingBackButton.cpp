@@ -3,7 +3,7 @@
 namespace GameSprite
 {
     SettingBackButton::SettingBackButton() :
-    BaseSprite(ImageConfig::getInstance()->getImagePath("SettingBackButton"))
+    BaseSprite(ImageConfig::getInstance()->getImagePath("BackButton"))
     {
         this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("SettingBackButton"));
         this->addEventListener();
@@ -42,7 +42,7 @@ namespace GameSprite
         auto sceneManager = Manager::SceneManager::getInstance();
         auto spriteManager = Manager::SpriteManager::getInstance();
         auto scene = sceneManager->getCurrent()->getCCScene();
-        auto settingBg = spriteManager->getByKey("SettingMenu_SettingBg")->getCCSprite();
+        auto settingBg = spriteManager->getByKey("SettingMenu_SettingBackground")->getCCSprite();
         auto settingBackButton = spriteManager->getByKey(
             "SettingMenu_SettingBackButton")->getCCSprite();
         auto musicButton = spriteManager->getByKey("SettingMenu_MusicButton")->getCCSprite();

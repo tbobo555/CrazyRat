@@ -1,26 +1,26 @@
-#include "SettingBg.h"
+#include "SettingBackground.h"
 
 namespace GameSprite
 {        
-    SettingBg::SettingBg() : BaseSprite(ImageConfig::getInstance()->getImagePath("SettingBg"))
+    SettingBackground::SettingBackground() : BaseSprite(ImageConfig::getInstance()->getImagePath("SettingBackground"))
     {
-        this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("SettingBg"));
+        this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("SettingBackground"));
         this->addEventListener();
     }
     
-    void SettingBg::addEventListener()
+    void SettingBackground::addEventListener()
     {
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);
-        listener->onTouchBegan = SettingBg::onTouchBegan;
-        listener->onTouchEnded = SettingBg::onTouchEnded;
-        listener->onTouchMoved = SettingBg::onTouchMoved;
-        listener->onTouchCancelled = SettingBg::onTouchCanceled;
+        listener->onTouchBegan = SettingBackground::onTouchBegan;
+        listener->onTouchEnded = SettingBackground::onTouchEnded;
+        listener->onTouchMoved = SettingBackground::onTouchMoved;
+        listener->onTouchCancelled = SettingBackground::onTouchCanceled;
         Director::getInstance()->getEventDispatcher()
         ->addEventListenerWithSceneGraphPriority(listener, this->sprite);
     }
     
-    bool SettingBg::onTouchBegan(Touch* touch, Event* event)
+    bool SettingBackground::onTouchBegan(Touch* touch, Event* event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
@@ -33,17 +33,17 @@ namespace GameSprite
         return false;
     }
     
-    void SettingBg::onTouchEnded(Touch* touch, Event* event)
+    void SettingBackground::onTouchEnded(Touch* touch, Event* event)
     {
         
     }
     
-    void SettingBg::onTouchMoved(Touch* touch, Event* event)
+    void SettingBackground::onTouchMoved(Touch* touch, Event* event)
     {
         
     }
     
-    void SettingBg::onTouchCanceled(Touch* touch, Event* event)
+    void SettingBackground::onTouchCanceled(Touch* touch, Event* event)
     {
         
     }

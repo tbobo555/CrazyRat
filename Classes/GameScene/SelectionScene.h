@@ -3,10 +3,10 @@
 
 #include "cocos2d.h"
 #include "BaseScene.h"
-#include "GameSprite/SelectionBg.h"
+#include "GameSprite/SelectionBackground.h"
 #include "GameSprite/StageButton.h"
-#include "GameSprite/MasterSprite.h"
-#include "GameSprite/StarSprite.h"
+#include "GameSprite/Master.h"
+#include "GameSprite/Star.h"
 #include "Db/CommonSetting.h"
 #include "Config/PositionConfig.h"
 #include "Lib/TextureCreator.h"
@@ -21,10 +21,10 @@ namespace GameScene
     public:
         SelectionScene();
         void initScene();
-        GameSprite::SelectionBg* selectionBg;
+        GameSprite::SelectionBackground* selectionBackground;
         std::vector<GameSprite::StageButton*> stageButtonVector;
-        GameSprite::MasterSprite* masterSprite;
-        std::vector<GameSprite::StarSprite*> starSpriteVector;
+        GameSprite::Master* master;
+        std::vector<GameSprite::Star*> starVector;
         void setStageDisplay();
         void setStarDisplay();
         void setMasterPosition();

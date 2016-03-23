@@ -6,14 +6,14 @@ namespace GameScene
     
     void SelectionScene::initScene()
     {
-        this->scene->addChild(this->selectionBg->getCCSprite(), 0);
+        this->scene->addChild(this->selectionBackground->getCCSprite(), 0);
         for (int i = 0; i < this->stageButtonVector.size(); i++) {
             this->scene->addChild(this->stageButtonVector[i]->getCCSprite(), 2);
         }
-        for (int i = 0; i < this->starSpriteVector.size(); i++) {
-            this->scene->addChild(this->starSpriteVector[i]->getCCSprite(), 2);
+        for (int i = 0; i < this->starVector.size(); i++) {
+            this->scene->addChild(this->starVector[i]->getCCSprite(), 2);
         }
-        this->scene->addChild(this->masterSprite->getCCSprite(), 3);
+        this->scene->addChild(this->master->getCCSprite(), 3);
         this->setMasterPosition();
         this->setStageDisplay();
         this->setStarDisplay();
@@ -24,14 +24,14 @@ namespace GameScene
         int currentStage = DB::CommonSetting::currentStage;
         for (int i = 0; i <= currentStage; i++) {
             std::stringstream key;
-            key << "Stage" << i;
+            key << "Stage" << i + 1;
             Vec2 position = PositionConfig::getInstance()->getStagePosition(key.str());
             this->stageButtonVector[i]->getCCSprite()->setPosition(position);
         }
         
         for (int i = currentStage + 1; i < this->stageButtonVector.size(); i++) {
             std::stringstream key;
-            key << "Stage" << i;
+            key << "Stage" << i + 1;
             Vec2 position = PositionConfig::getInstance()->getStagePosition(key.str());
             Texture2D* texture = TextureCreator::getInstance()
             ->getAutoSizeTexture2d(ImageConfig::getInstance()->getImagePath("StageLockedButton"));
@@ -44,9 +44,9 @@ namespace GameScene
     {
         int currentStage = DB::CommonSetting::currentStage;
         std::vector<int> starNumberVector = DB::CommonSetting::starOfStage;
-        for (int i = 0; i < currentStage; i++) {
+        for (int i = 0; i < currentStage-1; i++) {
             std::stringstream key;
-            key << "Stage" << i ;
+            key << "Stage" << i + 1;
             for (int x = 1; x <= starNumberVector[i]; x++) {
                 Vec2 position = PositionConfig::getInstance()->getStagePosition(key.str());
                 position.y += 50;
@@ -62,7 +62,7 @@ namespace GameScene
                     default:
                         break;
                 }
-                this->starSpriteVector[(i*3)+(x-1)]->getCCSprite()->setPosition(position);
+                this->starVector[(i*3)+(x-1)]->getCCSprite()->setPosition(position);
             }
         }
     }
@@ -73,6 +73,6 @@ namespace GameScene
         std::stringstream key;
         key << "Stage" << currentStage ;
         Vec2 position = PositionConfig::getInstance()->getStagePosition(key.str());
-        this->masterSprite->getCCSprite()->setPosition(Vec2(position.x, position.y+100));
+        this->master->getCCSprite()->setPosition(Vec2(position.x, position.y+100));
     }
 }

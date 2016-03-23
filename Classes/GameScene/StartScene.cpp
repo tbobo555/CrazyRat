@@ -8,7 +8,7 @@ namespace GameScene
     
     void StartScene::initScene()
     {
-        this->scene->addChild(this->startBg->getCCSprite(), 0);
+        this->scene->addChild(this->startBackground->getCCSprite(), 0);
         this->scene->addChild(this->startButton->getCCSprite(), 1);
     }
     

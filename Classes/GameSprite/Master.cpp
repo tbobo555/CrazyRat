@@ -1,26 +1,28 @@
-#include "StarSprite.h"
+#include "Master.h"
+
 
 namespace GameSprite
-{    
-    StarSprite::StarSprite() : BaseSprite(ImageConfig::getInstance()->getImagePath("StarSprite"))
+{
+    Master::Master() :
+    BaseSprite(ImageConfig::getInstance()->getImagePath("Master"))
     {
-        this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("StarSprite"));
+        this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("Master"));
     }
     
-    void StarSprite::addEventListener()
+    void Master::addEventListener()
     {
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);
-        listener->onTouchBegan = StarSprite::onTouchBegan;
-        listener->onTouchEnded = StarSprite::onTouchEnded;
-        listener->onTouchMoved = StarSprite::onTouchMoved;
-        listener->onTouchCancelled = StarSprite::onTouchCanceled;
+        listener->onTouchBegan = Master::onTouchBegan;
+        listener->onTouchEnded = Master::onTouchEnded;
+        listener->onTouchMoved = Master::onTouchMoved;
+        listener->onTouchCancelled = Master::onTouchCanceled;
         Director::getInstance()->getEventDispatcher()
         ->addEventListenerWithSceneGraphPriority(listener, this->sprite);
     }
 
     
-    bool StarSprite::onTouchBegan(Touch *touch, Event *event)
+    bool Master::onTouchBegan(Touch *touch, Event *event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
@@ -28,27 +30,27 @@ namespace GameSprite
         Rect rect = Rect(0, 0, s.width, s.height);
         
         if (rect.containsPoint(locationInNode)) {
-            log("StarSprite began... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            log("Master began... x = %f, y = %f", locationInNode.x, locationInNode.y);
             target->setScale(1.2);
             return true;
         }
         return false;
     }
     
-    void StarSprite::onTouchEnded(Touch *touch, Event *event)
+    void Master::onTouchEnded(Touch *touch, Event *event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         target->setScale(1.0);
     }
     
-    void StarSprite::onTouchMoved(Touch *touch, Event *event)
+    void Master::onTouchMoved(Touch *touch, Event *event)
     {
     }
     
-    void StarSprite::onTouchCanceled(Touch *touch, Event *event)
+    void Master::onTouchCanceled(Touch *touch, Event *event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         target->setScale(1.0);
     }
-    
+
 }
