@@ -127,6 +127,30 @@ namespace Controller
         this->addSettingMenuToCurrentScene();
         Director::getInstance()->replaceScene(scene->getCCScene());
     }
+    
+    void GameController::selectionSceneToMapScene(int mapNumber)
+    {
+        this->loadMapSceneResource(mapNumber);
+        std::stringstream key;
+        key << "MapScene_" << mapNumber;
+        MapScene *scene = static_cast<MapScene*>(
+             SceneManager::getInstance()->getByKey(key.str()));
+        this->removeSettingMenuFromCurrentScene();
+        SceneManager::getInstance()->setCurrent(scene);
+        this->addSettingMenuToCurrentScene();
+        Director::getInstance()->replaceScene(scene->getCCScene());
+    }
+    
+    void GameController::MapSceneToSelectionScene(int mapNumber)
+    {
+        this->releaseMapSceneResource(mapNumber);
+        SelectionScene *scene = static_cast<SelectionScene*>(
+            SceneManager::getInstance()->getByKey("SelectionScene"));
+        this->removeSettingMenuFromCurrentScene();
+        SceneManager::getInstance()->setCurrent(scene);
+        this->addSettingMenuToCurrentScene();
+        Director::getInstance()->replaceScene(scene->getCCScene());
 
+    }
 
 }

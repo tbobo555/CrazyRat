@@ -1,4 +1,6 @@
 #include "BackButton.h"
+#include "Controller/GameController.h"
+#include <iostream>
 
 namespace GameSprite {
     
@@ -37,7 +39,22 @@ namespace GameSprite {
     void BackButton::onTouchEnded(Touch *touch, Event *event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
-        target->setScale(1.0);
+        Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
+        Size s = target->getContentSize();
+        Rect rect = Rect(0, 0, s.width, s.height);
+        if (rect.containsPoint(locationInNode)) {
+            log("BackButton ended... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            auto scene = SceneManager::getInstance()->getCurrent();
+            auto controller = Controller::GameController::getInstance();
+            target->setScale(1.0);
+            if (scene->name == "MapScene") {
+                controller->MapSceneToSelectionScene(static_cast<MapScene*>(scene)->mapMumber);
+            } else if (scene->name == "SelectionScene") {
+                controller->selectionSceneToStartScene();
+            }
+        } else {
+            target->setScale(1.0);
+        }
     }
 
     void BackButton::onTouchMoved(Touch *touch, Event *event)

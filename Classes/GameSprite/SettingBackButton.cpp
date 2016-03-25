@@ -36,19 +36,26 @@ namespace GameSprite
     void SettingBackButton::onTouchEnded(Touch* touch, Event* event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
-        target->setScale(1.0);
-        auto sceneManager = Manager::SceneManager::getInstance();
-        auto spriteManager = Manager::SpriteManager::getInstance();
-        auto scene = sceneManager->getCurrent()->getCCScene();
-        auto settingBg = spriteManager->getByKey("MenuScene_SettingBackground")->getCCSprite();
-        auto settingBackButton = spriteManager->getByKey(
-            "MenuScene_SettingBackButton")->getCCSprite();
-        auto musicButton = spriteManager->getByKey("MenuScene_MusicButton")->getCCSprite();
-        auto soundsButton = spriteManager->getByKey("MenuScene_SoundsButton")->getCCSprite();
-        scene->removeChild(soundsButton);
-        scene->removeChild(musicButton);
-        scene->removeChild(settingBackButton);
-        scene->removeChild(settingBg);
+        Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
+        Size s = target->getContentSize();
+        Rect rect = Rect(0, 0, s.width, s.height);
+        if (rect.containsPoint(locationInNode)) {
+            target->setScale(1.0);
+            auto sceneManager = Manager::SceneManager::getInstance();
+            auto spriteManager = Manager::SpriteManager::getInstance();
+            auto scene = sceneManager->getCurrent()->getCCScene();
+            auto settingBg = spriteManager->getByKey("MenuScene_SettingBackground")->getCCSprite();
+            auto settingBackButton = spriteManager->getByKey(
+                "MenuScene_SettingBackButton")->getCCSprite();
+            auto musicButton = spriteManager->getByKey("MenuScene_MusicButton")->getCCSprite();
+            auto soundsButton = spriteManager->getByKey("MenuScene_SoundsButton")->getCCSprite();
+            scene->removeChild(soundsButton);
+            scene->removeChild(musicButton);
+            scene->removeChild(settingBackButton);
+            scene->removeChild(settingBg);
+        } else {
+            target->setScale(1.0);
+        }
     }
     
     void SettingBackButton::onTouchMoved(Touch* touch, Event* event)

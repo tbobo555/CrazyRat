@@ -1,5 +1,5 @@
 #include "MapButton.h"
-
+#include "Controller/GameController.h"
 
 namespace GameSprite
 {
@@ -7,6 +7,7 @@ namespace GameSprite
     {
         this->isLocked = false;
         this->mapNumber = mapNumber;
+        this->sprite->setTag(mapNumber);
         this->addEventListener();
     }
     
@@ -62,8 +63,16 @@ namespace GameSprite
     void MapButton::onTouchEnded(Touch *touch, Event *event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
-        target->setScale(1.0);
-        log("map onTouchEnded..");
+        Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
+        Size s = target->getContentSize();
+        Rect rect = Rect(0, 0, s.width, s.height);
+        if (rect.containsPoint(locationInNode)) {
+            log("MapButton ended... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            target->setScale(1.0);
+            Controller::GameController::getInstance()->selectionSceneToMapScene(target->getTag());
+        } else {
+            target->setScale(1.0);
+        }
     }
     
     void MapButton::onTouchMoved(Touch *touch, Event *event)

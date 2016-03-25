@@ -2,7 +2,10 @@
 
 namespace GameScene
 {
-    SelectionScene::SelectionScene(){}
+    SelectionScene::SelectionScene() : GameScene::BaseScene()
+    {
+        this->name = "SelectionScene";
+    }
     
     void SelectionScene::initScene()
     {
@@ -56,7 +59,7 @@ namespace GameScene
         log("x %f", this->rightBottom.x);
         log("y %f", this->rightBottom.y);
         
-        return this->center;
+        return position;
     }
     
     Vec2 SelectionScene::getMapButtonPosition(int mapNumber)

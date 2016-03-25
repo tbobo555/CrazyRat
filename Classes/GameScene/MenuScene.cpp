@@ -2,7 +2,10 @@
 
 namespace GameScene
 {
-    MenuScene::MenuScene() : GameScene::BaseScene(){}
+    MenuScene::MenuScene() : GameScene::BaseScene()
+    {
+        this->name = "MenuScene";
+    }
     
     void MenuScene::initScene()
     {

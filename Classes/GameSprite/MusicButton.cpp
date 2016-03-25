@@ -36,7 +36,15 @@ namespace GameSprite
     void MusicButton::onTouchEnded(Touch* touch, Event* event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
-        target->setScale(1.0);
+        Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
+        Size s = target->getContentSize();
+        Rect rect = Rect(0, 0, s.width, s.height);
+        if (rect.containsPoint(locationInNode)) {
+            log("MusicButton ended... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            target->setScale(1.0);
+        } else {
+            target->setScale(1.0);
+        }
     }
 
     void MusicButton::onTouchMoved(Touch* touch, Event* event)

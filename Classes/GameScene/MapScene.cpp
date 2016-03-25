@@ -5,6 +5,7 @@ namespace GameScene
 {
     MapScene::MapScene(int pMapNumber) : GameScene::BaseScene()
     {
+        this->name = "MapScene";
         this->mapMumber = pMapNumber;
     }
     
@@ -115,44 +116,44 @@ namespace GameScene
             {
                 {Vec2(165, 1100)},
                 {Vec2(550, 1100)},
+                {Vec2(930, 1100)},
                 {Vec2(165, 650)},
                 {Vec2(550, 650)},
-                {Vec2(930, 650)},
             },
             {
                 {Vec2(165, 1100)},
                 {Vec2(550, 1100)},
+                {Vec2(930, 1100)},
                 {Vec2(165, 650)},
                 {Vec2(550, 650)},
-                {Vec2(930, 650)},
             },
             {
                 {Vec2(165, 1100)},
                 {Vec2(550, 1100)},
+                {Vec2(930, 1100)},
                 {Vec2(165, 650)},
                 {Vec2(550, 650)},
-                {Vec2(930, 650)},
             },
             {
                 {Vec2(165, 1100)},
                 {Vec2(550, 1100)},
+                {Vec2(930, 1100)},
                 {Vec2(165, 650)},
                 {Vec2(550, 650)},
-                {Vec2(930, 650)},
             },
             {
                 {Vec2(165, 1100)},
                 {Vec2(550, 1100)},
+                {Vec2(930, 1100)},
                 {Vec2(165, 650)},
                 {Vec2(550, 650)},
-                {Vec2(930, 650)},
             },
             {
                 {Vec2(165, 1100)},
                 {Vec2(550, 1100)},
+                {Vec2(930, 1100)},
                 {Vec2(165, 650)},
                 {Vec2(550, 650)},
-                {Vec2(930, 650)},
             }
         };
         return stageButtonPositionSet[mapNumber][stageNumber];

@@ -39,19 +39,26 @@ namespace GameSprite
     void SettingButton::onTouchEnded(Touch* touch, Event* event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
-        target->setScale(1.0);
-        Manager::SceneManager* sceneManager = Manager::SceneManager::getInstance();
-        Manager::SpriteManager* spriteManager = Manager::SpriteManager::getInstance();
-        auto currentScene = sceneManager->getCurrent()->getCCScene();
-        auto settingBg = spriteManager->getByKey("MenuScene_SettingBackground")->getCCSprite();
-        auto settingBackButton = spriteManager->getByKey(
-            "MenuScene_SettingBackButton")->getCCSprite();
-        auto musicButton = spriteManager->getByKey("MenuScene_MusicButton")->getCCSprite();
-        auto soundsButton = spriteManager->getByKey("MenuScene_SoundsButton")->getCCSprite();
-        currentScene->addChild(settingBg, 100, 1);
-        currentScene->addChild(settingBackButton, 101, 2);
-        currentScene->addChild(musicButton, 101, 3);
-        currentScene->addChild(soundsButton, 101, 4);
+        Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
+        Size s = target->getContentSize();
+        Rect rect = Rect(0, 0, s.width, s.height);
+        if (rect.containsPoint(locationInNode)) {
+            target->setScale(1.0);
+            Manager::SceneManager* sceneManager = Manager::SceneManager::getInstance();
+            Manager::SpriteManager* spriteManager = Manager::SpriteManager::getInstance();
+            auto currentScene = sceneManager->getCurrent()->getCCScene();
+            auto settingBg = spriteManager->getByKey("MenuScene_SettingBackground")->getCCSprite();
+            auto settingBackButton = spriteManager->getByKey(
+                "MenuScene_SettingBackButton")->getCCSprite();
+            auto musicButton = spriteManager->getByKey("MenuScene_MusicButton")->getCCSprite();
+            auto soundsButton = spriteManager->getByKey("MenuScene_SoundsButton")->getCCSprite();
+            currentScene->addChild(settingBg, 100, 1);
+            currentScene->addChild(settingBackButton, 101, 2);
+            currentScene->addChild(musicButton, 101, 3);
+            currentScene->addChild(soundsButton, 101, 4);
+        } else {
+            target->setScale(1.0);
+        }
     }
     
     void SettingButton::onTouchMoved(Touch* touch, Event* event)

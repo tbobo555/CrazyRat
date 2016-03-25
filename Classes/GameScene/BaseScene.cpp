@@ -14,8 +14,8 @@ namespace GameScene
                               visibleOrigin.y + visibleSize.height);
         this->leftBottom = Vec2(visibleOrigin.x,
                                 visibleOrigin.y);
-        this->rightBottom = (Vec2(visibleOrigin.x + visibleSize.height,
-                                  visibleOrigin.y));
+        this->rightBottom = (Vec2(visibleOrigin.x + visibleSize.width,
+                                  visibleOrigin.y ));
         this->scene = Scene::create();
         this->scene->retain();
     }

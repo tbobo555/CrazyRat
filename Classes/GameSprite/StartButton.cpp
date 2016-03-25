@@ -44,14 +44,34 @@ namespace GameSprite
             target->setScale(1.2);
             return true;
         }
-        return true;
+        return false;
     }
     
     void StartButton::onTouchEnded(Touch* touch, Event* event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
-        target->setScale(1.0);
-        Controller::GameController::getInstance()->startSceneToSelectionScene();
+        Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
+        Size s = target->getContentSize();
+        Rect rect = Rect(0, 0, s.width, s.height);
+        if (rect.containsPoint(locationInNode)) {
+            log("Win Size: %f  %f",
+                Director::getInstance()->getWinSize().width, Director::getInstance()->getWinSize().height);
+            log("Win Size In pixels: %f  %f",
+                Director::getInstance()->getWinSizeInPixels().width,
+                Director::getInstance()->getWinSizeInPixels().height);
+            log("View Size: %f  %f",
+                Director::getInstance()->getVisibleSize().width,
+                Director::getInstance()->getVisibleSize().height);
+            log("opengl Size: %f  %f",
+                Director::getInstance()->getOpenGLView()->getFrameSize().width,
+                Director::getInstance()->getOpenGLView()->getFrameSize().height);
+            log("contetn factor: %f  ", Director::getInstance()->getContentScaleFactor());
+            log("StartButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            target->setScale(1.0);
+            Controller::GameController::getInstance()->startSceneToSelectionScene();
+        } else {
+            target->setScale(1.0);
+        }
     }
     
     void StartButton::onTouchMoved(Touch* touch, Event* event)

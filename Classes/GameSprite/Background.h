@@ -13,6 +13,13 @@ namespace GameSprite
     {
     public:
         Background(std::string image);
+        void addEventListener();
+    private:
+        static bool onTouchBegan(Touch* touch, Event* event);
+        static void onTouchEnded(Touch* touch, Event* event);
+        static void onTouchMoved(Touch* touch, Event* event);
+        static void onTouchCanceled(Touch* touch, Event* event);
+
     };
 }
 

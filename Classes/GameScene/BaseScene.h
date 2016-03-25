@@ -13,6 +13,7 @@ namespace GameScene
     public:
         BaseScene();
         ~BaseScene();
+        std::string name;
         void release();
         Scene* getCCScene();
         virtual void initScene();

@@ -4,6 +4,7 @@ namespace GameScene
 {
     StartScene::StartScene() : GameScene::BaseScene()
     {
+        this->name = "StartScene";
     }
     
     void StartScene::initScene()

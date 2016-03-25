@@ -41,16 +41,13 @@ namespace Controller
         
         void addSettingMenuToCurrentScene();
         void removeSettingMenuFromCurrentScene();
-
-        
         
         void runStartScene();
         void startSceneToSelectionScene();
         void selectionSceneToStartScene();
-        //void selectionSceneToMapScene(int mapNumber);
-        //void MapSceneToSelectionScene(int mapNumber);
+        void selectionSceneToMapScene(int mapNumber);
+        void MapSceneToSelectionScene(int mapNumber);
         
-
     private:
         GameController();
         static GameController* instance;
