@@ -1,5 +1,4 @@
 #include "ImageConfig.h"
-# include <iostream>
 
 ImageConfig* ImageConfig::instance = new ImageConfig();
 
@@ -9,30 +8,6 @@ ImageConfig* ImageConfig::getInstance()
 {
     return instance;
 }
-
-std::string ImageConfig::getImagePath(std::string key)
-{
-    if (this->imagePath.empty()) {
-        this->imagePath = {
-            {"StartBackground", "image/StartBackground.png"},
-            {"SelectionBackground", "image/SelectionBackground.png"},
-            {"StartButton", "image/StartButton.png"},
-            {"MusicOnButton", "image/MusicOnButton.png"},
-            {"MusicOffButton", "image/MusicOffBtn.png"},
-            {"SoundsOnButton", "image/SoundsOnButton.png"},
-            {"SoundsOffButton", "image/SoundsOffButton.png"},
-            {"SettingBackground", "image/SettingBackground.png"},
-            {"BackButton", "image/BackButton.png"},
-            {"SettingButton", "image/SettingButton.png"},
-            {"StageButton", "image/StageButton.png"},
-            {"StageLockedButton", "image/StageLockedButton.png"},
-            {"Master", "image/Master.png"},
-            {"Star", "image/Star.png"},
-        };
-    }
-    return this->imagePath.at(key);
-}
-
 
 Size ImageConfig::getImageSize(std::string key)
 {
@@ -48,11 +23,10 @@ Size ImageConfig::getImageSize(std::string key)
             {"SettingBackground", Size(690, 640)},
             {"BackButton", Size(180, 120)},
             {"SettingButton", Size(250, 165)},
-            {"StageButton", Size(246, 246)},
-            {"StageLockedButton", Size(246, 246)},
-            {"Master", Size(86, 136)},
-            {"Star", Size(76, 76)},
-
+            {"StageButton", Size(245, 245)},
+            {"StageLockedButton", Size(245, 245)},
+            {"Master", Size(85, 135)},
+            {"Star", Size(75, 75)},
         };
     }
     return this->imageSize.at(key);

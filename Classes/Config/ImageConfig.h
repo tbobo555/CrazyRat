@@ -10,12 +10,10 @@ class ImageConfig
 public:
     static ImageConfig* getInstance();
     cocos2d::Size getImageSize(std::string);
-    std::string getImagePath(std::string);
 private:
     ImageConfig();
     static ImageConfig* instance;
     std::map<std::string, cocos2d::Size> imageSize;
-    std::map<std::string, std::string> imagePath;
 };
 
 #endif /* _Config_ImageConfig_H_ */

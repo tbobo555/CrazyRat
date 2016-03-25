@@ -21,6 +21,12 @@ namespace Manager
         return this->container.at(key);
     }
     
+    void SceneManager::releaseByKey(std::string key)
+    {
+        this->container[key]->release();
+        this->container.erase(key);
+    }
+    
     BaseScene* SceneManager::getCurrent()
     {
         return this->current;

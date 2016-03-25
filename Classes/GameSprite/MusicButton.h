@@ -3,8 +3,6 @@
 
 #include "BaseSprite.h"
 #include "cocos2d.h"
-#include "Config/ImageConfig.h"
-#include "Config/PositionConfig.h"
 
 USING_NS_CC;
 
@@ -13,8 +11,7 @@ namespace GameSprite
     class MusicButton : public BaseSprite
     {
     public:
-        MusicButton();
-        MusicButton(std::string img);
+        MusicButton(std::string image);
         void addEventListener();
     private:
         static bool onTouchBegan(Touch* touch, Event* event);

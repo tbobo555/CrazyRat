@@ -7,8 +7,9 @@ namespace DB {
     public:
         static bool musicSwitch;
         static bool soundsSwitch;
+        static int currentMap;
         static int currentStage;
-        static std::vector<int> starOfStage;
+        static std::vector<std::vector<int>> starOfStage;
     };
 }
 

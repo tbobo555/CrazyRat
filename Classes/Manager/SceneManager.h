@@ -15,6 +15,7 @@ namespace Manager
         void setWithKey(std::string key, BaseScene* scene);
         BaseScene* getCurrent();
         void setCurrent(BaseScene* scene);
+        void releaseByKey(std::string key);
         void resetContainer();
     private:
         SceneManager();

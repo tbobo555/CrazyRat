@@ -1,11 +1,9 @@
 #include "MusicButton.h"
 
 namespace GameSprite
-{    
-    MusicButton::MusicButton() :
-    BaseSprite::BaseSprite(ImageConfig::getInstance()->getImagePath("MusicOnButton"))
+{
+    MusicButton::MusicButton(std::string image) : GameSprite::BaseSprite(image)
     {
-        this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("MusicButton"));
         this->addEventListener();
     }
     

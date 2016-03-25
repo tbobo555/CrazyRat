@@ -2,11 +2,9 @@
 #include "Controller/GameController.h"
 
 namespace GameSprite
-{    
-    StartButton::StartButton() :
-    GameSprite::BaseSprite(ImageConfig::getInstance()->getImagePath("StartButton"))
+{
+    StartButton::StartButton(std::string image) : GameSprite::BaseSprite(image)
     {
-        this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("StartButton"));
         this->addEventListener();
     }
     
@@ -46,7 +44,7 @@ namespace GameSprite
             target->setScale(1.2);
             return true;
         }
-        return false;
+        return true;
     }
     
     void StartButton::onTouchEnded(Touch* touch, Event* event)

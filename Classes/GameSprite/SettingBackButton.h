@@ -3,8 +3,6 @@
 
 #include "BaseSprite.h"
 #include "cocos2d.h"
-#include "Config/ImageConfig.h"
-#include "Config/PositionConfig.h"
 #include "Manager/SceneManager.h"
 #include "Manager/SpriteManager.h"
 
@@ -15,7 +13,7 @@ namespace GameSprite
     class SettingBackButton : public BaseSprite
     {
     public:
-        SettingBackButton();
+        SettingBackButton(std::string image);
         void addEventListener();
     private:
         static bool onTouchBegan(Touch* touch, Event* event);

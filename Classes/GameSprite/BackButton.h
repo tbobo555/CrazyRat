@@ -1,17 +1,18 @@
-#ifndef _GameSprite_Star_H_
-#define _GameSprite_Star_H_
+#ifndef _GameSprite_BackButton_H_
+#define _GameSprite_BackButton_H_
 
 #include "cocos2d.h"
 #include "BaseSprite.h"
 
 USING_NS_CC;
 
+
 namespace GameSprite
 {
-    class Star : public BaseSprite
+    class BackButton : public BaseSprite
     {
     public:
-        Star(std::string image);
+        BackButton(std::string image);
         void addEventListener();
     private:
         static bool onTouchBegan(Touch *touch, Event *event);
@@ -21,4 +22,5 @@ namespace GameSprite
     };
 }
 
-#endif /* _GameSprite_Star_H_ */
+
+#endif /* _GameSprite_BackButton_H_ */

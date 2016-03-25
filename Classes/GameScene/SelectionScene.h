@@ -3,14 +3,13 @@
 
 #include "cocos2d.h"
 #include "BaseScene.h"
-#include "GameSprite/SelectionBackground.h"
-#include "GameSprite/StageButton.h"
-#include "GameSprite/Master.h"
-#include "GameSprite/Star.h"
+#include "BaseScene.h"
+#include "GameSprite/Background.h"
+#include "GameSprite/MapButton.h"
+#include "GameSprite/BackButton.h"
 #include "Db/CommonSetting.h"
-#include "Config/PositionConfig.h"
-#include "Lib/TextureCreator.h"
-#include "Config/ImageConfig.h" 
+#include "Manager/SpriteManager.h"
+#include "Config/ImageConfig.h"
 
 USING_NS_CC;
 
@@ -21,13 +20,13 @@ namespace GameScene
     public:
         SelectionScene();
         void initScene();
-        GameSprite::SelectionBackground* selectionBackground;
-        std::vector<GameSprite::StageButton*> stageButtonVector;
-        GameSprite::Master* master;
-        std::vector<GameSprite::Star*> starVector;
-        void setStageDisplay();
-        void setStarDisplay();
-        void setMasterPosition();
+        void releaseScene();
+        GameSprite::Background* selectionBackground;
+        GameSprite::BackButton* selectionBackButton;
+        std::vector<GameSprite::MapButton*> mapButtonVector;
+    private:
+        Vec2 getBackButtonPosition();
+        Vec2 getMapButtonPosition(int mapNumber);
     };
 }
 

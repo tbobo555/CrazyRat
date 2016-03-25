@@ -2,10 +2,8 @@
 
 namespace GameSprite
 {
-    SettingBackButton::SettingBackButton() :
-    BaseSprite(ImageConfig::getInstance()->getImagePath("BackButton"))
+    SettingBackButton::SettingBackButton(std::string image) : GameSprite::BaseSprite(image)
     {
-        this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("SettingBackButton"));
         this->addEventListener();
     }
     
@@ -42,11 +40,11 @@ namespace GameSprite
         auto sceneManager = Manager::SceneManager::getInstance();
         auto spriteManager = Manager::SpriteManager::getInstance();
         auto scene = sceneManager->getCurrent()->getCCScene();
-        auto settingBg = spriteManager->getByKey("SettingMenu_SettingBackground")->getCCSprite();
+        auto settingBg = spriteManager->getByKey("MenuScene_SettingBackground")->getCCSprite();
         auto settingBackButton = spriteManager->getByKey(
-            "SettingMenu_SettingBackButton")->getCCSprite();
-        auto musicButton = spriteManager->getByKey("SettingMenu_MusicButton")->getCCSprite();
-        auto soundsButton = spriteManager->getByKey("SettingMenu_SoundsButton")->getCCSprite();
+            "MenuScene_SettingBackButton")->getCCSprite();
+        auto musicButton = spriteManager->getByKey("MenuScene_MusicButton")->getCCSprite();
+        auto soundsButton = spriteManager->getByKey("MenuScene_SoundsButton")->getCCSprite();
         scene->removeChild(soundsButton);
         scene->removeChild(musicButton);
         scene->removeChild(settingBackButton);

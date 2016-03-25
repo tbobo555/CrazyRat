@@ -1,24 +1,25 @@
-#include "Master.h"
+#include "BackButton.h"
 
-
-namespace GameSprite
-{
-    Master::Master(std::string image) : GameSprite::BaseSprite(image){}
+namespace GameSprite {
     
-    void Master::addEventListener()
+    BackButton::BackButton(std::string image) : GameSprite::BaseSprite(image)
+    {
+        this->addEventListener();
+    }
+    
+    void BackButton::addEventListener()
     {
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);
-        listener->onTouchBegan = Master::onTouchBegan;
-        listener->onTouchEnded = Master::onTouchEnded;
-        listener->onTouchMoved = Master::onTouchMoved;
-        listener->onTouchCancelled = Master::onTouchCanceled;
+        listener->onTouchBegan = BackButton::onTouchBegan;
+        listener->onTouchEnded = BackButton::onTouchEnded;
+        listener->onTouchMoved = BackButton::onTouchMoved;
+        listener->onTouchCancelled = BackButton::onTouchCanceled;
         Director::getInstance()->getEventDispatcher()
         ->addEventListenerWithSceneGraphPriority(listener, this->sprite);
     }
 
-    
-    bool Master::onTouchBegan(Touch *touch, Event *event)
+    bool BackButton::onTouchBegan(Touch *touch, Event *event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
@@ -26,27 +27,26 @@ namespace GameSprite
         Rect rect = Rect(0, 0, s.width, s.height);
         
         if (rect.containsPoint(locationInNode)) {
-            log("Master began... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            log("BackButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
             target->setScale(1.2);
             return true;
         }
         return false;
     }
-    
-    void Master::onTouchEnded(Touch *touch, Event *event)
-    {
-        auto target = static_cast<Sprite*>(event->getCurrentTarget());
-        target->setScale(1.0);
-    }
-    
-    void Master::onTouchMoved(Touch *touch, Event *event)
-    {
-    }
-    
-    void Master::onTouchCanceled(Touch *touch, Event *event)
+
+    void BackButton::onTouchEnded(Touch *touch, Event *event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         target->setScale(1.0);
     }
 
+    void BackButton::onTouchMoved(Touch *touch, Event *event)
+    {
+    }
+
+    void BackButton::onTouchCanceled(Touch *touch, Event *event)
+    {
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        target->setScale(1.0);
+    }
 }

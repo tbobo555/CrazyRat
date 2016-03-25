@@ -1,11 +1,8 @@
 #include "Star.h"
 
 namespace GameSprite
-{    
-    Star::Star() : BaseSprite(ImageConfig::getInstance()->getImagePath("Star"))
-    {
-        this->sprite->setPosition(PositionConfig::getInstance()->getBasePsotion("Star"));
-    }
+{
+    Star::Star(std::string image) : GameSprite::BaseSprite(image){}
     
     void Star::addEventListener()
     {

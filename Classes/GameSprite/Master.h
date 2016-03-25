@@ -2,8 +2,6 @@
 #define _GameSprite_Master_H_
 
 #include "BaseSprite.h"
-#include "Config/ImageConfig.h"
-#include "Config/PositionConfig.h"
 #include "cocos2d.h"
 
 USING_NS_CC;
@@ -13,7 +11,7 @@ namespace GameSprite
     class Master : public BaseSprite
     {
     public:
-        Master();
+        Master(std::string image);
         void addEventListener();
     private:
         static bool onTouchBegan(Touch *touch, Event *event);

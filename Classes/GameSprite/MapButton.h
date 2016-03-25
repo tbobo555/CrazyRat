@@ -1,17 +1,22 @@
-#ifndef _GameSprite_Star_H_
-#define _GameSprite_Star_H_
+#ifndef _GameSprite_MapButton_H_
+#define _GameSprite_MapButton_H_
 
 #include "cocos2d.h"
 #include "BaseSprite.h"
+#include "Lib/TextureCreator.h"
 
 USING_NS_CC;
 
 namespace GameSprite
 {
-    class Star : public BaseSprite
+    class MapButton : public BaseSprite
     {
     public:
-        Star(std::string image);
+        MapButton(std::string image, int mapNumber);
+        int mapNumber;
+        bool isLocked;
+        void locked();
+        void unlocked();
         void addEventListener();
     private:
         static bool onTouchBegan(Touch *touch, Event *event);
@@ -21,4 +26,5 @@ namespace GameSprite
     };
 }
 
-#endif /* _GameSprite_Star_H_ */
+
+#endif /* _GameSprite_MapButton_H_ */

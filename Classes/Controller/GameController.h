@@ -2,19 +2,15 @@
 #define _Controller_GameController_H_
 
 #include "cocos2d.h"
-#include "GameSprite/StartBackground.h"
-#include "GameSprite/SelectionBackground.h"
-#include "GameSprite/StartButton.h"
 #include "GameSprite/SettingButton.h"
-#include "GameSprite/SettingBackground.h"
+#include "GameSprite/SettingBackButton.h"
+#include "GameSprite/Background.h"
 #include "GameSprite/MusicButton.h"
 #include "GameSprite/SoundsButton.h"
-#include "GameSprite/SettingBackButton.h"
-#include "GameSprite/StageButton.h"
-#include "GameSprite/Star.h"
-#include "GameSprite/Master.h"
 #include "GameScene/StartScene.h"
 #include "GameScene/SelectionScene.h"
+#include "GameScene/MapScene.h"
+#include "GameScene/MenuScene.h"
 #include "Manager/SceneManager.h"
 #include "Manager/SpriteManager.h"
 #include "Db/CommonSetting.h"
@@ -30,14 +26,31 @@ namespace Controller
     {
     public:
         static GameController* getInstance();
+        
+        void loadSettingMenuResource();
+        void releaseSettingMenuResource();
+        
+        void loadStartSceneResource();
+        void releaseStartSceneResource();
+        
+        void loadSelectionSceneResource();
+        void releaseSelectionSceneResource();
+        
+        void loadMapSceneResource(int mapNumber);
+        void releaseMapSceneResource(int mapNumber);
+        
+        void addSettingMenuToCurrentScene();
+        void removeSettingMenuFromCurrentScene();
+
+        
+        
         void runStartScene();
         void startSceneToSelectionScene();
-        void loadStaticResourcesForSettingMenu();
-        void loadStaticResourcesForStartScene();
-        void loadStaticResourcesForSelectionScene();
-        //void runLoadingScene();
-        void setSettingMenuToCurrentScene();
-        void releaseSettingMenuFromCurrentScene();
+        void selectionSceneToStartScene();
+        //void selectionSceneToMapScene(int mapNumber);
+        //void MapSceneToSelectionScene(int mapNumber);
+        
+
     private:
         GameController();
         static GameController* instance;
