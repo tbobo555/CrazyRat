@@ -3,8 +3,10 @@
 
 #include "cocos2d.h"
 #include "BaseScene.h"
+#include "Manager/SpriteManager.h"
+#include "GameSprite/Background.h"
 
-
+USING_NS_CC;
 
 namespace GameScene
 {
@@ -16,6 +18,15 @@ namespace GameScene
         void releaseScene();
         int mapNumber;
         int stageNumber;
+        GameSprite::Background* playBackground;
+        void run();
+    private:
+        virtual void update(float delta);
+        int prepareTime;
+        Label* prepareLabel;
+        Scheduler* prepareScheduler;
+        void prepareCountdown();
+        void start();
     };
 }
 

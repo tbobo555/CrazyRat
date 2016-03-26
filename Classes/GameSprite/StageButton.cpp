@@ -1,4 +1,5 @@
 #include "StageButton.h"
+#include "Controller/GameController.h"
 
 namespace GameSprite
 {
@@ -64,13 +65,15 @@ namespace GameSprite
     
     void StageButton::onTouchEnded(Touch *touch, Event *event)
     {
-        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        auto target = static_cast<StageButton*>(event->getCurrentTarget());
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
+            auto controller = Controller::GameController::getInstance();
             log("StageButton ended... x = %f, y = %f", locationInNode.x, locationInNode.y);
             target->setScale(1.0);
+            controller->MapSceneToPlayScene(target->mapNumber, target->stageNumber);
         } else {
             target->setScale(1.0);
         }

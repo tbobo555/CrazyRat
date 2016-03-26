@@ -11,6 +11,7 @@
 #include "GameScene/SelectionScene.h"
 #include "GameScene/MapScene.h"
 #include "GameScene/MenuScene.h"
+#include "GameScene/PlayScene.h"
 #include "Manager/SceneManager.h"
 #include "Manager/SpriteManager.h"
 #include "Db/CommonSetting.h"
@@ -39,6 +40,10 @@ namespace Controller
         void loadMapSceneResource(int mapNumber);
         void releaseMapSceneResource(int mapNumber);
         
+        void loadPlaySceneResource(int mapNumber, int stageNumber);
+        void releasePlaySceneResource(int mapNumber, int stageNumber);
+
+        
         void addSettingMenuToCurrentScene();
         void removeSettingMenuFromCurrentScene();
         
@@ -47,6 +52,8 @@ namespace Controller
         void selectionSceneToStartScene();
         void selectionSceneToMapScene(int mapNumber);
         void MapSceneToSelectionScene(int mapNumber);
+        
+        void MapSceneToPlayScene(int mapNumber, int stageNumber);
         
     private:
         GameController();

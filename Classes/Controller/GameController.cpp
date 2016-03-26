@@ -73,6 +73,30 @@ namespace Controller
         SceneManager::getInstance()->releaseByKey(key.str());
     }
     
+    
+    
+    void GameController::loadPlaySceneResource(int mapNumber, int stageNumber)
+    {
+        PlayScene *playScene = new PlayScene(mapNumber, stageNumber);
+        playScene->initScene();
+        std::stringstream key;
+        key << "PlayScene_" << mapNumber << "_" << stageNumber;
+        SceneManager::getInstance()->setWithKey(key.str(), playScene);
+    }
+    
+    void GameController::releasePlaySceneResource(int mapNumber, int stageNumber)
+    {
+        std::stringstream key;
+        key << "PlayScene_" << mapNumber << "_" << stageNumber;
+        auto playScene = SceneManager::getInstance()->getByKey(key.str());
+        playScene->releaseScene();
+        SceneManager::getInstance()->releaseByKey(key.str());
+    }
+
+    
+    
+    
+    
     void GameController::addSettingMenuToCurrentScene()
     {
         auto scene = SceneManager::getInstance()->getCurrent();
@@ -142,6 +166,22 @@ namespace Controller
         this->addSettingMenuToCurrentScene();
         Director::getInstance()->replaceScene(scene);
 
+    }
+    
+    void GameController::MapSceneToPlayScene(int mapNumber, int stageNumber)
+    {
+        this->releaseStartSceneResource();
+        this->releaseSettingMenuResource();
+        this->releaseMapSceneResource(mapNumber);
+        this->releaseSelectionSceneResource();
+        this->loadPlaySceneResource(mapNumber, stageNumber);
+        std::stringstream key;
+        key << "PlayScene_" << mapNumber << "_" << stageNumber;
+        PlayScene *scene = static_cast<PlayScene*>(
+            SceneManager::getInstance()->getByKey(key.str()));
+        SceneManager::getInstance()->setCurrent(scene);
+        Director::getInstance()->replaceScene(scene);
+        scene->run();
     }
 
 }

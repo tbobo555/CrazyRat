@@ -8,6 +8,11 @@ namespace GameSprite
         this->addEventListener();
     }
     
+    void Rat::hit()
+    {
+        this->release();
+    }
+    
     void Rat::addEventListener()
     {
         auto listener = EventListenerTouchOneByOne::create();
@@ -22,41 +27,22 @@ namespace GameSprite
     
     bool Rat::onTouchBegan(Touch* touch, Event* event)
     {
-        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        auto target = static_cast<Rat*>(event->getCurrentTarget());
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
             log("Rat began... x = %f, y = %f", locationInNode.x, locationInNode.y);
-            target->setScale(1.2);
+            target->hit();
             return true;
         }
         return false;
     }
-    
-    void Rat::onTouchEnded(Touch* touch, Event* event)
-    {
-        auto target = static_cast<Sprite*>(event->getCurrentTarget());
-        Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
-        Size s = target->getContentSize();
-        Rect rect = Rect(0, 0, s.width, s.height);
-        if (rect.containsPoint(locationInNode)) {
-            log("Rat ended... x = %f, y = %f", locationInNode.x, locationInNode.y);
-            target->setScale(1.0);
-        } else {
-            target->setScale(1.0);
-        }
-    }
-    
-    void Rat::onTouchMoved(Touch* touch, Event* event)
-    {
-        
-    }
-    
-    void Rat::onTouchCanceled(Touch* touch, Event* event)
-    {
-        auto target = static_cast<Sprite*>(event->getCurrentTarget());
-        target->setScale(1.0);
-    }
+
+    void Rat::onTouchEnded(Touch* touch, Event* event){}
+
+    void Rat::onTouchMoved(Touch* touch, Event* event){}
+
+    void Rat::onTouchCanceled(Touch* touch, Event* event){}
 
 }

@@ -14,6 +14,7 @@ namespace GameSprite
     public:
         Rat(std::string image, int pRatType);
         int ratType;
+        void hit();
         void addEventListener();
     private:
         static bool onTouchBegan(Touch* touch, Event* event);
