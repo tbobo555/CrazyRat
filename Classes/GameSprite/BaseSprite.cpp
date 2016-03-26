@@ -2,38 +2,23 @@
 
 namespace GameSprite
 {
-    BaseSprite::BaseSprite()
+    BaseSprite::BaseSprite() : Sprite()
     {
-        this->sprite = Sprite::create();
-        this->sprite->retain();
+        this->init();
+        this->autorelease();
+        this->retain();
     }
     
-    BaseSprite::~BaseSprite()
+    BaseSprite::BaseSprite(std::string image) : Sprite()
     {
-        if (this->sprite) {
-            this->sprite->release();
-        }
+        Texture2D* texture = TextureCreator::getInstance()->getAutoSizeTexture2d(image);
+        this->initWithTexture(texture);
+        this->autorelease();
+        this->retain();
     }
     
-    BaseSprite::BaseSprite(std::string img)
-    {
-        Texture2D* texture = TextureCreator::getInstance()->getAutoSizeTexture2d(img);
-        this->sprite = Sprite::createWithTexture(texture);
-        this->sprite->retain();
-    }
-
-    void BaseSprite::release()
-    {
-        delete this;
-    }
-    
-    Sprite* BaseSprite::getCCSprite()
-    {
-        return this->sprite;
-    }
-    
-    void BaseSprite::addEventListener()
-    {
-    }
+    BaseSprite::~BaseSprite(){}
+        
+    void BaseSprite::addEventListener(){}
     
 }

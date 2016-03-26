@@ -15,11 +15,11 @@ namespace GameScene
         std::string backButtonImage = "image/BackButton.png";
         int currentMap = DB::CommonSetting::currentMap;
         this->selectionBackground = new GameSprite::Background(backgroundImage);
-        this->selectionBackground->getCCSprite()->setPosition(this->center);
+        this->selectionBackground->setPosition(this->center);
         this->selectionBackButton = new GameSprite::BackButton(backButtonImage);
-        this->selectionBackButton->getCCSprite()->setPosition(this->getBackButtonPosition());
-        this->scene->addChild(this->selectionBackground->getCCSprite(), 0);
-        this->scene->addChild(this->selectionBackButton->getCCSprite(), 5);
+        this->selectionBackButton->setPosition(this->getBackButtonPosition());
+        this->addChild(this->selectionBackground, 0);
+        this->addChild(this->selectionBackButton, 5);
         spriteManager->setWithKey("SelectionScene_Background", this->selectionBackground);
         spriteManager->setWithKey("SelectionScene_BackButton", this->selectionBackButton);
         for (int i = 0; i < 6; i++) {
@@ -28,8 +28,8 @@ namespace GameScene
                 mapButton->locked();
             }
             this->mapButtonVector.push_back(mapButton);
-            mapButton->getCCSprite()->setPosition(this->getMapButtonPosition(i));
-            this->scene->addChild(mapButton->getCCSprite(), 1);
+            mapButton->setPosition(this->getMapButtonPosition(i));
+            this->addChild(mapButton, 1);
             std::stringstream key;
             key << "SelectionScene_MapButton_" << i;
             spriteManager->setWithKey(key.str(), mapButton);
@@ -38,7 +38,7 @@ namespace GameScene
     
     void SelectionScene::releaseScene()
     {
-        this->scene->removeAllChildren();
+        this->removeAllChildren();
         auto spriteManager = Manager::SpriteManager::getInstance();
         spriteManager->releaseByKey("SelectionScene_Background");
         spriteManager->releaseByKey("SelectionScene_BackButton");

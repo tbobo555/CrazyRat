@@ -8,17 +8,14 @@ USING_NS_CC;
 
 namespace GameSprite
 {
-    class BaseSprite
+    class BaseSprite : public Sprite
     {
     public:
         BaseSprite();
-        ~BaseSprite();
-        BaseSprite(std::string img);
-        void release();
+        virtual ~BaseSprite();
+        BaseSprite(std::string image);
         virtual void addEventListener();
-        Sprite* getCCSprite();
-    protected:
-        Sprite* sprite;
+    private:
     };
 }
 

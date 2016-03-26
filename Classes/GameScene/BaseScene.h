@@ -8,18 +8,15 @@ USING_NS_CC;
 
 namespace GameScene
 {
-    class BaseScene
+    class BaseScene : public Scene
     {
     public:
         BaseScene();
-        ~BaseScene();
+        virtual ~BaseScene();
         std::string name;
-        void release();
-        Scene* getCCScene();
         virtual void initScene();
         virtual void releaseScene();
     protected:
-        Scene* scene;
         cocos2d::Size visibleSize;
         Vec2 visibleOrigin;
         Vec2 center;

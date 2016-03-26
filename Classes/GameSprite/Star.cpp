@@ -13,7 +13,7 @@ namespace GameSprite
         listener->onTouchMoved = Star::onTouchMoved;
         listener->onTouchCancelled = Star::onTouchCanceled;
         Director::getInstance()->getEventDispatcher()
-        ->addEventListenerWithSceneGraphPriority(listener, this->sprite);
+        ->addEventListenerWithSceneGraphPriority(listener, this);
     }
 
     

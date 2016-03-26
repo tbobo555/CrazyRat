@@ -14,7 +14,7 @@ namespace GameSprite
         listener->onTouchMoved = Master::onTouchMoved;
         listener->onTouchCancelled = Master::onTouchCanceled;
         Director::getInstance()->getEventDispatcher()
-        ->addEventListenerWithSceneGraphPriority(listener, this->sprite);
+        ->addEventListenerWithSceneGraphPriority(listener, this);
     }
 
     

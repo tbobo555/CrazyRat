@@ -11,23 +11,23 @@ namespace GameScene
     {
         auto spriteManager = Manager::SpriteManager::getInstance();
         this->settingButton = new SettingButton("image/SettingButton.png");
-        this->settingButton->getCCSprite()->setPosition(this->getSettingButtonPosition());
+        this->settingButton->setPosition(this->getSettingButtonPosition());
         spriteManager->setWithKey("MenuScene_SettingButton", this->settingButton);
         
         this->settingBackground = new Background("image/SettingBackground.png");
-        this->settingBackground->getCCSprite()->setPosition(this->center);
+        this->settingBackground->setPosition(this->center);
         spriteManager->setWithKey("MenuScene_SettingBackground", this->settingBackground);
         
         this->settingBackButton = new SettingBackButton("image/BackButton.png");
-        this->settingBackButton->getCCSprite()->setPosition(this->getSettingBackButtonPosition());
+        this->settingBackButton->setPosition(this->getSettingBackButtonPosition());
         spriteManager->setWithKey("MenuScene_SettingBackButton", this->settingBackButton);
         
         this->musicButton = new MusicButton("image/MusicOnButton.png");
-        this->musicButton->getCCSprite()->setPosition(this->getMusicButtonPosition());
+        this->musicButton->setPosition(this->getMusicButtonPosition());
         spriteManager->setWithKey("MenuScene_MusicButton", this->musicButton);
         
         this->soundsButton = new SoundsButton("image/SoundsOnButton.png");
-        this->soundsButton->getCCSprite()->setPosition(this->getSoundsButtonPosition());
+        this->soundsButton->setPosition(this->getSoundsButtonPosition());
         spriteManager->setWithKey("MenuScene_SoundsButton", this->soundsButton);
     }
     

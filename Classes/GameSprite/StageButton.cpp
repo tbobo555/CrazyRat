@@ -18,7 +18,7 @@ namespace GameSprite
             std::string lockedStageButtonImage = "image/StageLockedButton.png";
             Texture2D* lockedTexutre =
             textureCreator->getAutoSizeTexture2d(lockedStageButtonImage);
-            this->sprite->setTexture(lockedTexutre);
+            this->setTexture(lockedTexutre);
         }
     }
     
@@ -29,7 +29,7 @@ namespace GameSprite
             TextureCreator* textureCreator = TextureCreator::getInstance();
             std::string stageButtonImage = "image/StageButton.png";
             Texture2D* texutre = textureCreator->getAutoSizeTexture2d(stageButtonImage);
-            this->sprite->setTexture(texutre);
+            this->setTexture(texutre);
         }
     }
 
@@ -43,7 +43,7 @@ namespace GameSprite
         listener->onTouchMoved = StageButton::onTouchMoved;
         listener->onTouchCancelled = StageButton::onTouchCanceled;
         Director::getInstance()->getEventDispatcher()
-        ->addEventListenerWithSceneGraphPriority(listener, this->sprite);
+        ->addEventListenerWithSceneGraphPriority(listener, this);
     }
 
     

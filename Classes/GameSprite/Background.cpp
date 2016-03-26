@@ -11,7 +11,6 @@ namespace GameSprite
     
     void Background::addEventListener()
     {
-        
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);
         listener->onTouchBegan = Background::onTouchBegan;
@@ -19,7 +18,7 @@ namespace GameSprite
         listener->onTouchMoved = Background::onTouchMoved;
         listener->onTouchCancelled = Background::onTouchCanceled;
         Director::getInstance()->getEventDispatcher()
-        ->addEventListenerWithSceneGraphPriority(listener, this->sprite);
+        ->addEventListenerWithSceneGraphPriority(listener, this);
     }
     
     bool Background::onTouchBegan(Touch *touch, Event *event)

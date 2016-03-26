@@ -77,27 +77,18 @@ namespace Controller
     {
         auto scene = SceneManager::getInstance()->getCurrent();
         auto settingButton = SpriteManager::getInstance()->getByKey("MenuScene_SettingButton");
-        scene->getCCScene()->addChild(settingButton->getCCSprite(), 1);
+        scene->addChild(settingButton, 1);
     }
     
     void GameController::removeSettingMenuFromCurrentScene()
     {
         auto scene = SceneManager::getInstance()->getCurrent();
-        scene->getCCScene()->removeChild(
-            SpriteManager::getInstance()->getByKey("MenuScene_SettingButton")->getCCSprite());
-        scene->getCCScene()->removeChild(
-            SpriteManager::getInstance()->getByKey("MenuScene_SettingBackground")->getCCSprite());
-        scene->getCCScene()->removeChild(
-            SpriteManager::getInstance()->getByKey("MenuScene_SettingBackButton")->getCCSprite());
-        scene->getCCScene()->removeChild(
-            SpriteManager::getInstance()->getByKey("MenuScene_MusicButton")->getCCSprite());
-        scene->getCCScene()->removeChild(
-            SpriteManager::getInstance()->getByKey("MenuScene_SoundsButton")->getCCSprite());
+        scene->removeChild(SpriteManager::getInstance()->getByKey("MenuScene_SettingButton"));
+        scene->removeChild(SpriteManager::getInstance()->getByKey("MenuScene_SettingBackground"));
+        scene->removeChild(SpriteManager::getInstance()->getByKey("MenuScene_SettingBackButton"));
+        scene->removeChild(SpriteManager::getInstance()->getByKey("MenuScene_MusicButton"));
+        scene->removeChild(SpriteManager::getInstance()->getByKey("MenuScene_SoundsButton"));
     }
-    
-    
-    
-    
     
     void GameController::runStartScene()
     {
@@ -105,7 +96,7 @@ namespace Controller
             SceneManager::getInstance()->getByKey("StartScene"));
         SceneManager::getInstance()->setCurrent(scene);
         this->addSettingMenuToCurrentScene();
-        Director::getInstance()->runWithScene(scene->getCCScene());
+        Director::getInstance()->runWithScene(scene);
     }
     
     void GameController::startSceneToSelectionScene()
@@ -115,7 +106,7 @@ namespace Controller
         this->removeSettingMenuFromCurrentScene();
         SceneManager::getInstance()->setCurrent(scene);
         this->addSettingMenuToCurrentScene();
-        Director::getInstance()->replaceScene(scene->getCCScene());
+        Director::getInstance()->replaceScene(scene);
     }
     
     void GameController::selectionSceneToStartScene()
@@ -125,7 +116,7 @@ namespace Controller
         this->removeSettingMenuFromCurrentScene();
         SceneManager::getInstance()->setCurrent(scene);
         this->addSettingMenuToCurrentScene();
-        Director::getInstance()->replaceScene(scene->getCCScene());
+        Director::getInstance()->replaceScene(scene);
     }
     
     void GameController::selectionSceneToMapScene(int mapNumber)
@@ -138,7 +129,7 @@ namespace Controller
         this->removeSettingMenuFromCurrentScene();
         SceneManager::getInstance()->setCurrent(scene);
         this->addSettingMenuToCurrentScene();
-        Director::getInstance()->replaceScene(scene->getCCScene());
+        Director::getInstance()->replaceScene(scene);
     }
     
     void GameController::MapSceneToSelectionScene(int mapNumber)
@@ -149,7 +140,7 @@ namespace Controller
         this->removeSettingMenuFromCurrentScene();
         SceneManager::getInstance()->setCurrent(scene);
         this->addSettingMenuToCurrentScene();
-        Director::getInstance()->replaceScene(scene->getCCScene());
+        Director::getInstance()->replaceScene(scene);
 
     }
 

@@ -22,10 +22,10 @@ namespace GameScene
         std::vector<int> starVector = DB::CommonSetting::starOfStage.at(this->mapMumber);
         this->mapBackground = new GameSprite::Background(backgroundImage);
         this->mapBackButton = new GameSprite::BackButton(backButtonImage);
-        this->mapBackground->getCCSprite()->setPosition(this->center);
-        this->mapBackButton->getCCSprite()->setPosition(this->getBackButtonPosition());
-        this->scene->addChild(this->mapBackground->getCCSprite(), 0);
-        this->scene->addChild(this->mapBackButton->getCCSprite(), 1);
+        this->mapBackground->setPosition(this->center);
+        this->mapBackButton->setPosition(this->getBackButtonPosition());
+        this->addChild(this->mapBackground, 0);
+        this->addChild(this->mapBackButton, 1);
         std::stringstream key;
         key << "MapScene_Background_" << this->mapMumber;
         spriteManager->setWithKey(key.str(), this->mapBackground);
@@ -37,10 +37,10 @@ namespace GameScene
         key.str("");
         if (this->mapMumber == currentMap) {
             this->master = new GameSprite::Master(masterImage);
-            this->master->getCCSprite()->setPosition(
+            this->master->setPosition(
                 this->getMasterPosition(currentStage, currentMap)
             );
-            this->scene->addChild(this->master->getCCSprite(), 4);
+            this->addChild(this->master, 4);
             spriteManager->setWithKey("Master", this->master);
         }
         for (int i = 0; i < 5; i++) {
@@ -56,8 +56,8 @@ namespace GameScene
                 for (int j = 0; j < starVector[i]; j++) {
                     auto star = new GameSprite::Star(starImage);
                     this->starVector.push_back(star);
-                    star->getCCSprite()->setPosition(this->getStarPosition(i, this->mapMumber, j));
-                    this->scene->addChild(star->getCCSprite(), 3);
+                    star->setPosition(this->getStarPosition(i, this->mapMumber, j));
+                    this->addChild(star, 3);
                     key << "MapScene_Star_" << this->mapMumber << "_" << i << "_" << j;
                     spriteManager->setWithKey(key.str(), star);
                     key.clear();
@@ -65,10 +65,10 @@ namespace GameScene
                 }
             }
             this->stageButtonVector.push_back(stageButton);
-            stageButton->getCCSprite()->setPosition(
+            stageButton->setPosition(
                 this->getStageButtonPosition(i, this->mapMumber)
             );
-            this->scene->addChild(stageButton->getCCSprite(), 2);
+            this->addChild(stageButton, 2);
             key << "MapScene_Stage_" << this->mapMumber << "_" << i;
             spriteManager->setWithKey(key.str(), stageButton);
         }
@@ -77,7 +77,7 @@ namespace GameScene
     
     void MapScene::releaseScene()
     {
-        this->scene->removeAllChildren();
+        this->removeAllChildren();
         auto spriteManager = Manager::SpriteManager::getInstance();
         int currentMap = DB::CommonSetting::currentMap;
         int currentStage = DB::CommonSetting::currentStage;

@@ -16,7 +16,7 @@ namespace GameSprite
         listener->onTouchMoved = SettingBackButton::onTouchMoved;
         listener->onTouchCancelled = SettingBackButton::onTouchCanceled;
         Director::getInstance()->getEventDispatcher()
-        ->addEventListenerWithSceneGraphPriority(listener, this->sprite);
+        ->addEventListenerWithSceneGraphPriority(listener, this);
     }
     
     bool SettingBackButton::onTouchBegan(Touch* touch, Event* event)
@@ -43,12 +43,11 @@ namespace GameSprite
             target->setScale(1.0);
             auto sceneManager = Manager::SceneManager::getInstance();
             auto spriteManager = Manager::SpriteManager::getInstance();
-            auto scene = sceneManager->getCurrent()->getCCScene();
-            auto settingBg = spriteManager->getByKey("MenuScene_SettingBackground")->getCCSprite();
-            auto settingBackButton = spriteManager->getByKey(
-                "MenuScene_SettingBackButton")->getCCSprite();
-            auto musicButton = spriteManager->getByKey("MenuScene_MusicButton")->getCCSprite();
-            auto soundsButton = spriteManager->getByKey("MenuScene_SoundsButton")->getCCSprite();
+            auto scene = sceneManager->getCurrent();
+            auto settingBg = spriteManager->getByKey("MenuScene_SettingBackground");
+            auto settingBackButton = spriteManager->getByKey("MenuScene_SettingBackButton");
+            auto musicButton = spriteManager->getByKey("MenuScene_MusicButton");
+            auto soundsButton = spriteManager->getByKey("MenuScene_SoundsButton");
             scene->removeChild(soundsButton);
             scene->removeChild(musicButton);
             scene->removeChild(settingBackButton);

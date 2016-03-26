@@ -18,7 +18,7 @@ namespace GameSprite {
         listener->onTouchMoved = BackButton::onTouchMoved;
         listener->onTouchCancelled = BackButton::onTouchCanceled;
         Director::getInstance()->getEventDispatcher()
-        ->addEventListenerWithSceneGraphPriority(listener, this->sprite);
+        ->addEventListenerWithSceneGraphPriority(listener, this);
     }
 
     bool BackButton::onTouchBegan(Touch *touch, Event *event)

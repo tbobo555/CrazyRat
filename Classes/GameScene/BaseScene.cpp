@@ -2,7 +2,7 @@
 
 namespace GameScene
 {
-    BaseScene::BaseScene()
+    BaseScene::BaseScene() : Scene()
     {
         this->visibleSize = Director::getInstance()->getVisibleSize();
         this->visibleOrigin = Director::getInstance()->getVisibleOrigin();
@@ -16,29 +16,14 @@ namespace GameScene
                                 visibleOrigin.y);
         this->rightBottom = (Vec2(visibleOrigin.x + visibleSize.width,
                                   visibleOrigin.y ));
-        this->scene = Scene::create();
-        this->scene->retain();
+        this->init();
+        this->autorelease();
+        this->retain();
     }
     
-    BaseScene::~BaseScene()
-    {
-        if (this->scene) {
-            this->scene->release();
-        }
-    }
-    
-    void BaseScene::release()
-    {
-        delete this;
-    }
-    
-    Scene* BaseScene::getCCScene()
-    {
-        return this->scene;
-    }
+    BaseScene::~BaseScene(){}
     
     void BaseScene::initScene(){}
     
     void BaseScene::releaseScene(){}
-
 }

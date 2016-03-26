@@ -7,7 +7,6 @@ namespace GameSprite
     {
         this->isLocked = false;
         this->mapNumber = mapNumber;
-        this->sprite->setTag(mapNumber);
         this->addEventListener();
     }
     
@@ -18,7 +17,7 @@ namespace GameSprite
             TextureCreator* textureCreator = TextureCreator::getInstance();
             std::string lockedMapButtonImage = "image/MapLockedButton_0.png";
             Texture2D* lockedTexutre = textureCreator->getAutoSizeTexture2d(lockedMapButtonImage);
-            this->sprite->setTexture(lockedTexutre);
+            this->setTexture(lockedTexutre);
         }
     }
     
@@ -29,7 +28,7 @@ namespace GameSprite
             TextureCreator* textureCreator = TextureCreator::getInstance();
             std::string mapButtonImage = "image/MapButton_0.png";
             Texture2D* texutre = textureCreator->getAutoSizeTexture2d(mapButtonImage);
-            this->sprite->setTexture(texutre);
+            this->setTexture(texutre);
         }
     }
     
@@ -42,7 +41,7 @@ namespace GameSprite
         listener->onTouchMoved = MapButton::onTouchMoved;
         listener->onTouchCancelled = MapButton::onTouchCanceled;
         Director::getInstance()->getEventDispatcher()
-        ->addEventListenerWithSceneGraphPriority(listener, this->sprite);
+        ->addEventListenerWithSceneGraphPriority(listener, this);
     }
     
     bool MapButton::onTouchBegan(Touch *touch, Event *event)
@@ -62,14 +61,14 @@ namespace GameSprite
     
     void MapButton::onTouchEnded(Touch *touch, Event *event)
     {
-        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        auto target = static_cast<MapButton*>(event->getCurrentTarget());
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
             log("MapButton ended... x = %f, y = %f", locationInNode.x, locationInNode.y);
             target->setScale(1.0);
-            Controller::GameController::getInstance()->selectionSceneToMapScene(target->getTag());
+            Controller::GameController::getInstance()->selectionSceneToMapScene(target->mapNumber);
         } else {
             target->setScale(1.0);
         }
