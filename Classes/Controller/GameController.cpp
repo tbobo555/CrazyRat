@@ -175,13 +175,14 @@ namespace Controller
         this->releaseMapSceneResource(mapNumber);
         this->releaseSelectionSceneResource();
         this->loadPlaySceneResource(mapNumber, stageNumber);
+        
         std::stringstream key;
         key << "PlayScene_" << mapNumber << "_" << stageNumber;
         PlayScene *scene = static_cast<PlayScene*>(
             SceneManager::getInstance()->getByKey(key.str()));
         SceneManager::getInstance()->setCurrent(scene);
         Director::getInstance()->replaceScene(scene);
-        scene->run();
+        scene->play();
     }
 
 }

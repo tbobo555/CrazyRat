@@ -1,16 +1,37 @@
 #include "Rat.h"
-
+#include "GameScene/PlayScene.h"
 
 namespace GameSprite
 {
-    Rat::Rat(std::string image, int pRatType) : GameSprite::BaseSprite(image)
+    Rat::Rat(std::string image, int pRatType, int pRoadIndex, int pRatId) : GameSprite::BaseSprite(image)
     {
+        this->ratId = pRatId;
+        this->roadIndex = pRoadIndex;
+        this->runningTime = 0.5f;
         this->addEventListener();
     }
-    
+
     void Rat::hit()
     {
-        this->release();
+        this->stopAllActions();
+        auto current = static_cast<GameScene::PlayScene*>(Manager::SceneManager::getInstance()->getCurrent());
+        if (this->roadIndex == 0) {
+            current->road0AvailableIndex.push_back(this->ratId);
+        }
+        if (this->roadIndex == 1) {
+            current->road1AvailableIndex.push_back(this->ratId);
+        }
+        if (this->roadIndex == 2) {
+            current->road2AvailableIndex.push_back(this->ratId);
+        }
+        this->setPosition(-150, -200);
+    }
+    
+    void Rat::run()
+    {
+        auto actionBy = MoveBy::create(this->runningTime, Vec2(0, -1000));
+        auto blink = Blink::create(0.3f, 3);
+        this->runAction(Sequence::create(actionBy, blink, CallFunc::create(CC_CALLBACK_0(Rat::hit, this)), nullptr));
     }
     
     void Rat::addEventListener()
@@ -27,6 +48,7 @@ namespace GameSprite
     
     bool Rat::onTouchBegan(Touch* touch, Event* event)
     {
+        
         auto target = static_cast<Rat*>(event->getCurrentTarget());
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();

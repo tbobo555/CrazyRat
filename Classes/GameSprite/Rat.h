@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "BaseSprite.h"
+#include "Manager/SceneManager.h"
 
 USING_NS_CC;
 
@@ -12,10 +13,14 @@ namespace GameSprite
     class Rat : public BaseSprite
     {
     public:
-        Rat(std::string image, int pRatType);
+        Rat(std::string image, int pRatType, int pRoadIndex, int pRatId);
         int ratType;
+        int roadIndex;
+        int ratId;
+        float runningTime;
         void hit();
         void addEventListener();
+        void run();
     private:
         static bool onTouchBegan(Touch* touch, Event* event);
         static void onTouchEnded(Touch* touch, Event* event);

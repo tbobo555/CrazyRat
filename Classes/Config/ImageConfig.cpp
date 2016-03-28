@@ -27,6 +27,9 @@ Size ImageConfig::getImageSize(std::string key)
             {"StageLockedButton", Size(245, 245)},
             {"Master", Size(85, 135)},
             {"Star", Size(75, 75)},
+            {"Rat", Size(140, 180)},
+            {"TimeBarDown", Size(500, 75)},
+            {"TimeBarUp", Size(500, 75)},
         };
     }
     return this->imageSize.at(key);
