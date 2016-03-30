@@ -4,9 +4,16 @@
 #include "cocos2d.h"
 #include "BaseScene.h"
 #include "Manager/SpriteManager.h"
+#include "Config/ImageConfig.h"
 #include "GameSprite/Background.h"
 #include "GameSprite/TimeBarUp.h"
 #include "GameSprite/TimeBarDown.h"
+#include "GameSprite/PauseButton.h"
+#include "GameSprite/MusicButton.h"
+#include "GameSprite/SoundsButton.h"
+#include "GameSprite/PauseBackButton.h"
+#include "GameSprite/BackHomeButton.h"
+#include "GameSprite/RetryButton.h"
 #include "GameSprite/Rat.h"
 
 USING_NS_CC;
@@ -20,11 +27,23 @@ namespace GameScene
         void initScene();
         void releaseScene();
         void play();
+        void pauseScene();
+        void resumeScene();
+        bool getIsPaused();
         int mapNumber;
         int stageNumber;
         GameSprite::Background* playBackground;
         GameSprite::TimeBarUp* timeBarUp;
         GameSprite::TimeBarDown* timeBarDown;
+        ProgressTimer* timeBar;
+        GameSprite::PauseButton* pauseButton;
+        GameSprite::Background* pauseBackground;
+        GameSprite::MusicButton* musicButton;
+        GameSprite::SoundsButton* soundsButton;
+        GameSprite::PauseBackButton* pauseBackButton;
+        GameSprite::BackHomeButton* backHomeButton;
+        GameSprite::RetryButton* retryButton;
+        
         std::vector<GameSprite::Rat*> road0RatVector;
         std::vector<GameSprite::Rat*> road1RatVector;
         std::vector<GameSprite::Rat*> road2RatVector;
@@ -32,6 +51,7 @@ namespace GameScene
         std::vector<int> road1AvailableIndex;
         std::vector<int> road2AvailableIndex;
     private:
+        bool isPaused;
         int prepareTime;
         Label* prepareLabel;
         void prepareUpdate(float delta);

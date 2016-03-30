@@ -34,4 +34,13 @@ namespace Manager
         }
         this->container.clear();
     }
+    
+    void SpriteManager::clearEmptyKey()
+    {
+        for (auto& kv : this->container) {
+            if (kv.second == nullptr) {
+                this->container.erase(kv.first);
+            }
+        }
+    }
 }

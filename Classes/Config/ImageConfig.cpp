@@ -30,6 +30,7 @@ Size ImageConfig::getImageSize(std::string key)
             {"Rat", Size(140, 180)},
             {"TimeBarDown", Size(500, 75)},
             {"TimeBarUp", Size(500, 75)},
+            {"PauseButton", Size(250, 165)},
         };
     }
     return this->imageSize.at(key);

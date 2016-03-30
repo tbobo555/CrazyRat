@@ -64,9 +64,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
     Director::getInstance()->getEventDispatcher()->setEnabled(true);
     Controller::GameController* controller = Controller::GameController::getInstance();
-    controller->loadSettingMenuResource();
-    controller->loadStartSceneResource();
-    controller->loadSelectionSceneResource();
     controller->runStartScene();
     return true;
 }

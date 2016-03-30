@@ -15,6 +15,7 @@ namespace Manager
         void setWithKey(std::string key, BaseSprite* sprite);
         void releaseByKey(std::string key);
         void resetContainer();
+        void clearEmptyKey();
     private:
         SpriteManager();
         static SpriteManager* instance;

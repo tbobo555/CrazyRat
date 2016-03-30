@@ -4,6 +4,7 @@ namespace GameSprite
 {
     SoundsButton::SoundsButton(std::string image) : GameSprite::BaseSprite(image)
     {
+        this->setName("SoundsButton");
         this->addEventListener();
     }
     

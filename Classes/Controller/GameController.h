@@ -27,34 +27,26 @@ namespace Controller
     {
     public:
         static GameController* getInstance();
-        
         void loadSettingMenuResource();
         void releaseSettingMenuResource();
-        
         void loadStartSceneResource();
         void releaseStartSceneResource();
-        
         void loadSelectionSceneResource();
         void releaseSelectionSceneResource();
-        
         void loadMapSceneResource(int mapNumber);
         void releaseMapSceneResource(int mapNumber);
-        
         void loadPlaySceneResource(int mapNumber, int stageNumber);
         void releasePlaySceneResource(int mapNumber, int stageNumber);
-
-        
         void addSettingMenuToCurrentScene();
         void removeSettingMenuFromCurrentScene();
-        
         void runStartScene();
         void startSceneToSelectionScene();
         void selectionSceneToStartScene();
         void selectionSceneToMapScene(int mapNumber);
         void MapSceneToSelectionScene(int mapNumber);
-        
         void MapSceneToPlayScene(int mapNumber, int stageNumber);
-        
+        void RetryPlayScene(int mapNumber, int stageNumber);
+        void PlaySceneToMapScene(int mapNumber, int stageNumber);
     private:
         GameController();
         static GameController* instance;

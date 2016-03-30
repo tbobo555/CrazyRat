@@ -47,11 +47,11 @@ namespace GameSprite
             Manager::SceneManager* sceneManager = Manager::SceneManager::getInstance();
             Manager::SpriteManager* spriteManager = Manager::SpriteManager::getInstance();
             auto currentScene = sceneManager->getCurrent();
-            auto settingBg = spriteManager->getByKey("MenuScene_SettingBackground");
+            auto settingBackground = spriteManager->getByKey("MenuScene_SettingBackground");
             auto settingBackButton = spriteManager->getByKey("MenuScene_SettingBackButton");
             auto musicButton = spriteManager->getByKey("MenuScene_MusicButton");
             auto soundsButton = spriteManager->getByKey("MenuScene_SoundsButton");
-            currentScene->addChild(settingBg, 100, 1);
+            currentScene->addChild(settingBackground, 100, 1);
             currentScene->addChild(settingBackButton, 101, 2);
             currentScene->addChild(musicButton, 101, 3);
             currentScene->addChild(soundsButton, 101, 4);

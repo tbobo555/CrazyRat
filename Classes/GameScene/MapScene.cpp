@@ -74,7 +74,6 @@ namespace GameScene
         }
     }
     
-    
     void MapScene::releaseScene()
     {
         this->removeAllChildren();

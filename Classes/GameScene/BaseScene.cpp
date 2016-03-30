@@ -20,10 +20,7 @@ namespace GameScene
         this->autorelease();
         this->retain();
     }
-    
     BaseScene::~BaseScene(){}
-    
     void BaseScene::initScene(){}
-    
     void BaseScene::releaseScene(){}
 }

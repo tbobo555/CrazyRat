@@ -1,59 +1,63 @@
-#include "MusicButton.h"
+#include "BackHomeButton.h"
+#include "Controller/GameController.h"
+#include "GameScene/PlayScene.h"
 
 namespace GameSprite
 {
-    MusicButton::MusicButton(std::string image) : GameSprite::BaseSprite(image)
+    BackHomeButton::BackHomeButton(std::string image) : GameSprite::BaseSprite(image)
     {
-        this->setName("MusicButton");
+        this->setName("BackHomeButton");
         this->addEventListener();
     }
     
-    void MusicButton::addEventListener()
+    void BackHomeButton::addEventListener()
     {
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);
-        listener->onTouchBegan = MusicButton::onTouchBegan;
-        listener->onTouchEnded = MusicButton::onTouchEnded;
-        listener->onTouchMoved = MusicButton::onTouchMoved;
-        listener->onTouchCancelled = MusicButton::onTouchCanceled;
+        listener->onTouchBegan = BackHomeButton::onTouchBegan;
+        listener->onTouchEnded = BackHomeButton::onTouchEnded;
+        listener->onTouchMoved = BackHomeButton::onTouchMoved;
+        listener->onTouchCancelled = BackHomeButton::onTouchCanceled;
         Director::getInstance()->getEventDispatcher()
         ->addEventListenerWithSceneGraphPriority(listener, this);
     }
-
-    bool MusicButton::onTouchBegan(Touch* touch, Event* event)
+    
+    bool BackHomeButton::onTouchBegan(Touch* touch, Event* event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
-            log("MusicButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            log("BackHomeButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
             target->setScale(1.2);
             return true;
         }
         return false;
     }
     
-    void MusicButton::onTouchEnded(Touch* touch, Event* event)
+    void BackHomeButton::onTouchEnded(Touch* touch, Event* event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
-            log("MusicButton ended... x = %f, y = %f", locationInNode.x, locationInNode.y);
             target->setScale(1.0);
+            auto scene = static_cast<GameScene::PlayScene*>(SceneManager::getInstance()->getCurrent());
+            auto controller = Controller::GameController::getInstance();
+            controller->PlaySceneToMapScene(scene->mapNumber, scene->stageNumber);
         } else {
             target->setScale(1.0);
         }
     }
-
-    void MusicButton::onTouchMoved(Touch* touch, Event* event)
+    
+    void BackHomeButton::onTouchMoved(Touch* touch, Event* event)
     {
         
     }
-
-    void MusicButton::onTouchCanceled(Touch* touch, Event* event)
+    
+    void BackHomeButton::onTouchCanceled(Touch* touch, Event* event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         target->setScale(1.0);

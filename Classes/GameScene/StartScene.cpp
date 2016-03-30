@@ -29,7 +29,6 @@ namespace GameScene
         spriteManager->releaseByKey("StartScene_Background");
         spriteManager->releaseByKey("StartScene_StartButton");
     }
-
     
     Vec2 StartScene::getStartButtonPosition()
     {
