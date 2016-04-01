@@ -23,6 +23,7 @@ namespace GameScene
         std::string backHomeButtonImage = "image/BackHomeButton.png";
         std::string retryButtonImage = "image/RetryButton.png";
         std::string pauseBackButtonImage = "image/BackButton.png";
+        std::string pigImage = "image/Pig.png";
         
         this->playBackground = new GameSprite::Background(backgroundImage);
         this->playBackground->setPosition(this->center);
@@ -93,20 +94,30 @@ namespace GameScene
         this->addChild(this->prepareLabel, 1);
 
         for (int i = 0; i < 10; i++) {
-            int ratId = i;
-            this->road0RatVector.push_back(new GameSprite::Rat("image/Rat.png", 0, 0, ratId));
-            this->road0RatVector[ratId]->setPosition(Vec2(-150, -200));
-            this->addChild(this->road0RatVector[ratId], 3);
-            this->road0AvailableIndex.push_back(ratId);
-            this->road1RatVector.push_back(new GameSprite::Rat("image/Rat.png", 0, 1, ratId));
-            this->road1RatVector[ratId]->setPosition(Vec2(-150, -200));
-            this->addChild(this->road1RatVector[ratId], 3);
-            this->road1AvailableIndex.push_back(ratId);
-            this->road2RatVector.push_back(new GameSprite::Rat("image/Rat.png", 0, 2, ratId));
-            this->road2RatVector[ratId]->setPosition(Vec2(-150, -200));
-            this->addChild(this->road2RatVector[ratId], 3);
-            this->road2AvailableIndex.push_back(ratId);
+            int sweetId = i;
+            this->road0SweetVector.push_back(new GameSprite::Sweet("image/Sweet.png", 0, 0, sweetId));
+            this->road0SweetVector[sweetId]->setPosition(Vec2(-150, -200));
+            this->addChild(this->road0SweetVector[sweetId], 3);
+            this->road0AvailableIndex.push_back(sweetId);
+            this->road1SweetVector.push_back(new GameSprite::Sweet("image/Sweet.png", 0, 1, sweetId));
+            this->road1SweetVector[sweetId]->setPosition(Vec2(-150, -200));
+            this->addChild(this->road1SweetVector[sweetId], 3);
+            this->road1AvailableIndex.push_back(sweetId);
+            this->road2SweetVector.push_back(new GameSprite::Sweet("image/Sweet.png", 0, 2, sweetId));
+            this->road2SweetVector[sweetId]->setPosition(Vec2(-150, -200));
+            this->addChild(this->road2SweetVector[sweetId], 3);
+            this->road2AvailableIndex.push_back(sweetId);
         }
+        
+        this->road0Pig = new Pig(pigImage, 0);
+        this->road0Pig->setPosition(Vec2(180, 480));
+        this->addChild(this->road0Pig, 2);
+        this->road1Pig = new Pig(pigImage, 1);
+        this->road1Pig->setPosition(Vec2(540, 480));
+        this->addChild(this->road1Pig, 2);
+        this->road2Pig = new Pig(pigImage, 2);
+        this->road2Pig->setPosition(Vec2(900, 480));
+        this->addChild(this->road2Pig, 2);
     }
     
     bool PlayScene::getIsPaused()
@@ -136,10 +147,13 @@ namespace GameScene
         spriteManager->releaseByKey("PlayScene_PauseBackButton");
         spriteManager->releaseByKey("PlayScene_PauseButton");
         this->prepareLabel->release();
+        this->road0Pig->release();
+        this->road1Pig->release();
+        this->road2Pig->release();
         for (int i = 0; i < 10; i++) {
-            this->road0RatVector[i]->release();
-            this->road1RatVector[i]->release();
-            this->road2RatVector[i]->release();
+            this->road0SweetVector[i]->release();
+            this->road1SweetVector[i]->release();
+            this->road2SweetVector[i]->release();
         }
     }
     
@@ -213,9 +227,10 @@ namespace GameScene
                     ++this->road0CurrentIndex;
                     int availabelIndex = this->road0AvailableIndex.back();
                     this->road0AvailableIndex.pop_back();
-                    auto rat = this->road0RatVector.at(availabelIndex);
-                    rat->setPosition(Vec2(180, 1480));
-                    rat->run();
+                    this->road0RunningIndex.push(availabelIndex);
+                    auto sweet = this->road0SweetVector.at(availabelIndex);
+                    sweet->setPosition(Vec2(180, 1480));
+                    sweet->run();
                 }
             }
         }
@@ -229,9 +244,10 @@ namespace GameScene
                     ++this->road1CurrentIndex;
                     int availabelIndex = this->road1AvailableIndex.back();
                     this->road1AvailableIndex.pop_back();
-                    auto rat = this->road1RatVector.at(availabelIndex);
-                    rat->setPosition(Vec2(540, 1480));
-                    rat->run();
+                    this->road1RunningIndex.push(availabelIndex);
+                    auto sweet = this->road1SweetVector.at(availabelIndex);
+                    sweet->setPosition(Vec2(540, 1480));
+                    sweet->run();
                 }
             }
         }
@@ -245,9 +261,10 @@ namespace GameScene
                     ++this->road2CurrentIndex;
                     int availabelIndex = this->road2AvailableIndex.back();
                     this->road2AvailableIndex.pop_back();
-                    auto rat = this->road2RatVector.at(availabelIndex);
-                    rat->setPosition(Vec2(900, 1480));
-                    rat->run();
+                    this->road2RunningIndex.push(availabelIndex);
+                    auto sweet = this->road2SweetVector.at(availabelIndex);
+                    sweet->setPosition(Vec2(900, 1480));
+                    sweet->run();
                 }
             }
         }
@@ -264,6 +281,33 @@ namespace GameScene
                 unschedule(schedule_selector(PlayScene::road2Update));
                 log("End!");
             }
+        }
+    }
+    
+    
+    GameSprite::Sweet* PlayScene::getNearestSweet(int road)
+    {
+        if (road == 0 && ! this->road0RunningIndex.empty()) {
+            return this->road0SweetVector.at(this->road0RunningIndex.front());
+        } else if (road == 1 && ! this->road2RunningIndex.empty()) {
+            return this->road1SweetVector.at(this->road1RunningIndex.front());
+        } else if (road == 2 && ! this->road2RunningIndex.empty()) {
+            return this->road2SweetVector.at(this->road2RunningIndex.front());
+        } else {
+            return nullptr;
+        }
+    }
+    
+    int PlayScene::getNearestSweetIndex(int road)
+    {
+        if (road == 0 && ! this->road0RunningIndex.empty()) {
+            return this->road0RunningIndex.front();
+        } else if (road == 1 && ! this->road2RunningIndex.empty()) {
+            return this->road1RunningIndex.front();
+        } else if (road == 2 && ! this->road2RunningIndex.empty()) {
+            return this->road2RunningIndex.front();
+        } else {
+            return -1;
         }
     }
     

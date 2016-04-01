@@ -1,26 +1,21 @@
-#ifndef _GameSprite_Rat_H_
-#define _GameSprite_Rat_H_
+#ifndef _GameSprite_Pig_H_
+#define _GameSprite_Pig_H_
 
 #include "cocos2d.h"
 #include "BaseSprite.h"
 #include "Manager/SceneManager.h"
 
-USING_NS_CC;
-
-
 namespace GameSprite
 {
-    class Rat : public BaseSprite
+    class Pig : public BaseSprite
     {
     public:
-        Rat(std::string image, int pRatType, int pRoadIndex, int pRatId);
-        int ratType;
+        Pig(std::string image, int pRoadIndex);
         int roadIndex;
-        int ratId;
-        float runningTime;
-        void hit();
+        int pigType;
+        int hp;
+        int eat();
         void addEventListener();
-        void run();
     private:
         static bool onTouchBegan(Touch* touch, Event* event);
         static void onTouchEnded(Touch* touch, Event* event);
@@ -29,4 +24,5 @@ namespace GameSprite
     };
 }
 
-#endif /* _GameSprite_Rat_H_ */
+
+#endif /* _GameSprite_Pig_H_ */

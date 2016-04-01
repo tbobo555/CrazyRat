@@ -1,6 +1,7 @@
 #ifndef _GameScene_PlayScene_H_
 #define _GameScene_PlayScene_H_
 
+#include <queue>
 #include "cocos2d.h"
 #include "BaseScene.h"
 #include "Manager/SpriteManager.h"
@@ -14,7 +15,8 @@
 #include "GameSprite/PauseBackButton.h"
 #include "GameSprite/BackHomeButton.h"
 #include "GameSprite/RetryButton.h"
-#include "GameSprite/Rat.h"
+#include "GameSprite/Sweet.h"
+#include "GameSprite/Pig.h"
 
 USING_NS_CC;
 
@@ -43,13 +45,20 @@ namespace GameScene
         GameSprite::PauseBackButton* pauseBackButton;
         GameSprite::BackHomeButton* backHomeButton;
         GameSprite::RetryButton* retryButton;
-        
-        std::vector<GameSprite::Rat*> road0RatVector;
-        std::vector<GameSprite::Rat*> road1RatVector;
-        std::vector<GameSprite::Rat*> road2RatVector;
+        GameSprite::Pig* road0Pig;
+        GameSprite::Pig* road1Pig;
+        GameSprite::Pig* road2Pig;
+        std::vector<GameSprite::Sweet*> road0SweetVector;
+        std::vector<GameSprite::Sweet*> road1SweetVector;
+        std::vector<GameSprite::Sweet*> road2SweetVector;
         std::vector<int> road0AvailableIndex;
         std::vector<int> road1AvailableIndex;
         std::vector<int> road2AvailableIndex;
+        std::queue<int> road0RunningIndex;
+        std::queue<int> road1RunningIndex;
+        std::queue<int> road2RunningIndex;
+        int getNearestSweetIndex(int road);
+        GameSprite::Sweet* getNearestSweet(int road);
     private:
         bool isPaused;
         int prepareTime;
