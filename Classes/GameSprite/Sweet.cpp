@@ -1,5 +1,6 @@
 #include "Sweet.h"
 #include "GameScene/PlayScene.h"
+#include "Pig.h"
 
 namespace GameSprite
 {
@@ -29,10 +30,19 @@ namespace GameSprite
         this->setPosition(-150, -200);
     }
     
+    void Sweet::missEat()
+    {
+        this->eaten();
+        std::stringstream key;
+        key << "PlayScene_Road" << this->roadIndex << "Pig";
+        auto pig = static_cast<Pig*>(Manager::SpriteManager::getInstance()->getByKey(key.str()));
+        pig->hp -- ;
+    }
+    
     void Sweet::run()
     {
         auto actionBy = MoveBy::create(this->runningTime, Vec2(0, -1000));
         //auto blink = Blink::create(0.3f, 3);
-        this->runAction(Sequence::create(actionBy, CallFunc::create(CC_CALLBACK_0(Sweet::eaten, this)), nullptr));
+        this->runAction(Sequence::create(actionBy, CallFunc::create(CC_CALLBACK_0(Sweet::missEat, this)), nullptr));
     }
 }

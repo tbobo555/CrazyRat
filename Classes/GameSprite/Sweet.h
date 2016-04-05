@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "BaseSprite.h"
 #include "Manager/SceneManager.h"
+#include "Manager/SpriteManager.h"
 
 USING_NS_CC;
 
@@ -19,6 +20,7 @@ namespace GameSprite
         int sweetId;
         float runningTime;
         void eaten();
+        void missEat();
         void run();
     };
 }

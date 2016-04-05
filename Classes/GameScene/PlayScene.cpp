@@ -1,4 +1,5 @@
 #include "PlayScene.h"
+#include "Controller/GameController.h"
 
 namespace GameScene
 {
@@ -7,11 +8,11 @@ namespace GameScene
         this->name = "PlayScene";
         this->mapNumber = pMapNumber;
         this->stageNumber = pStageNumber;
+        this->isVictory = false;
     }
     
     void PlayScene::initScene()
     {
-        auto imageConfig = ImageConfig::getInstance();
         auto spriteManager = Manager::SpriteManager::getInstance();
         std::string backgroundImage = "image/PlayBackground.png";
         std::string timeBarDownImage = "image/TimeBarDown.png";
@@ -46,48 +47,6 @@ namespace GameScene
         this->timeBar->retain();
         this->timeBar->setPosition(Vec2(800, this->visibleOrigin.y + 70));
         
-        this->pauseBackground = new Background(pauseBackgroundImage);
-        this->pauseBackground->setPosition(this->center);
-        this->pauseBackground->setVisible(false);
-        this->addChild(this->pauseBackground, -100);
-        spriteManager->setWithKey("PlayScene_PauseBackground", this->pauseBackground);
-        
-        this->musicButton = new MusicButton(musicButtonImage);
-        this->musicButton->setPosition(Vec2(355, 1315));
-        this->musicButton->setVisible(false);
-        this->addChild(this->musicButton, -100);
-        spriteManager->setWithKey("PlayScene_MusicButton", this->musicButton);
-        
-        this->soundsButton = new SoundsButton(soundsButtonImage);
-        this->soundsButton->setPosition(Vec2(355, 985));
-        this->soundsButton->setVisible(false);
-        this->addChild(this->soundsButton, -100);
-        spriteManager->setWithKey("PlayScene_SoundsButton", this->soundsButton);
-        
-        this->backHomeButton = new BackHomeButton(backHomeButtonImage);
-        this->backHomeButton->setPosition(Vec2(730, 1315));
-        this->backHomeButton->setVisible(false);
-        this->addChild(this->backHomeButton, -100);
-        spriteManager->setWithKey("PlayScene_BackHomeButton", this->backHomeButton);
-
-        this->retryButton = new RetryButton(retryButtonImage);
-        this->retryButton->setPosition(Vec2(730, 985));
-        this->retryButton->setVisible(false);
-        this->addChild(this->retryButton, -100);
-        spriteManager->setWithKey("PlayScene_RetryButton", this->retryButton);
-        
-        this->pauseBackButton = new PauseBackButton(pauseBackButtonImage);
-        this->pauseBackButton->setPosition(Vec2(this->leftTop.x + imageConfig->getImageSize("BackButton").width * 0.6, this->leftTop.y - imageConfig->getImageSize("BackButton").height * 0.6));
-        this->pauseBackButton->setVisible(false);
-        this->addChild(this->pauseBackButton, 101);
-        spriteManager->setWithKey("PlayScene_PauseBackButton", this->pauseBackButton);
-        
-        auto pauseButtonPosition = Vec2(this->leftBottom.x + imageConfig->getImageSize("PauseButton").width * 0.6, this->leftBottom.y + imageConfig->getImageSize("PauseButton").height * 0.6);
-        this->pauseButton = new GameSprite::PauseButton(pauseButtonImage);
-        this->pauseButton->setPosition(pauseButtonPosition);
-        this->addChild(this->pauseButton, 1);
-        spriteManager->setWithKey("PlayScene_PauseButton", this->pauseButton);
-        
         this->prepareLabel = Label::createWithTTF("3", "fonts/arial.ttf", 100);
         this->prepareLabel->setPosition(this->center);
         this->prepareLabel->retain();
@@ -112,17 +71,25 @@ namespace GameScene
         this->road0Pig = new Pig(pigImage, 0);
         this->road0Pig->setPosition(Vec2(180, 480));
         this->addChild(this->road0Pig, 2);
+        spriteManager->setWithKey("PlayScene_Road0Pig", this->road0Pig);
         this->road1Pig = new Pig(pigImage, 1);
         this->road1Pig->setPosition(Vec2(540, 480));
         this->addChild(this->road1Pig, 2);
+        spriteManager->setWithKey("PlayScene_Road1Pig", this->road1Pig);
         this->road2Pig = new Pig(pigImage, 2);
         this->road2Pig->setPosition(Vec2(900, 480));
         this->addChild(this->road2Pig, 2);
+        spriteManager->setWithKey("PlayScene_Road2Pig", this->road2Pig);
     }
     
     bool PlayScene::getIsPaused()
     {
         return this->isPaused;
+    }
+    
+    bool PlayScene::getIsVictory()
+    {
+        return this->isVictory;
     }
     
     void PlayScene::releaseScene()
@@ -139,17 +106,10 @@ namespace GameScene
         spriteManager->releaseByKey("PlayScene_TimeBarDown");
         spriteManager->releaseByKey("PlayScene_TimeBarUp");
         this->timeBar->release();
-        spriteManager->releaseByKey("PlayScene_PauseBackground");
-        spriteManager->releaseByKey("PlayScene_MusicButton");
-        spriteManager->releaseByKey("PlayScene_SoundsButton");
-        spriteManager->releaseByKey("PlayScene_BackHomeButton");
-        spriteManager->releaseByKey("PlayScene_RetryButton");
-        spriteManager->releaseByKey("PlayScene_PauseBackButton");
-        spriteManager->releaseByKey("PlayScene_PauseButton");
         this->prepareLabel->release();
-        this->road0Pig->release();
-        this->road1Pig->release();
-        this->road2Pig->release();
+        spriteManager->releaseByKey("PlayScene_Road0Pig");
+        spriteManager->releaseByKey("PlayScene_Road1Pig");
+        spriteManager->releaseByKey("PlayScene_Road2Pig");
         for (int i = 0; i < 10; i++) {
             this->road0SweetVector[i]->release();
             this->road1SweetVector[i]->release();
@@ -279,11 +239,29 @@ namespace GameScene
                 unschedule(schedule_selector(PlayScene::road0Update));
                 unschedule(schedule_selector(PlayScene::road1Update));
                 unschedule(schedule_selector(PlayScene::road2Update));
-                log("End!");
+                for (const auto &child : this->getChildren()) {
+                    child->pause();
+                }
+                log("Victory!");
+                this->isVictory = true;
+                auto controller = Controller::GameController::getInstance();
+                controller->addVictorySceneToCurrentScene();
+            }
+            if (this->road0Pig->hp <= 0 || this->road1Pig->hp <= 0 || this->road2Pig->hp <= 0) {
+                unschedule(schedule_selector(PlayScene::gameUpdate));
+                unschedule(schedule_selector(PlayScene::road0Update));
+                unschedule(schedule_selector(PlayScene::road1Update));
+                unschedule(schedule_selector(PlayScene::road2Update));
+                for (const auto &child : this->getChildren()) {
+                    child->pause();
+                }
+                log("Lose!");
+                this->isVictory = false;
+                auto controller = Controller::GameController::getInstance();
+                controller->addLoseSceneToCurrentScene();
             }
         }
     }
-    
     
     GameSprite::Sweet* PlayScene::getNearestSweet(int road)
     {

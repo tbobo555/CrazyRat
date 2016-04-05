@@ -5,16 +5,9 @@
 #include "cocos2d.h"
 #include "BaseScene.h"
 #include "Manager/SpriteManager.h"
-#include "Config/ImageConfig.h"
 #include "GameSprite/Background.h"
 #include "GameSprite/TimeBarUp.h"
 #include "GameSprite/TimeBarDown.h"
-#include "GameSprite/PauseButton.h"
-#include "GameSprite/MusicButton.h"
-#include "GameSprite/SoundsButton.h"
-#include "GameSprite/PauseBackButton.h"
-#include "GameSprite/BackHomeButton.h"
-#include "GameSprite/RetryButton.h"
 #include "GameSprite/Sweet.h"
 #include "GameSprite/Pig.h"
 
@@ -32,19 +25,13 @@ namespace GameScene
         void pauseScene();
         void resumeScene();
         bool getIsPaused();
+        bool getIsVictory();
         int mapNumber;
         int stageNumber;
         GameSprite::Background* playBackground;
         GameSprite::TimeBarUp* timeBarUp;
         GameSprite::TimeBarDown* timeBarDown;
         ProgressTimer* timeBar;
-        GameSprite::PauseButton* pauseButton;
-        GameSprite::Background* pauseBackground;
-        GameSprite::MusicButton* musicButton;
-        GameSprite::SoundsButton* soundsButton;
-        GameSprite::PauseBackButton* pauseBackButton;
-        GameSprite::BackHomeButton* backHomeButton;
-        GameSprite::RetryButton* retryButton;
         GameSprite::Pig* road0Pig;
         GameSprite::Pig* road1Pig;
         GameSprite::Pig* road2Pig;
@@ -60,6 +47,7 @@ namespace GameScene
         int getNearestSweetIndex(int road);
         GameSprite::Sweet* getNearestSweet(int road);
     private:
+        bool isVictory;
         bool isPaused;
         int prepareTime;
         Label* prepareLabel;

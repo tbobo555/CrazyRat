@@ -44,19 +44,13 @@ namespace GameSprite
         if (rect.containsPoint(locationInNode)) {
             target->setScale(1.0);
             auto scene = static_cast<GameScene::PlayScene*>(Manager::SceneManager::getInstance()->getCurrent());
-            /**
-             if (scene->getIsPaused()) {
-             scene->resumeScene();
-             } else {
-             scene->pauseScene();
-             }**/
             Manager::SpriteManager* spriteManager = Manager::SpriteManager::getInstance();
-            auto pauseBackground = spriteManager->getByKey("PlayScene_PauseBackground");
-            auto pauseBackButton = spriteManager->getByKey("PlayScene_PauseBackButton");
-            auto musicButton = spriteManager->getByKey("PlayScene_MusicButton");
-            auto soundsButton = spriteManager->getByKey("PlayScene_SoundsButton");
-            auto backHomeButton = spriteManager->getByKey("PlayScene_BackHomeButton");
-            auto retryButton = spriteManager->getByKey("PlayScene_RetryButton");
+            auto pauseBackground = spriteManager->getByKey("PauseScene_PauseBackground");
+            auto pauseBackButton = spriteManager->getByKey("PauseScene_PauseBackButton");
+            auto musicButton = spriteManager->getByKey("PauseScene_MusicButton");
+            auto soundsButton = spriteManager->getByKey("PauseScene_SoundsButton");
+            auto backHomeButton = spriteManager->getByKey("PauseScene_BackHomeButton");
+            auto retryButton = spriteManager->getByKey("PauseScene_RetryButton");
             pauseBackground->setVisible(false);
             pauseBackground->setLocalZOrder(-100);
             pauseBackButton->setVisible(false);

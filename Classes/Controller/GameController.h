@@ -12,6 +12,9 @@
 #include "GameScene/MapScene.h"
 #include "GameScene/MenuScene.h"
 #include "GameScene/PlayScene.h"
+#include "GameScene/PauseScene.h"
+#include "GameScene/VictoryScene.h"
+#include "GameScene/LoseScene.h"
 #include "Manager/SceneManager.h"
 #include "Manager/SpriteManager.h"
 #include "Db/CommonSetting.h"
@@ -27,8 +30,8 @@ namespace Controller
     {
     public:
         static GameController* getInstance();
-        void loadSettingMenuResource();
-        void releaseSettingMenuResource();
+        void loadMenuSceneResource();
+        void releaseMenuSceneResource();
         void loadStartSceneResource();
         void releaseStartSceneResource();
         void loadSelectionSceneResource();
@@ -37,8 +40,20 @@ namespace Controller
         void releaseMapSceneResource(int mapNumber);
         void loadPlaySceneResource(int mapNumber, int stageNumber);
         void releasePlaySceneResource(int mapNumber, int stageNumber);
-        void addSettingMenuToCurrentScene();
-        void removeSettingMenuFromCurrentScene();
+        void loadPauseSceneResource();
+        void releasePauseSceneResource();
+        void loadVictorySceneResource();
+        void releaseVictorySceneResource();
+        void loadLoseSceneResource();
+        void releaseLoseSceneResource();
+        void addMenuSceneToCurrentScene();
+        void removeMenuSceneFromCurrentScene();
+        void addPauseSceneToCurrentScene();
+        void removePauseSceneFromCurrentScene();
+        void addVictorySceneToCurrentScene();
+        void removeVictorySceneFromCurrentScene();
+        void addLoseSceneToCurrentScene();
+        void removeLoseSceneFromCurrentScene();
         void runStartScene();
         void startSceneToSelectionScene();
         void selectionSceneToStartScene();

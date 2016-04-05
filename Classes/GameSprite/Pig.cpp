@@ -47,6 +47,7 @@ namespace GameSprite
             } else if (diffPosition > 90 && diffPosition <= 126) {
                 scores =  60;
             } else {
+                this->hp --;
                 return 0;
             }
             nearestSweet->eaten();
