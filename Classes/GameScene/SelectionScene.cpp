@@ -11,9 +11,10 @@ namespace GameScene
     {
         auto spriteManager = Manager::SpriteManager::getInstance();
         std::string backgroundImage = "image/SelectionBackground.png";
-        std::string mapButtonImage0 = "image/MapButton_0.png";
+        std::string mapButtonImagePrefix = "image/EpisodeButton_";
         std::string backButtonImage = "image/BackButton.png";
         int currentMap = DB::CommonSetting::currentMap;
+        int maxMap = DB::CommonSetting::maxEpisode;
         this->selectionBackground = new GameSprite::Background(backgroundImage);
         this->selectionBackground->setPosition(this->center);
         this->selectionBackButton = new GameSprite::BackButton(backButtonImage);
@@ -22,8 +23,10 @@ namespace GameScene
         this->addChild(this->selectionBackButton, 5);
         spriteManager->setWithKey("SelectionScene_Background", this->selectionBackground);
         spriteManager->setWithKey("SelectionScene_BackButton", this->selectionBackButton);
-        for (int i = 0; i < 6; i++) {
-            GameSprite::MapButton* mapButton = new GameSprite::MapButton(mapButtonImage0, i);
+        for (int i = 0; i < maxMap; i++) {
+            std::stringstream filePath;
+            filePath << mapButtonImagePrefix << i << ".png";
+            GameSprite::MapButton* mapButton = new GameSprite::MapButton(filePath.str(), i);
             if (currentMap < i) {
                 mapButton->locked();
             }
@@ -42,7 +45,8 @@ namespace GameScene
         auto spriteManager = Manager::SpriteManager::getInstance();
         spriteManager->releaseByKey("SelectionScene_Background");
         spriteManager->releaseByKey("SelectionScene_BackButton");
-        for (int i = 0; i < 6; i++) {
+        int maxMap = DB::CommonSetting::maxEpisode;
+        for (int i = 0; i < maxMap; i++) {
             std::stringstream key;
             key << "SelectionScene_MapButton_" << i;
             spriteManager->releaseByKey(key.str());
@@ -55,10 +59,8 @@ namespace GameScene
         auto position = Vec2(
         this->rightBottom.x - imageConfig->getImageSize("BackButton").width * 0.6,
         this->rightBottom.y + imageConfig->getImageSize("BackButton").height * 0.6);
-        
         log("x %f", this->rightBottom.x);
         log("y %f", this->rightBottom.y);
-        
         return position;
     }
     

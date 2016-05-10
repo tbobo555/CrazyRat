@@ -14,8 +14,7 @@ namespace GameSprite
     class Sweet : public BaseSprite
     {
     public:
-        Sweet(std::string image, int pSweetType, int pRoadIndex, int pSweetId);
-        int sweetType;
+        Sweet(std::string image, int pRoadIndex, int pSweetId);
         int roadIndex;
         int sweetId;
         float runningTime;

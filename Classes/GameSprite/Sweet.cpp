@@ -4,7 +4,7 @@
 
 namespace GameSprite
 {
-    Sweet::Sweet(std::string image, int pSweetType, int pRoadIndex, int pSweetId) : GameSprite::BaseSprite(image)
+    Sweet::Sweet(std::string image, int pRoadIndex, int pSweetId) : GameSprite::BaseSprite(image)
     {
         this->sweetId = pSweetId;
         this->roadIndex = pRoadIndex;

@@ -12,15 +12,17 @@ namespace GameScene
     void MapScene::initScene()
     {
         auto spriteManager = Manager::SpriteManager::getInstance();
-        std::string backgroundImage = "image/MapBackground_0.png";
-        std::string stageButtonImage = "image/StageButton.png";
+        std::string backgroundImagePrefix = "image/EpisodeBackground_";
+        std::string stageButtonImagePrefix = "image/StageButton_";
         std::string backButtonImage = "image/BackButton.png";
         std::string starImage = "image/Star.png";
         std::string masterImage = "image/Master.png";
         int currentMap = DB::CommonSetting::currentMap;
         int currentStage = DB::CommonSetting::currentStage;
-        std::vector<int> starVector = DB::CommonSetting::starOfStage.at(this->mapMumber);
-        this->mapBackground = new GameSprite::Background(backgroundImage);
+        std::vector<int> starOfStage = DB::CommonSetting::starOfStage.at(this->mapMumber);
+        std::stringstream backgroundPath;
+        backgroundPath << backgroundImagePrefix << this->mapMumber << ".png";
+        this->mapBackground = new GameSprite::Background(backgroundPath.str());
         this->mapBackButton = new GameSprite::BackButton(backButtonImage);
         this->mapBackground->setPosition(this->center);
         this->mapBackButton->setPosition(this->getBackButtonPosition());
@@ -43,19 +45,22 @@ namespace GameScene
             this->addChild(this->master, 4);
             spriteManager->setWithKey("Master", this->master);
         }
-        for (int i = 0; i < 5; i++) {
+        int maxStage = DB::CommonSetting::maxStage;
+        for (int i = 0; i < maxStage; i++) {
             key.clear();
             key.str("");
-            auto stageButton = new GameSprite::StageButton(stageButtonImage, this->mapMumber, i);
+            std::stringstream stagePath;
+            stagePath << stageButtonImagePrefix << i << ".png";            
+            auto stageButton = new GameSprite::StageButton(stagePath.str(), this->mapMumber, i);
             if (this->mapMumber == currentMap && i > currentStage) {
                 stageButton->locked();
             } else if (
                 this->mapMumber < currentMap ||
                 (this->mapMumber == currentMap && i < currentStage)
             ) {
-                for (int j = 0; j < starVector[i]; j++) {
+                int starNum = starOfStage.at(i);
+                for (int j = 0; j < starNum; j++) {
                     auto star = new GameSprite::Star(starImage);
-                    this->starVector.push_back(star);
                     star->setPosition(this->getStarPosition(i, this->mapMumber, j));
                     this->addChild(star, 3);
                     key << "MapScene_Star_" << this->mapMumber << "_" << i << "_" << j;
@@ -80,7 +85,7 @@ namespace GameScene
         auto spriteManager = Manager::SpriteManager::getInstance();
         int currentMap = DB::CommonSetting::currentMap;
         int currentStage = DB::CommonSetting::currentStage;
-        std::vector<int> starVector = DB::CommonSetting::starOfStage.at(this->mapMumber);
+        std::vector<int> starOfStage = DB::CommonSetting::starOfStage.at(this->mapMumber);
         std::stringstream key;
         key << "MapScene_Background_" << this->mapMumber;
         spriteManager->releaseByKey(key.str());
@@ -93,11 +98,13 @@ namespace GameScene
         if (this->mapMumber == currentMap) {
             spriteManager->releaseByKey("Master");
         }
-        for (int i = 0; i < 5; i++) {
+        int maxStage = DB::CommonSetting::maxStage;
+        for (int i = 0; i < maxStage; i++) {
             key.clear();
             key.str("");
             if (this->mapMumber < currentMap || (this->mapMumber == currentMap && i < currentStage)) {
-                for (int j = 0; j < starVector[i]; j++) {
+                int starNum = starOfStage.at(i);
+                for (int j = 0; j < starNum; j++) {
                     key << "MapScene_Star_" << this->mapMumber << "_" << i << "_" << j;
                     spriteManager->releaseByKey(key.str());
                     key.clear();

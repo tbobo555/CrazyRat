@@ -13,22 +13,26 @@ namespace GameSprite
     void MapButton::locked()
     {
         if (this->isLocked == false) {
+            std::stringstream filePath;
+            filePath << "image/EpisodeLockedButton_" << this->mapNumber << ".png";
             this->isLocked = true;
             TextureCreator* textureCreator = TextureCreator::getInstance();
-            std::string lockedMapButtonImage = "image/MapLockedButton_0.png";
-            Texture2D* lockedTexutre = textureCreator->getAutoSizeTexture2d(lockedMapButtonImage);
+            Texture2D* lockedTexutre = textureCreator->getAutoSizeTexture2d(filePath.str());
             this->setTexture(lockedTexutre);
+            Director::getInstance()->getEventDispatcher()->removeEventListenersForTarget(this);
         }
     }
     
     void MapButton::unlocked()
     {
         if (this->isLocked == true) {
+            std::stringstream filePath;
+            filePath << "image/EpisodeButton_" << this->mapNumber << ".png";
             this->isLocked = false;
             TextureCreator* textureCreator = TextureCreator::getInstance();
-            std::string mapButtonImage = "image/MapButton_0.png";
-            Texture2D* texutre = textureCreator->getAutoSizeTexture2d(mapButtonImage);
+            Texture2D* texutre = textureCreator->getAutoSizeTexture2d(filePath.str());
             this->setTexture(texutre);
+            this->addEventListener();
         }
     }
     

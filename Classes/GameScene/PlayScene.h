@@ -6,8 +6,8 @@
 #include "BaseScene.h"
 #include "Manager/SpriteManager.h"
 #include "GameSprite/Background.h"
-#include "GameSprite/TimeBarUp.h"
-#include "GameSprite/TimeBarDown.h"
+#include "GameSprite/ProgressBarUp.h"
+#include "GameSprite/ProgressBarDown.h"
 #include "GameSprite/Sweet.h"
 #include "GameSprite/Pig.h"
 
@@ -29,8 +29,8 @@ namespace GameScene
         int mapNumber;
         int stageNumber;
         GameSprite::Background* playBackground;
-        GameSprite::TimeBarUp* timeBarUp;
-        GameSprite::TimeBarDown* timeBarDown;
+        GameSprite::ProgressBarUp* progressBarUp;
+        GameSprite::ProgressBarDown* progressBarDown;
         ProgressTimer* timeBar;
         GameSprite::Pig* road0Pig;
         GameSprite::Pig* road1Pig;

@@ -15,7 +15,6 @@
 namespace GameScene
 {
     class MapScene :  public BaseScene
-
     {
     public:
         MapScene(int pMapNumber);
@@ -26,7 +25,6 @@ namespace GameScene
         GameSprite::Master* master;
         GameSprite::BackButton* mapBackButton;
         std::vector<GameSprite::StageButton*> stageButtonVector;
-        std::vector<GameSprite::Star*> starVector;
     private:
         Vec2 getMasterPosition(int currentStage, int currentMap);
         Vec2 getBackButtonPosition();

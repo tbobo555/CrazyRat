@@ -15,8 +15,8 @@ namespace GameScene
     {
         auto spriteManager = Manager::SpriteManager::getInstance();
         std::string backgroundImage = "image/PlayBackground.png";
-        std::string timeBarDownImage = "image/TimeBarDown.png";
-        std::string timeBarUpImage = "image/TimeBarUp.png";
+        std::string progressBarDownImage = "image/ProgressBarDown.png";
+        std::string progressBarUpImage = "image/ProgressBarUp.png";
         std::string pauseButtonImage = "image/PauseButton.png";
         std::string pauseBackgroundImage = "image/SettingBackground.png";
         std::string musicButtonImage = "image/MusicOnButton.png";
@@ -24,22 +24,24 @@ namespace GameScene
         std::string backHomeButtonImage = "image/BackHomeButton.png";
         std::string retryButtonImage = "image/RetryButton.png";
         std::string pauseBackButtonImage = "image/BackButton.png";
-        std::string pigImage = "image/Pig.png";
+        std::string pig0Image = "image/Pig0.png";
+        std::string pig1Image = "image/Pig1.png";
+        std::string pig2Image = "image/Pig2.png";
         
         this->playBackground = new GameSprite::Background(backgroundImage);
         this->playBackground->setPosition(this->center);
         this->addChild(this->playBackground, 0);
         spriteManager->setWithKey("PlayScene_Background", this->playBackground);
         
-        this->timeBarDown = new GameSprite::TimeBarDown(timeBarDownImage);
-        this->timeBarDown->setPosition(Vec2(800, this->visibleOrigin.y + 70));
-        this->addChild(timeBarDown, 1);
-        spriteManager->setWithKey("PlayScene_TimeBarDown", this->timeBarDown);
+        this->progressBarDown = new GameSprite::ProgressBarDown(progressBarDownImage);
+        this->progressBarDown->setPosition(Vec2(800, this->visibleOrigin.y + 70));
+        this->addChild(progressBarDown, 1);
+        spriteManager->setWithKey("PlayScene_ProgressBarDown", this->progressBarDown);
         
-        this->timeBarUp = new GameSprite::TimeBarUp(timeBarUpImage);
-        spriteManager->setWithKey("PlayScene_TimeBarUp", this->timeBarUp);
+        this->progressBarUp = new GameSprite::ProgressBarUp(progressBarUpImage);
+        spriteManager->setWithKey("PlayScene_ProgressBarUp", this->progressBarUp);
         
-        this->timeBar = ProgressTimer::create(this->timeBarUp);
+        this->timeBar = ProgressTimer::create(this->progressBarUp);
         this->timeBar->setType(ProgressTimer::Type::BAR);
         this->timeBar->setMidpoint(Vec2(0,0));
         this->timeBar->setBarChangeRate(Vec2(1, 0));
@@ -53,30 +55,42 @@ namespace GameScene
         this->addChild(this->prepareLabel, 1);
 
         for (int i = 0; i < 10; i++) {
+            std::string path = "image/Sweet";
+            std::stringstream key;
+            int type = rand() % 3;
             int sweetId = i;
-            this->road0SweetVector.push_back(new GameSprite::Sweet("image/Sweet.png", 0, 0, sweetId));
+            key << path << type << ".png";
+            this->road0SweetVector.push_back(new GameSprite::Sweet(key.str(), 0, sweetId));
             this->road0SweetVector[sweetId]->setPosition(Vec2(-150, -200));
             this->addChild(this->road0SweetVector[sweetId], 3);
             this->road0AvailableIndex.push_back(sweetId);
-            this->road1SweetVector.push_back(new GameSprite::Sweet("image/Sweet.png", 0, 1, sweetId));
+            key.clear();
+            key.str("");
+            type = rand() % 3;
+            key << path << type << ".png";
+            this->road1SweetVector.push_back(new GameSprite::Sweet(key.str(), 1, sweetId));
             this->road1SweetVector[sweetId]->setPosition(Vec2(-150, -200));
             this->addChild(this->road1SweetVector[sweetId], 3);
             this->road1AvailableIndex.push_back(sweetId);
-            this->road2SweetVector.push_back(new GameSprite::Sweet("image/Sweet.png", 0, 2, sweetId));
+            key.clear();
+            key.str("");
+            type = rand() % 3;
+            key << path << type << ".png";
+            this->road2SweetVector.push_back(new GameSprite::Sweet(key.str(), 2, sweetId));
             this->road2SweetVector[sweetId]->setPosition(Vec2(-150, -200));
             this->addChild(this->road2SweetVector[sweetId], 3);
             this->road2AvailableIndex.push_back(sweetId);
         }
         
-        this->road0Pig = new Pig(pigImage, 0);
+        this->road0Pig = new Pig(pig0Image, 0);
         this->road0Pig->setPosition(Vec2(180, 480));
         this->addChild(this->road0Pig, 2);
         spriteManager->setWithKey("PlayScene_Road0Pig", this->road0Pig);
-        this->road1Pig = new Pig(pigImage, 1);
+        this->road1Pig = new Pig(pig1Image, 1);
         this->road1Pig->setPosition(Vec2(540, 480));
         this->addChild(this->road1Pig, 2);
         spriteManager->setWithKey("PlayScene_Road1Pig", this->road1Pig);
-        this->road2Pig = new Pig(pigImage, 2);
+        this->road2Pig = new Pig(pig2Image, 2);
         this->road2Pig->setPosition(Vec2(900, 480));
         this->addChild(this->road2Pig, 2);
         spriteManager->setWithKey("PlayScene_Road2Pig", this->road2Pig);
@@ -103,8 +117,8 @@ namespace GameScene
         this->removeAllChildren();
         auto spriteManager = Manager::SpriteManager::getInstance();
         spriteManager->releaseByKey("PlayScene_Background");
-        spriteManager->releaseByKey("PlayScene_TimeBarDown");
-        spriteManager->releaseByKey("PlayScene_TimeBarUp");
+        spriteManager->releaseByKey("PlayScene_ProgressBarDown");
+        spriteManager->releaseByKey("PlayScene_ProgressBarUp");
         this->timeBar->release();
         this->prepareLabel->release();
         spriteManager->releaseByKey("PlayScene_Road0Pig");
@@ -170,8 +184,8 @@ namespace GameScene
         this->road1CurrentIndex = 0;
         this->road2CurrentIndex = 0;
         this->initConfig();
-        this->timeBarUp->setVisible(true);
-        this->timeBarUp->runProgress(10.f);
+        this->progressBarUp->setVisible(true);
+        this->progressBarUp->runProgress(10.f);
         this->timeBar->runAction(ProgressTo::create(10.f, 100));
         schedule(CC_SCHEDULE_SELECTOR(PlayScene::gameUpdate), 0.1f);
         schedule(CC_SCHEDULE_SELECTOR(PlayScene::road0Update), 0.1f);
@@ -312,7 +326,6 @@ namespace GameScene
             8.5f,
             9.6f
         };
-        this->road0TypeConfig = {0, 0};
         
         this->road1TimeConfig = {
             0.9f,
@@ -333,7 +346,6 @@ namespace GameScene
             8.1f,
             8.4f
         };
-        this->road1TypeConfig = {0, 0};
 
         this->road2TimeConfig = {
             0.8f,
@@ -356,6 +368,5 @@ namespace GameScene
             8.9f,
             9.5f
         };
-        this->road2TypeConfig = {0, 0};
     }
 }

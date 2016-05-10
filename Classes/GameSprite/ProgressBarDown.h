@@ -1,5 +1,6 @@
-#ifndef _GameSprite_TimeBarUp_H_
-#define _GameSprite_TimeBarUp_H_
+#ifndef _GameSprite_ProgressBarDown_H_
+#define _GameSprite_ProgressBarDown_H_
+
 
 #include "cocos2d.h"
 #include "BaseSprite.h"
@@ -8,11 +9,10 @@ USING_NS_CC;
 
 namespace GameSprite
 {
-    class TimeBarUp : public BaseSprite
+    class ProgressBarDown : public BaseSprite
     {
     public:
-        TimeBarUp(std::string image);
-        void runProgress(float time);
+        ProgressBarDown(std::string image);
         void addEventListener();
     private:
         static bool onTouchBegan(Touch *touch, Event *event);
@@ -23,4 +23,4 @@ namespace GameSprite
 }
 
 
-#endif /* _GameSprite_TimeBarUp_H_ */
+#endif /* _GameSprite_ProgressBarDown_H_ */
