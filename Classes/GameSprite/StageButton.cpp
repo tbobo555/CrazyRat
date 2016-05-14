@@ -3,10 +3,10 @@
 
 namespace GameSprite
 {
-    StageButton::StageButton(std::string image, int pMapNumber, int pStageNumber) : GameSprite::BaseSprite(image)
+    StageButton::StageButton(std::string image, int pEpisodeNumber, int pStageNumber) : GameSprite::BaseSprite(image)
     {
         this->isLocked = false;
-        this->mapNumber = pMapNumber;
+        this->episodeNumber = pEpisodeNumber;
         this->stageNumber = pStageNumber;
         this->addEventListener();
     }
@@ -74,7 +74,7 @@ namespace GameSprite
             auto controller = Controller::GameController::getInstance();
             log("StageButton ended... x = %f, y = %f", locationInNode.x, locationInNode.y);
             target->setScale(1.0);
-            controller->MapSceneToPlayScene(target->mapNumber, target->stageNumber);
+            controller->EpisodeSceneToPlayScene(target->episodeNumber, target->stageNumber);
         } else {
             target->setScale(1.0);
         }

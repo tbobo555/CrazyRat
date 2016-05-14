@@ -1,5 +1,5 @@
-#ifndef _GameSprite_MapButton_H_
-#define _GameSprite_MapButton_H_
+#ifndef _GameSprite_EpisodeButton_H_
+#define _GameSprite_EpisodeButton_H_
 
 #include "cocos2d.h"
 #include "BaseSprite.h"
@@ -9,11 +9,11 @@ USING_NS_CC;
 
 namespace GameSprite
 {
-    class MapButton : public BaseSprite
+    class EpisodeButton : public BaseSprite
     {
     public:
-        MapButton(std::string image, int mapNumber);
-        int mapNumber;
+        EpisodeButton(std::string image, int episodeNumber);
+        int episodeNumber;
         bool isLocked;
         void locked();
         void unlocked();
@@ -27,4 +27,4 @@ namespace GameSprite
 }
 
 
-#endif /* _GameSprite_MapButton_H_ */
+#endif /* _GameSprite_EpisodeButton_H_ */

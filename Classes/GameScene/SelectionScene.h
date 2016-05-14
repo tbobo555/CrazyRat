@@ -5,7 +5,7 @@
 #include "BaseScene.h"
 #include "BaseScene.h"
 #include "GameSprite/Background.h"
-#include "GameSprite/MapButton.h"
+#include "GameSprite/EpisodeButton.h"
 #include "GameSprite/BackButton.h"
 #include "Db/CommonSetting.h"
 #include "Manager/SpriteManager.h"
@@ -23,10 +23,10 @@ namespace GameScene
         void releaseScene();
         GameSprite::Background* selectionBackground;
         GameSprite::BackButton* selectionBackButton;
-        std::vector<GameSprite::MapButton*> mapButtonVector;
+        std::vector<GameSprite::EpisodeButton*> episodeButtonVector;
     private:
         Vec2 getBackButtonPosition();
-        Vec2 getMapButtonPosition(int mapNumber);
+        Vec2 getEpisodeButtonPosition(int episodeNumber);
     };
 }
 

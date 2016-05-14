@@ -9,7 +9,7 @@
 #include "GameSprite/SoundsButton.h"
 #include "GameScene/StartScene.h"
 #include "GameScene/SelectionScene.h"
-#include "GameScene/MapScene.h"
+#include "GameScene/EpisodeScene.h"
 #include "GameScene/MenuScene.h"
 #include "GameScene/PlayScene.h"
 #include "GameScene/PauseScene.h"
@@ -36,10 +36,10 @@ namespace Controller
         void releaseStartSceneResource();
         void loadSelectionSceneResource();
         void releaseSelectionSceneResource();
-        void loadMapSceneResource(int mapNumber);
-        void releaseMapSceneResource(int mapNumber);
-        void loadPlaySceneResource(int mapNumber, int stageNumber);
-        void releasePlaySceneResource(int mapNumber, int stageNumber);
+        void loadEpisodeSceneResource(int episodeNumber);
+        void releaseEpisodeSceneResource(int episodeNumber);
+        void loadPlaySceneResource(int episodeNumber, int stageNumber);
+        void releasePlaySceneResource(int episodeNumber, int stageNumber);
         void loadPauseSceneResource();
         void releasePauseSceneResource();
         void loadVictorySceneResource();
@@ -57,11 +57,11 @@ namespace Controller
         void runStartScene();
         void startSceneToSelectionScene();
         void selectionSceneToStartScene();
-        void selectionSceneToMapScene(int mapNumber);
-        void MapSceneToSelectionScene(int mapNumber);
-        void MapSceneToPlayScene(int mapNumber, int stageNumber);
-        void RetryPlayScene(int mapNumber, int stageNumber);
-        void PlaySceneToMapScene(int mapNumber, int stageNumber);
+        void selectionSceneToEpisodeScene(int episodeNumber);
+        void EpisodeSceneToSelectionScene(int episodeNumber);
+        void EpisodeSceneToPlayScene(int episodeNumber, int stageNumber);
+        void RetryPlayScene(int episodeNumber, int stageNumber);
+        void PlaySceneToEpisodeScene(int episodeNumber, int stageNumber);
     private:
         GameController();
         static GameController* instance;

@@ -46,7 +46,7 @@ namespace GameSprite
             target->setScale(1.0);
             auto scene = static_cast<GameScene::PlayScene*>(SceneManager::getInstance()->getCurrent());
             auto controller = Controller::GameController::getInstance();
-            controller->RetryPlayScene(scene->mapNumber, scene->stageNumber);
+            controller->RetryPlayScene(scene->episodeNumber, scene->stageNumber);
         } else {
             target->setScale(1.0);
         }

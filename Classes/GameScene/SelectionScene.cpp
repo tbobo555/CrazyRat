@@ -11,10 +11,10 @@ namespace GameScene
     {
         auto spriteManager = Manager::SpriteManager::getInstance();
         std::string backgroundImage = "image/SelectionBackground.png";
-        std::string mapButtonImagePrefix = "image/EpisodeButton_";
+        std::string episodeButtonImagePrefix = "image/EpisodeButton_";
         std::string backButtonImage = "image/BackButton.png";
-        int currentMap = DB::CommonSetting::currentMap;
-        int maxMap = DB::CommonSetting::maxEpisode;
+        int currentEpisode = DB::CommonSetting::currentEpisode;
+        int maxEpisode = DB::CommonSetting::maxEpisode;
         this->selectionBackground = new GameSprite::Background(backgroundImage);
         this->selectionBackground->setPosition(this->center);
         this->selectionBackButton = new GameSprite::BackButton(backButtonImage);
@@ -23,19 +23,19 @@ namespace GameScene
         this->addChild(this->selectionBackButton, 5);
         spriteManager->setWithKey("SelectionScene_Background", this->selectionBackground);
         spriteManager->setWithKey("SelectionScene_BackButton", this->selectionBackButton);
-        for (int i = 0; i < maxMap; i++) {
+        for (int i = 0; i < maxEpisode; i++) {
             std::stringstream filePath;
-            filePath << mapButtonImagePrefix << i << ".png";
-            GameSprite::MapButton* mapButton = new GameSprite::MapButton(filePath.str(), i);
-            if (currentMap < i) {
-                mapButton->locked();
+            filePath << episodeButtonImagePrefix << i << ".png";
+            GameSprite::EpisodeButton* episodeButton = new GameSprite::EpisodeButton(filePath.str(), i);
+            if (currentEpisode < i) {
+                episodeButton->locked();
             }
-            this->mapButtonVector.push_back(mapButton);
-            mapButton->setPosition(this->getMapButtonPosition(i));
-            this->addChild(mapButton, 1);
+            this->episodeButtonVector.push_back(episodeButton);
+            episodeButton->setPosition(this->getEpisodeButtonPosition(i));
+            this->addChild(episodeButton, 1);
             std::stringstream key;
-            key << "SelectionScene_MapButton_" << i;
-            spriteManager->setWithKey(key.str(), mapButton);
+            key << "SelectionScene_EpisodeButton_" << i;
+            spriteManager->setWithKey(key.str(), episodeButton);
         }
     }
     
@@ -45,10 +45,10 @@ namespace GameScene
         auto spriteManager = Manager::SpriteManager::getInstance();
         spriteManager->releaseByKey("SelectionScene_Background");
         spriteManager->releaseByKey("SelectionScene_BackButton");
-        int maxMap = DB::CommonSetting::maxEpisode;
-        for (int i = 0; i < maxMap; i++) {
+        int maxEpisode = DB::CommonSetting::maxEpisode;
+        for (int i = 0; i < maxEpisode; i++) {
             std::stringstream key;
-            key << "SelectionScene_MapButton_" << i;
+            key << "SelectionScene_EpisodeButton_" << i;
             spriteManager->releaseByKey(key.str());
         }
     }
@@ -64,9 +64,9 @@ namespace GameScene
         return position;
     }
     
-    Vec2 SelectionScene::getMapButtonPosition(int mapNumber)
+    Vec2 SelectionScene::getEpisodeButtonPosition(int episodeNumber)
     {
-        std::vector<Vec2> mapButtonPositionSet = {
+        std::vector<Vec2> episodeButtonPositionSet = {
             {Vec2(165, 1100)},
             {Vec2(550, 1100)},
             {Vec2(930, 1100)},
@@ -75,6 +75,6 @@ namespace GameScene
             {Vec2(930, 650)},
         };
         
-        return mapButtonPositionSet[mapNumber];
+        return episodeButtonPositionSet[episodeNumber];
     }
 }

@@ -47,8 +47,8 @@ namespace GameSprite {
             auto scene = SceneManager::getInstance()->getCurrent();
             auto controller = Controller::GameController::getInstance();
             target->setScale(1.0);
-            if (scene->name == "MapScene") {
-                controller->MapSceneToSelectionScene(static_cast<MapScene*>(scene)->mapMumber);
+            if (scene->name == "EpisodeScene") {
+                controller->EpisodeSceneToSelectionScene(static_cast<EpisodeScene*>(scene)->episodeNumber);
             } else if (scene->name == "SelectionScene") {
                 controller->selectionSceneToStartScene();
             }

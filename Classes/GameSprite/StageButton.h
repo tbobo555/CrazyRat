@@ -11,8 +11,8 @@ namespace GameSprite
     class StageButton : public BaseSprite
     {
     public:
-        StageButton(std::string image, int pMapNumber, int pStageNumber);
-        int mapNumber;
+        StageButton(std::string image, int pEpisodeNumber, int pStageNumber);
+        int episodeNumber;
         int stageNumber;
         bool isLocked;
         void locked();

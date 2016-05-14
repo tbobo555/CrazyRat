@@ -3,10 +3,10 @@
 
 namespace GameScene
 {
-    PlayScene::PlayScene(int pMapNumber, int pStageNumber) : GameScene::BaseScene()
+    PlayScene::PlayScene(int pEpisodeNumber, int pStageNumber) : GameScene::BaseScene()
     {
         this->name = "PlayScene";
-        this->mapNumber = pMapNumber;
+        this->episodeNumber = pEpisodeNumber;
         this->stageNumber = pStageNumber;
         this->isVictory = false;
     }

@@ -1,15 +1,15 @@
-#include "MapScene.h"
+#include "EpisodeScene.h"
 
 
 namespace GameScene
 {
-    MapScene::MapScene(int pMapNumber) : GameScene::BaseScene()
+    EpisodeScene::EpisodeScene(int pEpisodeNumber) : GameScene::BaseScene()
     {
-        this->name = "MapScene";
-        this->mapMumber = pMapNumber;
+        this->name = "EpisodeScene";
+        this->episodeNumber = pEpisodeNumber;
     }
     
-    void MapScene::initScene()
+    void EpisodeScene::initScene()
     {
         auto spriteManager = Manager::SpriteManager::getInstance();
         std::string backgroundImagePrefix = "image/EpisodeBackground_";
@@ -17,30 +17,30 @@ namespace GameScene
         std::string backButtonImage = "image/BackButton.png";
         std::string starImage = "image/Star.png";
         std::string masterImage = "image/Master.png";
-        int currentMap = DB::CommonSetting::currentMap;
+        int currentEpisode = DB::CommonSetting::currentEpisode;
         int currentStage = DB::CommonSetting::currentStage;
-        std::vector<int> starOfStage = DB::CommonSetting::starOfStage.at(this->mapMumber);
+        std::vector<int> starOfStage = DB::CommonSetting::starOfStage.at(this->episodeNumber);
         std::stringstream backgroundPath;
-        backgroundPath << backgroundImagePrefix << this->mapMumber << ".png";
-        this->mapBackground = new GameSprite::Background(backgroundPath.str());
-        this->mapBackButton = new GameSprite::BackButton(backButtonImage);
-        this->mapBackground->setPosition(this->center);
-        this->mapBackButton->setPosition(this->getBackButtonPosition());
-        this->addChild(this->mapBackground, 0);
-        this->addChild(this->mapBackButton, 1);
+        backgroundPath << backgroundImagePrefix << this->episodeNumber << ".png";
+        this->episodeBackground = new GameSprite::Background(backgroundPath.str());
+        this->episodeBackButton = new GameSprite::BackButton(backButtonImage);
+        this->episodeBackground->setPosition(this->center);
+        this->episodeBackButton->setPosition(this->getBackButtonPosition());
+        this->addChild(this->episodeBackground, 0);
+        this->addChild(this->episodeBackButton, 1);
         std::stringstream key;
-        key << "MapScene_Background_" << this->mapMumber;
-        spriteManager->setWithKey(key.str(), this->mapBackground);
+        key << "EpisodeScene_Background_" << this->episodeNumber;
+        spriteManager->setWithKey(key.str(), this->episodeBackground);
         key.clear();
         key.str("");
-        key << "MapScene_BackButton_" << this->mapMumber;
-        spriteManager->setWithKey(key.str(), this->mapBackButton);
+        key << "EpisodeScene_BackButton_" << this->episodeNumber;
+        spriteManager->setWithKey(key.str(), this->episodeBackButton);
         key.clear();
         key.str("");
-        if (this->mapMumber == currentMap) {
+        if (this->episodeNumber == currentEpisode) {
             this->master = new GameSprite::Master(masterImage);
             this->master->setPosition(
-                this->getMasterPosition(currentStage, currentMap)
+                this->getMasterPosition(currentStage, currentEpisode)
             );
             this->addChild(this->master, 4);
             spriteManager->setWithKey("Master", this->master);
@@ -51,19 +51,19 @@ namespace GameScene
             key.str("");
             std::stringstream stagePath;
             stagePath << stageButtonImagePrefix << i << ".png";            
-            auto stageButton = new GameSprite::StageButton(stagePath.str(), this->mapMumber, i);
-            if (this->mapMumber == currentMap && i > currentStage) {
+            auto stageButton = new GameSprite::StageButton(stagePath.str(), this->episodeNumber, i);
+            if (this->episodeNumber == currentEpisode && i > currentStage) {
                 stageButton->locked();
             } else if (
-                this->mapMumber < currentMap ||
-                (this->mapMumber == currentMap && i < currentStage)
+                this->episodeNumber < currentEpisode ||
+                (this->episodeNumber == currentEpisode && i < currentStage)
             ) {
                 int starNum = starOfStage.at(i);
                 for (int j = 0; j < starNum; j++) {
                     auto star = new GameSprite::Star(starImage);
-                    star->setPosition(this->getStarPosition(i, this->mapMumber, j));
+                    star->setPosition(this->getStarPosition(i, this->episodeNumber, j));
                     this->addChild(star, 3);
-                    key << "MapScene_Star_" << this->mapMumber << "_" << i << "_" << j;
+                    key << "EpisodeScene_Star_" << this->episodeNumber << "_" << i << "_" << j;
                     spriteManager->setWithKey(key.str(), star);
                     key.clear();
                     key.str("");
@@ -71,52 +71,52 @@ namespace GameScene
             }
             this->stageButtonVector.push_back(stageButton);
             stageButton->setPosition(
-                this->getStageButtonPosition(i, this->mapMumber)
+                this->getStageButtonPosition(i, this->episodeNumber)
             );
             this->addChild(stageButton, 2);
-            key << "MapScene_Stage_" << this->mapMumber << "_" << i;
+            key << "EpisodeScene_Stage_" << this->episodeNumber << "_" << i;
             spriteManager->setWithKey(key.str(), stageButton);
         }
     }
     
-    void MapScene::releaseScene()
+    void EpisodeScene::releaseScene()
     {
         this->removeAllChildren();
         auto spriteManager = Manager::SpriteManager::getInstance();
-        int currentMap = DB::CommonSetting::currentMap;
+        int currentEpisode = DB::CommonSetting::currentEpisode;
         int currentStage = DB::CommonSetting::currentStage;
-        std::vector<int> starOfStage = DB::CommonSetting::starOfStage.at(this->mapMumber);
+        std::vector<int> starOfStage = DB::CommonSetting::starOfStage.at(this->episodeNumber);
         std::stringstream key;
-        key << "MapScene_Background_" << this->mapMumber;
+        key << "EpisodeScene_Background_" << this->episodeNumber;
         spriteManager->releaseByKey(key.str());
         key.clear();
         key.str("");
-        key << "MapScene_BackButton_" << this->mapMumber;
+        key << "EpisodeScene_BackButton_" << this->episodeNumber;
         spriteManager->releaseByKey(key.str());
         key.clear();
         key.str("");
-        if (this->mapMumber == currentMap) {
+        if (this->episodeNumber == currentEpisode) {
             spriteManager->releaseByKey("Master");
         }
         int maxStage = DB::CommonSetting::maxStage;
         for (int i = 0; i < maxStage; i++) {
             key.clear();
             key.str("");
-            if (this->mapMumber < currentMap || (this->mapMumber == currentMap && i < currentStage)) {
+            if (this->episodeNumber < currentEpisode || (this->episodeNumber == currentEpisode && i < currentStage)) {
                 int starNum = starOfStage.at(i);
                 for (int j = 0; j < starNum; j++) {
-                    key << "MapScene_Star_" << this->mapMumber << "_" << i << "_" << j;
+                    key << "EpisodeScene_Star_" << this->episodeNumber << "_" << i << "_" << j;
                     spriteManager->releaseByKey(key.str());
                     key.clear();
                     key.str("");
                 }
             }
-            key << "MapScene_Stage_" << this->mapMumber << "_" << i;
+            key << "EpisodeScene_Stage_" << this->episodeNumber << "_" << i;
             spriteManager->releaseByKey(key.str());
         }
     }
     
-    Vec2 MapScene::getStageButtonPosition(int stageNumber, int mapNumber)
+    Vec2 EpisodeScene::getStageButtonPosition(int stageNumber, int episodeNumber)
     {
         std::vector<std::vector<Vec2>> stageButtonPositionSet = {
             {
@@ -162,18 +162,18 @@ namespace GameScene
                 {Vec2(550, 650)},
             }
         };
-        return stageButtonPositionSet[mapNumber][stageNumber];
+        return stageButtonPositionSet[episodeNumber][stageNumber];
     }
     
-    Vec2 MapScene::getMasterPosition(int currentStage, int currentMap)
+    Vec2 EpisodeScene::getMasterPosition(int currentStage, int currentEpisode)
     {
-        Vec2 position = this->getStageButtonPosition(currentStage, currentMap);
+        Vec2 position = this->getStageButtonPosition(currentStage, currentEpisode);
         return Vec2(position.x, position.y + 100);
     }
     
-    Vec2 MapScene::getStarPosition(int stageNumber, int mapNumber, int starNumber)
+    Vec2 EpisodeScene::getStarPosition(int stageNumber, int episodeNumber, int starNumber)
     {
-        Vec2 position = this->getStageButtonPosition(stageNumber, mapNumber);
+        Vec2 position = this->getStageButtonPosition(stageNumber, episodeNumber);
         position.y += 50;
         switch (starNumber) {
             case 0:
@@ -190,7 +190,7 @@ namespace GameScene
         return position;
     }
     
-    Vec2 MapScene::getBackButtonPosition()
+    Vec2 EpisodeScene::getBackButtonPosition()
     {
         auto imageConfig = ImageConfig::getInstance();
         auto position = Vec2(

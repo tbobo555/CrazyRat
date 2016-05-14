@@ -53,37 +53,37 @@ namespace Controller
         SceneManager::getInstance()->releaseByKey("SelectionScene");
     }
     
-    void GameController::loadMapSceneResource(int mapNumber)
+    void GameController::loadEpisodeSceneResource(int episodeNumber)
     {
-        MapScene *mapScene = new MapScene(mapNumber);
-        mapScene->initScene();
+        EpisodeScene *episodeScene = new EpisodeScene(episodeNumber);
+        episodeScene->initScene();
         std::stringstream key;
-        key << "MapScene_" << mapNumber;
-        SceneManager::getInstance()->setWithKey(key.str(), mapScene);
+        key << "EpisodeScene_" << episodeNumber;
+        SceneManager::getInstance()->setWithKey(key.str(), episodeScene);
     }
     
-    void GameController::releaseMapSceneResource(int mapNumber)
+    void GameController::releaseEpisodeSceneResource(int episodeNumber)
     {
         std::stringstream key;
-        key << "MapScene_" << mapNumber;
-        auto mapScene = SceneManager::getInstance()->getByKey(key.str());
-        mapScene->releaseScene();
+        key << "EpisodeScene_" << episodeNumber;
+        auto episodeScene = SceneManager::getInstance()->getByKey(key.str());
+        episodeScene->releaseScene();
         SceneManager::getInstance()->releaseByKey(key.str());
     }
     
-    void GameController::loadPlaySceneResource(int mapNumber, int stageNumber)
+    void GameController::loadPlaySceneResource(int episodeNumber, int stageNumber)
     {
-        PlayScene *playScene = new PlayScene(mapNumber, stageNumber);
+        PlayScene *playScene = new PlayScene(episodeNumber, stageNumber);
         playScene->initScene();
         std::stringstream key;
-        key << "PlayScene_" << mapNumber << "_" << stageNumber;
+        key << "PlayScene_" << episodeNumber << "_" << stageNumber;
         SceneManager::getInstance()->setWithKey(key.str(), playScene);
     }
     
-    void GameController::releasePlaySceneResource(int mapNumber, int stageNumber)
+    void GameController::releasePlaySceneResource(int episodeNumber, int stageNumber)
     {
         std::stringstream key;
-        key << "PlayScene_" << mapNumber << "_" << stageNumber;
+        key << "PlayScene_" << episodeNumber << "_" << stageNumber;
         auto playScene = SceneManager::getInstance()->getByKey(key.str());
         playScene->releaseScene();
         SceneManager::getInstance()->releaseByKey(key.str());
@@ -246,12 +246,12 @@ namespace Controller
         Director::getInstance()->replaceScene(scene);
     }
     
-    void GameController::selectionSceneToMapScene(int mapNumber)
+    void GameController::selectionSceneToEpisodeScene(int episodeNumber)
     {
-        this->loadMapSceneResource(mapNumber);
+        this->loadEpisodeSceneResource(episodeNumber);
         std::stringstream key;
-        key << "MapScene_" << mapNumber;
-        MapScene *scene = static_cast<MapScene*>(
+        key << "EpisodeScene_" << episodeNumber;
+        EpisodeScene *scene = static_cast<EpisodeScene*>(
              SceneManager::getInstance()->getByKey(key.str()));
         this->removeMenuSceneFromCurrentScene();
         SceneManager::getInstance()->setCurrent(scene);
@@ -259,9 +259,9 @@ namespace Controller
         Director::getInstance()->replaceScene(scene);
     }
     
-    void GameController::MapSceneToSelectionScene(int mapNumber)
+    void GameController::EpisodeSceneToSelectionScene(int episodeNumber)
     {
-        this->releaseMapSceneResource(mapNumber);
+        this->releaseEpisodeSceneResource(episodeNumber);
         SelectionScene *scene = static_cast<SelectionScene*>(
             SceneManager::getInstance()->getByKey("SelectionScene"));
         this->removeMenuSceneFromCurrentScene();
@@ -270,18 +270,19 @@ namespace Controller
         Director::getInstance()->replaceScene(scene);
     }
     
-    void GameController::MapSceneToPlayScene(int mapNumber, int stageNumber)
+    void GameController::EpisodeSceneToPlayScene(int episodeNumber, int stageNumber)
     {
         this->releaseStartSceneResource();
         this->releaseMenuSceneResource();
-        this->releaseMapSceneResource(mapNumber);
+        this->releaseEpisodeSceneResource(episodeNumber);
         this->releaseSelectionSceneResource();
         this->loadPauseSceneResource();
         this->loadVictorySceneResource();
         this->loadLoseSceneResource();
-        this->loadPlaySceneResource(mapNumber, stageNumber);
+        this->loadPlaySceneResource(episodeNumber, stageNumber);
         std::stringstream key;
-        key << "PlayScene_" << mapNumber << "_" << stageNumber;
+        key << "PlayScene_" << episodeNumber << "_" << stageNumber;
+        std::string a = key.str();
         PlayScene *scene = static_cast<PlayScene*>(
             SceneManager::getInstance()->getByKey(key.str()));
         SceneManager::getInstance()->setCurrent(scene);
@@ -290,16 +291,16 @@ namespace Controller
         scene->play();
     }
     
-    void GameController::PlaySceneToMapScene(int mapNumber, int stageNumber)
+    void GameController::PlaySceneToEpisodeScene(int episodeNumber, int stageNumber)
     {
-        int newMapNumber = mapNumber;
+        int newEpisodeNumber = episodeNumber;
         auto current = static_cast<GameScene::PlayScene*>(SceneManager::getInstance()->getCurrent());
         if (current->getIsVictory()) {
             if (stageNumber == 4) {
-                newMapNumber++;
+                newEpisodeNumber++;
             }
-            if (newMapNumber > 5) {
-                newMapNumber = mapNumber;
+            if (newEpisodeNumber > 5) {
+                newEpisodeNumber = episodeNumber;
             }
         }
         this->removePauseSceneFromCurrentScene();
@@ -308,20 +309,20 @@ namespace Controller
         this->releasePauseSceneResource();
         this->releaseVictorySceneResource();
         this->releaseLoseSceneResource();
-        this->releasePlaySceneResource(mapNumber, stageNumber);
+        this->releasePlaySceneResource(episodeNumber, stageNumber);
         this->loadMenuSceneResource();
         this->loadStartSceneResource();
         this->loadSelectionSceneResource();
-        this->loadMapSceneResource(newMapNumber);
+        this->loadEpisodeSceneResource(newEpisodeNumber);
         std::stringstream key;
-        key << "MapScene_" << newMapNumber;
-        MapScene *scene = static_cast<MapScene*>(SceneManager::getInstance()->getByKey(key.str()));
+        key << "EpisodeScene_" << newEpisodeNumber;
+        EpisodeScene *scene = static_cast<EpisodeScene*>(SceneManager::getInstance()->getByKey(key.str()));
         SceneManager::getInstance()->setCurrent(scene);
         this->addMenuSceneToCurrentScene();
         Director::getInstance()->replaceScene(scene);
     }
     
-    void GameController::RetryPlayScene(int mapNumber, int stageNumber)
+    void GameController::RetryPlayScene(int episodeNumber, int stageNumber)
     {
         this->removePauseSceneFromCurrentScene();
         this->removeLoseSceneFromCurrentScene();
@@ -329,13 +330,13 @@ namespace Controller
         this->releasePauseSceneResource();
         this->releaseVictorySceneResource();
         this->releaseLoseSceneResource();
-        this->releasePlaySceneResource(mapNumber, stageNumber);
+        this->releasePlaySceneResource(episodeNumber, stageNumber);
         this->loadPauseSceneResource();
         this->loadVictorySceneResource();
         this->loadLoseSceneResource();
-        this->loadPlaySceneResource(mapNumber, stageNumber);
+        this->loadPlaySceneResource(episodeNumber, stageNumber);
         std::stringstream key;
-        key << "PlayScene_" << mapNumber << "_" << stageNumber;
+        key << "PlayScene_" << episodeNumber << "_" << stageNumber;
         PlayScene *scene = static_cast<PlayScene*>(SceneManager::getInstance()->getByKey(key.str()));
         SceneManager::getInstance()->setCurrent(scene);
         this->addPauseSceneToCurrentScene();

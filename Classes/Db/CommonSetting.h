@@ -9,7 +9,7 @@ namespace DB {
         static bool soundsSwitch;
         static int maxEpisode;
         static int maxStage;
-        static int currentMap;
+        static int currentEpisode;
         static int currentStage;
         static std::vector<std::vector<int>> starOfStage;
     };

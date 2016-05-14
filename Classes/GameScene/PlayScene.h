@@ -18,7 +18,7 @@ namespace GameScene
     class PlayScene : public BaseScene
     {
     public:
-        PlayScene(int pMapNumber, int pStageNumber);
+        PlayScene(int pEpisodeNumber, int pStageNumber);
         void initScene();
         void releaseScene();
         void play();
@@ -26,7 +26,7 @@ namespace GameScene
         void resumeScene();
         bool getIsPaused();
         bool getIsVictory();
-        int mapNumber;
+        int episodeNumber;
         int stageNumber;
         GameSprite::Background* playBackground;
         GameSprite::ProgressBarUp* progressBarUp;

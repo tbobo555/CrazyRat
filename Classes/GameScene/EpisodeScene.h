@@ -1,5 +1,5 @@
-#ifndef _GameScene_MapScene_H_
-#define _GameScene_MapScene_H_
+#ifndef _GameScene_EpisodeScene_H_
+#define _GameScene_EpisodeScene_H_
 
 #include "cocos2d.h"
 #include "BaseScene.h"
@@ -14,23 +14,23 @@
 
 namespace GameScene
 {
-    class MapScene :  public BaseScene
+    class EpisodeScene :  public BaseScene
     {
     public:
-        MapScene(int pMapNumber);
+        EpisodeScene(int pEpisodeNumber);
         void initScene();
         void releaseScene();
-        int mapMumber;
-        GameSprite::Background* mapBackground;
+        int episodeNumber;
+        GameSprite::Background* episodeBackground;
         GameSprite::Master* master;
-        GameSprite::BackButton* mapBackButton;
+        GameSprite::BackButton* episodeBackButton;
         std::vector<GameSprite::StageButton*> stageButtonVector;
     private:
-        Vec2 getMasterPosition(int currentStage, int currentMap);
+        Vec2 getMasterPosition(int currentStage, int currentEpisode);
         Vec2 getBackButtonPosition();
-        Vec2 getStageButtonPosition(int stageNumber, int mapNumber);
-        Vec2 getStarPosition(int stageNumber, int mapNumber, int starNumber);
+        Vec2 getStageButtonPosition(int stageNumber, int episodeNumber);
+        Vec2 getStarPosition(int stageNumber, int episodeNumber, int starNumber);
     };
 }
 
-#endif /* _GameScene_MapScene_H_ */
+#endif /* _GameScene_EpisodeScene_H_ */
