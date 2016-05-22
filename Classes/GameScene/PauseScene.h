@@ -30,6 +30,14 @@ namespace GameScene
         GameSprite::PauseBackButton* pauseBackButton;
         GameSprite::MusicButton* musicButton;
         GameSprite::SoundsButton* soundsButton;
+    private:
+        Vec2 getPauseButtonPosition();
+        Vec2 getPauseBackgroundPosition();
+        Vec2 getPauseBackButtonPosition();
+        Vec2 getMusicButtonPosition();
+        Vec2 getSoundsButtonPosition();
+        Vec2 getBackHomeButtonPosition();
+        Vec2 getRetryButtonPosition();
     };
 }
 

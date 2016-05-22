@@ -15,10 +15,10 @@ namespace GameScene
         spriteManager->setWithKey("MenuScene_SettingButton", this->settingButton);
         
         this->settingBackground = new Background("image/SettingBackground.png");
-        this->settingBackground->setPosition(this->center);
+        this->settingBackground->setPosition(this->getSettingBackgroundPosition());
         spriteManager->setWithKey("MenuScene_SettingBackground", this->settingBackground);
         
-        this->settingBackButton = new SettingBackButton("image/BackButton.png");
+        this->settingBackButton = new SettingBackButton("image/CloseSettingButton.png");
         this->settingBackButton->setPosition(this->getSettingBackButtonPosition());
         spriteManager->setWithKey("MenuScene_SettingBackButton", this->settingBackButton);
         
@@ -41,33 +41,35 @@ namespace GameScene
         spriteManager->releaseByKey("MenuScene_SoundsButton");
     }
     
+    Vec2 MenuScene::getSettingBackgroundPosition()
+    {
+        return Vec2(this->center.x, this->center.y + this->visibleSize.height / 20);
+    }
+    
     Vec2 MenuScene::getMusicButtonPosition()
     {
-        auto imageConfig = ImageConfig::getInstance();
-        return Vec2(this->center.x - imageConfig->getImageSize("MusicOnButton").width * 0.6,
-                    this->center.y);
-
+        float width = this->settingBackground->getContentSize().width;
+        float height = this->settingBackground->getContentSize().height;
+        Vec2 center = Vec2(width / 2, height / 2);
+        return Vec2(center.x - width / 4, center.y);
     }
     
     Vec2 MenuScene::getSoundsButtonPosition()
     {
-        auto imageConfig = ImageConfig::getInstance();
-        return Vec2(this->center.x + imageConfig->getImageSize("SoundsOnButton").width * 0.6,
-                    this->center.y);
+        float width = this->settingBackground->getContentSize().width;
+        float height = this->settingBackground->getContentSize().height;
+        Vec2 center = Vec2(width / 2, height / 2);
+        return Vec2(center.x + width / 4, center.y);
     }
 
     Vec2 MenuScene::getSettingBackButtonPosition()
     {
-        auto imageConfig = ImageConfig::getInstance();
-        return Vec2(this->leftTop.x + imageConfig->getImageSize("BackButton").width * 0.6,
-                    this->leftTop.y - imageConfig->getImageSize("BackButton").height * 0.6);
+        return Vec2(this->settingBackground->getContentSize().width, this->settingBackground->getContentSize().height);
 
     }
     
     Vec2 MenuScene::getSettingButtonPosition()
     {
-        auto imageConfig = ImageConfig::getInstance();
-        return Vec2(this->leftBottom.x + imageConfig->getImageSize("SettingButton").width * 0.6,
-                    this->leftBottom.y + imageConfig->getImageSize("SettingButton").height * 0.6);
+        return Vec2(this->visibleOrigin.x + this->visibleSize.height / 12, this->visibleOrigin.y + this->visibleSize.height / 12);
     }
 }

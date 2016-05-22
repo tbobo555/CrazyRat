@@ -161,23 +161,25 @@ namespace Controller
         auto retryButton = spriteManager->getByKey("PauseScene_RetryButton");
         scene->addChild(pauseButton, 1);
         scene->addChild(pauseBackground, -100);
-        scene->addChild(pauseBackButton, -100);
-        scene->addChild(musicButton, -100);
-        scene->addChild(soundsButton, -100);
-        scene->addChild(backHomeButton, -100);
-        scene->addChild(retryButton, -100);
+        pauseBackground->addChild(pauseBackButton, -100);
+        pauseBackground->addChild(musicButton, -100);
+        pauseBackground->addChild(soundsButton, -100);
+        pauseBackground->addChild(backHomeButton, -100);
+        pauseBackground->addChild(retryButton, -100);
     }
     
     void GameController::removePauseSceneFromCurrentScene()
     {
         auto scene = SceneManager::getInstance()->getCurrent();
+        Manager::SpriteManager* spriteManager = Manager::SpriteManager::getInstance();
+        auto pauseBackground = spriteManager->getByKey("PauseScene_PauseBackground");
         scene->removeChild(SpriteManager::getInstance()->getByKey("PauseScene_PauseButton"));
         scene->removeChild(SpriteManager::getInstance()->getByKey("PauseScene_PauseBackground"));
-        scene->removeChild(SpriteManager::getInstance()->getByKey("PauseScene_PauseBackButton"));
-        scene->removeChild(SpriteManager::getInstance()->getByKey("PauseScene_MusicButton"));
-        scene->removeChild(SpriteManager::getInstance()->getByKey("PauseScene_SoundsButton"));
-        scene->removeChild(SpriteManager::getInstance()->getByKey("PauseScene_BackHomeButton"));
-        scene->removeChild(SpriteManager::getInstance()->getByKey("PauseScene_RetryButton"));
+        pauseBackground->GameScene::BaseScene::removeChild(SpriteManager::getInstance()->getByKey("PauseScene_PauseBackButton"));
+        pauseBackground->GameScene::BaseScene::removeChild(SpriteManager::getInstance()->getByKey("PauseScene_MusicButton"));
+        pauseBackground->GameScene::BaseScene::removeChild(SpriteManager::getInstance()->getByKey("PauseScene_SoundsButton"));
+        pauseBackground->GameScene::BaseScene::removeChild(SpriteManager::getInstance()->getByKey("PauseScene_BackHomeButton"));
+        pauseBackground->GameScene::BaseScene::removeChild(SpriteManager::getInstance()->getByKey("PauseScene_RetryButton"));
     }
     
     void GameController::addVictorySceneToCurrentScene()
@@ -186,8 +188,14 @@ namespace Controller
         Manager::SpriteManager* spriteManager = Manager::SpriteManager::getInstance();
         auto victoryBackground = spriteManager->getByKey("VictoryScene_VictoryBackground");
         auto nextButton = spriteManager->getByKey("VictoryScene_NextButton");
+        auto starLeft = spriteManager->getByKey("VictoryScene_StarLeft");
+        auto starRight = spriteManager->getByKey("VictoryScene_StarRight");
+        auto starMiddle = spriteManager->getByKey("VictoryScene_StarMiddle");
         scene->addChild(victoryBackground, 200);
         scene->addChild(nextButton, 201);
+        scene->addChild(starLeft, 201);
+        scene->addChild(starRight, 201);
+        scene->addChild(starMiddle, 201);
     }
     
     void GameController::removeVictorySceneFromCurrentScene()
@@ -195,6 +203,9 @@ namespace Controller
         auto scene = SceneManager::getInstance()->getCurrent();
         scene->removeChild(SpriteManager::getInstance()->getByKey("VictoryScene_VictoryBackground"));
         scene->removeChild(SpriteManager::getInstance()->getByKey("VictoryScene_NextButton"));
+        scene->removeChild(SpriteManager::getInstance()->getByKey("VictoryScene_StarLeft"));
+        scene->removeChild(SpriteManager::getInstance()->getByKey("VictoryScene_StarRight"));
+        scene->removeChild(SpriteManager::getInstance()->getByKey("VictoryScene_StarMiddle"));
     }
     
     void GameController::addLoseSceneToCurrentScene()

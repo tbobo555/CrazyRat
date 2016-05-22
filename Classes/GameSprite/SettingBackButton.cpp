@@ -44,14 +44,14 @@ namespace GameSprite
             auto sceneManager = Manager::SceneManager::getInstance();
             auto spriteManager = Manager::SpriteManager::getInstance();
             auto scene = sceneManager->getCurrent();
-            auto settingBg = spriteManager->getByKey("MenuScene_SettingBackground");
+            auto settingBackground = spriteManager->getByKey("MenuScene_SettingBackground");
             auto settingBackButton = spriteManager->getByKey("MenuScene_SettingBackButton");
             auto musicButton = spriteManager->getByKey("MenuScene_MusicButton");
             auto soundsButton = spriteManager->getByKey("MenuScene_SoundsButton");
-            scene->removeChild(soundsButton);
-            scene->removeChild(musicButton);
-            scene->removeChild(settingBackButton);
-            scene->removeChild(settingBg);
+            settingBackground->GameScene::BaseScene::removeChild(soundsButton);
+            settingBackground->GameScene::BaseScene::removeChild(musicButton);
+            settingBackground->GameScene::BaseScene::removeChild(settingBackButton);
+            scene->removeChild(settingBackground);
         } else {
             target->setScale(1.0);
         }

@@ -27,14 +27,17 @@ namespace GameScene
         std::string pig0Image = "image/Pig0.png";
         std::string pig1Image = "image/Pig1.png";
         std::string pig2Image = "image/Pig2.png";
+        std::string cloud0Image = "image/Cloud0.png";
+        std::string cloud1Image = "image/Cloud1.png";
+        std::string cloud2Image = "image/Cloud2.png";
         
         this->playBackground = new GameSprite::Background(backgroundImage);
-        this->playBackground->setPosition(this->center);
+        this->playBackground->setPosition(this->getBackgroundPosition());
         this->addChild(this->playBackground, 0);
         spriteManager->setWithKey("PlayScene_Background", this->playBackground);
         
         this->progressBarDown = new GameSprite::ProgressBarDown(progressBarDownImage);
-        this->progressBarDown->setPosition(Vec2(800, this->visibleOrigin.y + 70));
+        this->progressBarDown->setPosition(this->getProgressPosition());
         this->addChild(progressBarDown, 1);
         spriteManager->setWithKey("PlayScene_ProgressBarDown", this->progressBarDown);
         
@@ -47,7 +50,7 @@ namespace GameScene
         this->timeBar->setBarChangeRate(Vec2(1, 0));
         this->addChild(this->timeBar, 2);
         this->timeBar->retain();
-        this->timeBar->setPosition(Vec2(800, this->visibleOrigin.y + 70));
+        this->timeBar->setPosition(this->getProgressPosition());
         
         this->prepareLabel = Label::createWithTTF("3", "fonts/arial.ttf", 100);
         this->prepareLabel->setPosition(this->center);
@@ -83,19 +86,73 @@ namespace GameScene
         }
         
         this->road0Pig = new Pig(pig0Image, 0);
-        this->road0Pig->setPosition(Vec2(180, 480));
+        this->road0Pig->setPosition(this->getPigPosition(0));
         this->addChild(this->road0Pig, 2);
         spriteManager->setWithKey("PlayScene_Road0Pig", this->road0Pig);
         this->road1Pig = new Pig(pig1Image, 1);
-        this->road1Pig->setPosition(Vec2(540, 480));
+        this->road1Pig->setPosition(this->getPigPosition(1));
         this->addChild(this->road1Pig, 2);
         spriteManager->setWithKey("PlayScene_Road1Pig", this->road1Pig);
         this->road2Pig = new Pig(pig2Image, 2);
-        this->road2Pig->setPosition(Vec2(900, 480));
+        this->road2Pig->setPosition(this->getPigPosition(2));
         this->addChild(this->road2Pig, 2);
         spriteManager->setWithKey("PlayScene_Road2Pig", this->road2Pig);
+        
+        this->road0Cloud = new Cloud(cloud0Image);
+        this->road0Cloud->setPosition(this->getCloudPosition(0));
+        this->addChild(this->road0Cloud, 20);
+        spriteManager->setWithKey("PlayScene_Road0Cloud", this->road0Cloud);
+        this->road1Cloud = new Cloud(cloud1Image);
+        this->road1Cloud->setPosition(this->getCloudPosition(1));
+        this->addChild(this->road1Cloud, 20);
+        spriteManager->setWithKey("PlayScene_Road1Cloud", this->road1Cloud);
+        this->road2Cloud = new Cloud(cloud2Image);
+        this->road2Cloud->setPosition(this->getCloudPosition(2));
+        this->addChild(this->road2Cloud, 20);
+        spriteManager->setWithKey("PlayScene_Road2Cloud", this->road2Cloud);
     }
     
+    Vec2 PlayScene::getBackgroundPosition()
+    {
+        return this->center;
+    }
+    
+    Vec2 PlayScene::getPigPosition(int roadNumber)
+    {
+        float height = Director::getInstance()->getWinSize().height;
+        std::vector<Vec2> pigPositionSet = {
+            Vec2(this->center.x - 365, 0.24 * height),
+            Vec2(this->center.x, 0.24 * height),
+            Vec2(this->center.x + 365, 0.24 * height),
+        };
+        return pigPositionSet.at(roadNumber);
+    }
+    
+    Vec2 PlayScene::getCloudPosition(int roadNumber)
+    {
+        std::vector<Vec2> cloudPositionSet = {
+            Vec2(this->center.x - 365, this->visibleOrigin.y + 0.87 * this->visibleSize.height),
+            Vec2(this->center.x, this->visibleOrigin.y + 0.87 * this->visibleSize.height),
+            Vec2(this->center.x + 365, this->visibleOrigin.y + 0.87 * this->visibleSize.height),
+        };
+        return cloudPositionSet.at(roadNumber);
+    }
+    
+    Vec2 PlayScene::getSweetPosition(int roadNumber)
+    {
+        std::vector<Vec2> sweetPositionSet = {
+            Vec2(this->center.x - 365, this->visibleOrigin.y + 0.87 * this->visibleSize.height),
+            Vec2(this->center.x, this->visibleOrigin.y + 0.87 * this->visibleSize.height),
+            Vec2(this->center.x + 365, this->visibleOrigin.y + 0.87 * this->visibleSize.height),
+        };
+        return sweetPositionSet.at(roadNumber);
+    }
+    
+    Vec2 PlayScene::getProgressPosition()
+    {
+        return Vec2(600, this->visibleOrigin.y + this->visibleSize.height - this->visibleSize.width / 11);
+    }
+        
     bool PlayScene::getIsPaused()
     {
         return this->isPaused;
@@ -124,6 +181,10 @@ namespace GameScene
         spriteManager->releaseByKey("PlayScene_Road0Pig");
         spriteManager->releaseByKey("PlayScene_Road1Pig");
         spriteManager->releaseByKey("PlayScene_Road2Pig");
+        spriteManager->releaseByKey("PlayScene_Road0Cloud");
+        spriteManager->releaseByKey("PlayScene_Road1Cloud");
+        spriteManager->releaseByKey("PlayScene_Road2Cloud");
+
         for (int i = 0; i < 10; i++) {
             this->road0SweetVector[i]->release();
             this->road1SweetVector[i]->release();
@@ -203,7 +264,7 @@ namespace GameScene
                     this->road0AvailableIndex.pop_back();
                     this->road0RunningIndex.push(availabelIndex);
                     auto sweet = this->road0SweetVector.at(availabelIndex);
-                    sweet->setPosition(Vec2(180, 1480));
+                    sweet->setPosition(this->getSweetPosition(0));
                     sweet->run();
                 }
             }
@@ -220,7 +281,7 @@ namespace GameScene
                     this->road1AvailableIndex.pop_back();
                     this->road1RunningIndex.push(availabelIndex);
                     auto sweet = this->road1SweetVector.at(availabelIndex);
-                    sweet->setPosition(Vec2(540, 1480));
+                    sweet->setPosition(this->getSweetPosition(1));
                     sweet->run();
                 }
             }
@@ -237,7 +298,7 @@ namespace GameScene
                     this->road2AvailableIndex.pop_back();
                     this->road2RunningIndex.push(availabelIndex);
                     auto sweet = this->road2SweetVector.at(availabelIndex);
-                    sweet->setPosition(Vec2(900, 1480));
+                    sweet->setPosition(this->getSweetPosition(2));
                     sweet->run();
                 }
             }
@@ -248,7 +309,7 @@ namespace GameScene
     {
         if (! this->isPaused) {
             this->playTime += delta;
-            if (this->playTime > 10.f) {
+            if (this->playTime > 1.f) {
                 unschedule(schedule_selector(PlayScene::gameUpdate));
                 unschedule(schedule_selector(PlayScene::road0Update));
                 unschedule(schedule_selector(PlayScene::road1Update));

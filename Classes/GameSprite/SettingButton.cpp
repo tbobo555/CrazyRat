@@ -51,10 +51,10 @@ namespace GameSprite
             auto settingBackButton = spriteManager->getByKey("MenuScene_SettingBackButton");
             auto musicButton = spriteManager->getByKey("MenuScene_MusicButton");
             auto soundsButton = spriteManager->getByKey("MenuScene_SoundsButton");
+            settingBackground->addChild(settingBackButton, 101, 2);
+            settingBackground->addChild(musicButton, 101, 3);
+            settingBackground->addChild(soundsButton, 101, 4);
             currentScene->addChild(settingBackground, 100, 1);
-            currentScene->addChild(settingBackButton, 101, 2);
-            currentScene->addChild(musicButton, 101, 3);
-            currentScene->addChild(soundsButton, 101, 4);
         } else {
             target->setScale(1.0);
         }

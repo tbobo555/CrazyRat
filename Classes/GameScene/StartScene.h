@@ -3,6 +3,7 @@
 
 #include "GameSprite/Background.h"
 #include "GameSprite/StartButton.h"
+#include "GameSprite/startTitle.h"
 #include "Manager/SpriteManager.h"
 #include "BaseScene.h"
 
@@ -16,8 +17,10 @@ namespace GameScene
         void releaseScene();
         GameSprite::Background* startBackground;
         GameSprite::StartButton* startButton;
+        GameSprite::StartTitle* startTitle;
     private:
         Vec2 getStartButtonPosition();
+        Vec2 getStartTitlePosition();
     };
 }
 

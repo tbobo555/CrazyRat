@@ -25,6 +25,7 @@ namespace GameScene
         GameSprite::MusicButton* musicButton;
         GameSprite::SoundsButton* soundsButton;
     private:
+        Vec2 getSettingBackgroundPosition();
         Vec2 getSettingButtonPosition();
         Vec2 getSettingBackButtonPosition();
         Vec2 getMusicButtonPosition();

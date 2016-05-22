@@ -19,6 +19,9 @@ namespace GameScene
         void releaseScene();
         GameSprite::Background* loseBackground;
         GameSprite::NextButton* nextButton;
+    private:
+        Vec2 getBackgroundPosition();
+        Vec2 getNextButtonPosition();
     };
 }
 

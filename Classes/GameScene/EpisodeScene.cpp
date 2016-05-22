@@ -24,7 +24,7 @@ namespace GameScene
         backgroundPath << backgroundImagePrefix << this->episodeNumber << ".png";
         this->episodeBackground = new GameSprite::Background(backgroundPath.str());
         this->episodeBackButton = new GameSprite::BackButton(backButtonImage);
-        this->episodeBackground->setPosition(this->center);
+        this->episodeBackground->setPosition(this->getBackgroundPosition());
         this->episodeBackButton->setPosition(this->getBackButtonPosition());
         this->addChild(this->episodeBackground, 0);
         this->addChild(this->episodeBackButton, 1);
@@ -40,7 +40,7 @@ namespace GameScene
         if (this->episodeNumber == currentEpisode) {
             this->master = new GameSprite::Master(masterImage);
             this->master->setPosition(
-                this->getMasterPosition(currentStage, currentEpisode)
+                this->getMasterPosition(currentStage)
             );
             this->addChild(this->master, 4);
             spriteManager->setWithKey("Master", this->master);
@@ -52,6 +52,7 @@ namespace GameScene
             std::stringstream stagePath;
             stagePath << stageButtonImagePrefix << i << ".png";            
             auto stageButton = new GameSprite::StageButton(stagePath.str(), this->episodeNumber, i);
+            this->stageButtonVector.push_back(stageButton);
             if (this->episodeNumber == currentEpisode && i > currentStage) {
                 stageButton->locked();
             } else if (
@@ -61,17 +62,17 @@ namespace GameScene
                 int starNum = starOfStage.at(i);
                 for (int j = 0; j < starNum; j++) {
                     auto star = new GameSprite::Star(starImage);
-                    star->setPosition(this->getStarPosition(i, this->episodeNumber, j));
-                    this->addChild(star, 3);
+                    star->setPosition(this->getStarPosition(i, j));
+                    stageButton->addChild(star, 3);
                     key << "EpisodeScene_Star_" << this->episodeNumber << "_" << i << "_" << j;
                     spriteManager->setWithKey(key.str(), star);
                     key.clear();
                     key.str("");
                 }
             }
-            this->stageButtonVector.push_back(stageButton);
+            
             stageButton->setPosition(
-                this->getStageButtonPosition(i, this->episodeNumber)
+                this->getStageButtonPosition(i)
             );
             this->addChild(stageButton, 2);
             key << "EpisodeScene_Stage_" << this->episodeNumber << "_" << i;
@@ -116,87 +117,74 @@ namespace GameScene
         }
     }
     
-    Vec2 EpisodeScene::getStageButtonPosition(int stageNumber, int episodeNumber)
+    Vec2 EpisodeScene::getStageButtonPosition(int stageNumber)
     {
-        std::vector<std::vector<Vec2>> stageButtonPositionSet = {
+        float width = Director::getInstance()->getWinSize().width;
+        float height = Director::getInstance()->getWinSize().height;
+        std::vector<Vec2> stageButtonPositionSet = {
             {
-                {Vec2(165, 1100)},
-                {Vec2(550, 1100)},
-                {Vec2(930, 1100)},
-                {Vec2(165, 650)},
-                {Vec2(550, 650)},
-            },
-            {
-                {Vec2(165, 1100)},
-                {Vec2(550, 1100)},
-                {Vec2(930, 1100)},
-                {Vec2(165, 650)},
-                {Vec2(550, 650)},
-            },
-            {
-                {Vec2(165, 1100)},
-                {Vec2(550, 1100)},
-                {Vec2(930, 1100)},
-                {Vec2(165, 650)},
-                {Vec2(550, 650)},
-            },
-            {
-                {Vec2(165, 1100)},
-                {Vec2(550, 1100)},
-                {Vec2(930, 1100)},
-                {Vec2(165, 650)},
-                {Vec2(550, 650)},
-            },
-            {
-                {Vec2(165, 1100)},
-                {Vec2(550, 1100)},
-                {Vec2(930, 1100)},
-                {Vec2(165, 650)},
-                {Vec2(550, 650)},
-            },
-            {
-                {Vec2(165, 1100)},
-                {Vec2(550, 1100)},
-                {Vec2(930, 1100)},
-                {Vec2(165, 650)},
-                {Vec2(550, 650)},
+                Vec2(this->center.x - 2 * width / 5.4, 0.75 * height),
+                Vec2(this->center.x - width / 5.4, 0.75 * height),
+                Vec2(this->center.x, 0.75 * height),
+                Vec2(this->center.x + width / 5.4, 0.75 * height),
+                Vec2(this->center.x + 2 * width / 5.4, 0.75 * height),
+                
+                Vec2(this->center.x - 2 * width / 5.4, 0.75 * height - width / 5.4),
+                Vec2(this->center.x - width / 5.4, 0.75 * height - width / 5.4),
+                Vec2(this->center.x, 0.75 * height - 5.4 * width),
+                Vec2(this->center.x + width / 5.4, 0.75 * height - width / 5.4),
+                Vec2(this->center.x + 2 * width / 5.4, 0.75 * height - width / 5.4),
+                
+                Vec2(this->center.x - 2 * width / 5.4, 0.75 * height - 2 * width / 5.4),
+                Vec2(this->center.x - width / 5.4, 0.75 * height - 2 * width / 5.4),
+                Vec2(this->center.x, 0.75 * height - 2 * 5.4 * width),
+                Vec2(this->center.x + width / 5.4, 0.75 * height - 2 * width / 5.4),
+                Vec2(this->center.x + 2 * width / 5.4, 0.75 * height - 2 * width / 5.4),
             }
         };
-        return stageButtonPositionSet[episodeNumber][stageNumber];
+        return stageButtonPositionSet[stageNumber];
     }
     
-    Vec2 EpisodeScene::getMasterPosition(int currentStage, int currentEpisode)
+    Vec2 EpisodeScene::getMasterPosition(int currentStage)
     {
-        Vec2 position = this->getStageButtonPosition(currentStage, currentEpisode);
+        Vec2 position = this->getStageButtonPosition(currentStage);
         return Vec2(position.x, position.y + 100);
     }
     
-    Vec2 EpisodeScene::getStarPosition(int stageNumber, int episodeNumber, int starNumber)
+    Vec2 EpisodeScene::getStarPosition(int stageNumber, int starNumber)
     {
-        Vec2 position = this->getStageButtonPosition(stageNumber, episodeNumber);
-        position.y += 50;
+        Vec2 position = this->getStageButtonPosition(stageNumber);
+        GameSprite::StageButton* stageButton = this->stageButtonVector.at(0);
+        float width = stageButton->getContentSize().width;
+        float height = stageButton->getContentSize().height;
+        Vec2 center = Vec2(width / 2, height / 2);
+        Vec2 result = Vec2(0, 0);
         switch (starNumber) {
             case 0:
-                position.x -= 35;
+                result = Vec2(center.x - width / 3, height / 16);
                 break;
             case 1:
+                result = Vec2(center.x, height / 8);
                 break;
             case 2:
-                position.x += 35;
+                result = Vec2(center.x + width / 3, height / 16);
                 break;
             default:
                 break;
         }
-        return position;
+        return result;
     }
     
     Vec2 EpisodeScene::getBackButtonPosition()
     {
-        auto imageConfig = ImageConfig::getInstance();
-        auto position = Vec2(
-            this->rightBottom.x - imageConfig->getImageSize("BackButton").width * 0.6,
-            this->rightBottom.y + imageConfig->getImageSize("BackButton").height * 0.6);
-        return position;
+        float width = this->visibleSize.width;
+        float height = this->visibleSize.height;
+        return Vec2(this->visibleOrigin.x + (width - height / 12), this->visibleOrigin.y + height / 12);
+    }
+    
+    Vec2 EpisodeScene::getBackgroundPosition()
+    {
+        return this->center;
     }
 
 }

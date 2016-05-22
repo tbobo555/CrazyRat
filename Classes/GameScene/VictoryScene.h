@@ -6,6 +6,7 @@
 #include "Manager/SpriteManager.h"
 #include "GameSprite/Background.h"
 #include "GameSprite/NextButton.h"
+#include "GameSprite/Star.h"
 
 USING_NS_CC;
 
@@ -19,6 +20,13 @@ namespace GameScene
         void releaseScene();
         GameSprite::Background* victoryBackground;
         GameSprite::NextButton* nextButton;
+        GameSprite::Star* starLeft;
+        GameSprite::Star* starMiddle;
+        GameSprite::Star* starRight;
+    private:
+        Vec2 getStarPosition(int position);
+        Vec2 getBackgroundPosition();
+        Vec2 getNextButtonPosition();
     };
 }
 

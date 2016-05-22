@@ -10,6 +10,7 @@
 #include "GameSprite/ProgressBarDown.h"
 #include "GameSprite/Sweet.h"
 #include "GameSprite/Pig.h"
+#include "GameSprite/Cloud.h"
 
 USING_NS_CC;
 
@@ -35,6 +36,9 @@ namespace GameScene
         GameSprite::Pig* road0Pig;
         GameSprite::Pig* road1Pig;
         GameSprite::Pig* road2Pig;
+        GameSprite::Cloud* road0Cloud;
+        GameSprite::Cloud* road1Cloud;
+        GameSprite::Cloud* road2Cloud;
         std::vector<GameSprite::Sweet*> road0SweetVector;
         std::vector<GameSprite::Sweet*> road1SweetVector;
         std::vector<GameSprite::Sweet*> road2SweetVector;
@@ -71,6 +75,11 @@ namespace GameScene
         void road0Update(float delta);
         void road1Update(float delta);
         void road2Update(float delta);
+        Vec2 getBackgroundPosition();
+        Vec2 getPigPosition(int roadNumber);
+        Vec2 getCloudPosition(int roadNumber);
+        Vec2 getProgressPosition();
+        Vec2 getSweetPosition(int roadNumber);
     };
 }
 
