@@ -3,6 +3,7 @@
 
 #include "BaseSprite.h"
 #include "cocos2d.h"
+#include "Db/SwitchSetting.h"
 
 USING_NS_CC;
 
@@ -13,6 +14,9 @@ namespace GameSprite
     public:
         SoundsButton(std::string image);
         void addEventListener();
+        bool isOpen;
+        void turnOff();
+        void turnOn();
     private:
         static bool onTouchBegan(Touch* touch, Event* event);
         static void onTouchEnded(Touch* touch, Event* event);

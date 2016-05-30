@@ -8,7 +8,9 @@
 #include "GameSprite/BackButton.h"
 #include "GameSprite/Star.h"
 #include "GameSprite/Master.h"
-#include "Db/CommonSetting.h"
+#include "Db/EpisodeSetting.h"
+#include "Db/StageSetting.h"
+#include "Db/StarSetting.h"
 #include "Manager/SpriteManager.h"
 #include "Config/ImageConfig.h"
 

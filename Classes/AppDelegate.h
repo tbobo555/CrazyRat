@@ -3,6 +3,11 @@
 
 #include "cocos2d.h"
 #include "Controller/GameController.h"
+#include "Db/Sqlite3Engine.h"
+#include "Db/SwitchSetting.h"
+#include "Db/EpisodeSetting.h"
+#include "Db/StageSetting.h"
+#include "Db/StarSetting.h"
 
 USING_NS_CC;
 

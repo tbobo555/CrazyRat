@@ -62,9 +62,31 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setContentScaleFactor(scaleFactor);
 
     register_all_packages();
+    
+    Sqlite3Engine::getInstance()->checkIsFirstCreate();
+    Sqlite3Engine::getInstance()->connect();
+    SwitchSetting *switchSetting = SwitchSetting::getInstance();
+    EpisodeSetting *episodeSetting = EpisodeSetting::getInstance();
+    StageSetting *stageSetting = StageSetting::getInstance();
+    StarSetting *starSetting = StarSetting::getInstance();
+    
+    if (Sqlite3Engine::getInstance()->getIsFirstCreate()) {
+        switchSetting->createTable();
+        switchSetting->initTable();
+        episodeSetting->createTable();
+        episodeSetting->initTable();
+        stageSetting->createTable();
+        stageSetting->initTable();
+        starSetting->createTable();
+        starSetting->initTable();
+    }
+    episodeSetting->updateMax(2);
+    stageSetting->updateMax(5);
+    //stageSetting->updateCurrent(0);
     Director::getInstance()->getEventDispatcher()->setEnabled(true);
     Controller::GameController* controller = Controller::GameController::getInstance();
     controller->runStartScene();
+    
     return true;
 }
 

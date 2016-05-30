@@ -17,7 +17,6 @@
 #include "GameScene/LoseScene.h"
 #include "Manager/SceneManager.h"
 #include "Manager/SpriteManager.h"
-#include "Db/CommonSetting.h"
 
 using namespace GameSprite;
 using namespace Manager;

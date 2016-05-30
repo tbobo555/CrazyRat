@@ -17,9 +17,14 @@ namespace GameScene
         std::string backButtonImage = "image/BackButton.png";
         std::string starImage = "image/Star.png";
         std::string masterImage = "image/Master.png";
-        int currentEpisode = DB::CommonSetting::currentEpisode;
-        int currentStage = DB::CommonSetting::currentStage;
-        std::vector<int> starOfStage = DB::CommonSetting::starOfStage.at(this->episodeNumber);
+        int currentEpisode = DB::EpisodeSetting::getInstance()->getCurrent();
+        int currentStage = DB::StageSetting::getInstance()->getCurrent();
+        std::vector<int> starOfStage = {0};
+        try {
+            starOfStage = DB::StarSetting::getInstance()->getAllStarNumber().at(this->episodeNumber);
+        } catch (std::out_of_range ex) {
+            
+        }
         std::stringstream backgroundPath;
         backgroundPath << backgroundImagePrefix << this->episodeNumber << ".png";
         this->episodeBackground = new GameSprite::Background(backgroundPath.str());
@@ -45,7 +50,8 @@ namespace GameScene
             this->addChild(this->master, 4);
             spriteManager->setWithKey("Master", this->master);
         }
-        int maxStage = DB::CommonSetting::maxStage;
+        int maxStage = DB::StageSetting::getInstance()->getMax();
+        int maxEpisode = DB::EpisodeSetting::getInstance()->getMax();
         for (int i = 0; i < maxStage; i++) {
             key.clear();
             key.str("");
@@ -69,8 +75,23 @@ namespace GameScene
                     key.clear();
                     key.str("");
                 }
+            } else if (this->episodeNumber == maxEpisode - 1 && currentStage == maxStage - 1 && i == currentStage) {
+                try {
+                    int starNum = starOfStage.at(i);
+                    for (int j = 0; j < starNum; j++) {
+                        auto star = new GameSprite::Star(starImage);
+                        star->setPosition(this->getStarPosition(i, j));
+                        stageButton->addChild(star, 3);
+                        key << "EpisodeScene_Star_" << this->episodeNumber << "_" << i << "_" << j;
+                        spriteManager->setWithKey(key.str(), star);
+                        key.clear();
+                        key.str("");
+                    }
+                } catch (std::out_of_range ex) {
+                    CCLOG("Not complete all level.");
+                }
+
             }
-            
             stageButton->setPosition(
                 this->getStageButtonPosition(i)
             );
@@ -84,9 +105,14 @@ namespace GameScene
     {
         this->removeAllChildren();
         auto spriteManager = Manager::SpriteManager::getInstance();
-        int currentEpisode = DB::CommonSetting::currentEpisode;
-        int currentStage = DB::CommonSetting::currentStage;
-        std::vector<int> starOfStage = DB::CommonSetting::starOfStage.at(this->episodeNumber);
+        int currentEpisode = DB::EpisodeSetting::getInstance()->getCurrent();
+        int currentStage = DB::StageSetting::getInstance()->getCurrent();
+        std::vector<int> starOfStage = {0};
+        try {
+            starOfStage = DB::StarSetting::getInstance()->getAllStarNumber().at(this->episodeNumber);
+        } catch (std::out_of_range ex) {
+            
+        }
         std::stringstream key;
         key << "EpisodeScene_Background_" << this->episodeNumber;
         spriteManager->releaseByKey(key.str());
@@ -99,7 +125,7 @@ namespace GameScene
         if (this->episodeNumber == currentEpisode) {
             spriteManager->releaseByKey("Master");
         }
-        int maxStage = DB::CommonSetting::maxStage;
+        int maxStage = DB::StageSetting::getInstance()->getMax();
         for (int i = 0; i < maxStage; i++) {
             key.clear();
             key.str("");

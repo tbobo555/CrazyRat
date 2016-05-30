@@ -321,6 +321,37 @@ namespace GameScene
                 this->isVictory = true;
                 auto controller = Controller::GameController::getInstance();
                 controller->addVictorySceneToCurrentScene();
+                int maxStage = DB::StageSetting::getInstance()->getMax() - 1;
+                int currentStage = DB::StageSetting::getInstance()->getCurrent();
+                int maxEpisode = DB::EpisodeSetting::getInstance()->getMax() - 1;
+                int currentEpisode = DB::EpisodeSetting::getInstance()->getCurrent();
+                int newStage;
+                int newEpisode;
+                if (this->episodeNumber == maxEpisode && this->stageNumber == maxStage) {
+                    CCLOG("%d %d",this->episodeNumber, this->stageNumber);
+                    int result = DB::StarSetting::getInstance()->missionComplete(this->episodeNumber, this->stageNumber, 3);
+                    if (result == -1) {
+                        DB::StarSetting::getInstance()->updateStar(this->episodeNumber, this->stageNumber, 3);
+                    }
+                    return;
+                } else if ((maxStage * currentEpisode + currentStage) > (maxStage * this->episodeNumber + this->stageNumber)) {
+                    DB::StarSetting::getInstance()->updateStar(this->episodeNumber, this->stageNumber, 2);
+                    return;
+                } else if (this->stageNumber == maxStage) {
+                    newStage = 0;
+                    newEpisode = this->episodeNumber + 1;
+                    DB::StarSetting::getInstance()->missionComplete(this->episodeNumber, this->stageNumber, 3);
+                } else if (this->episodeNumber == 0 && this->stageNumber == 0) {
+                    newStage = this->stageNumber + 1;
+                    newEpisode = this->episodeNumber;
+                    DB::StarSetting::getInstance()->updateStar(0, 0, 3);
+                } else {
+                    newStage = this->stageNumber + 1;
+                    newEpisode = this->episodeNumber;
+                    DB::StarSetting::getInstance()->missionComplete(this->episodeNumber, this->stageNumber, 3);
+                }
+                DB::StageSetting::getInstance()->updateCurrent(newStage);
+                DB::EpisodeSetting::getInstance()->updateCurrent(newEpisode);
             }
             if (this->road0Pig->hp <= 0 || this->road1Pig->hp <= 0 || this->road2Pig->hp <= 0) {
                 unschedule(schedule_selector(PlayScene::gameUpdate));

@@ -8,7 +8,7 @@
 #include "GameSprite/EpisodeButton.h"
 #include "GameSprite/BackButton.h"
 #include "GameSprite/SelectionTitle.h"
-#include "Db/CommonSetting.h"
+#include "Db/EpisodeSetting.h"
 #include "Manager/SpriteManager.h"
 #include "Config/ImageConfig.h"
 

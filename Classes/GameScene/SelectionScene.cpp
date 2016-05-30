@@ -14,8 +14,8 @@ namespace GameScene
         std::string episodeButtonImagePrefix = "image/EpisodeButton_";
         std::string backButtonImage = "image/BackButton.png";
         std::string selectionTitleImage = "image/SelectionTitle.png";
-        int currentEpisode = DB::CommonSetting::currentEpisode;
-        int maxEpisode = DB::CommonSetting::maxEpisode;
+        int currentEpisode = DB::EpisodeSetting::getInstance()->getCurrent();
+        int maxEpisode = DB::EpisodeSetting::getInstance()->getMax();
         this->selectionBackground = new GameSprite::Background(backgroundImage);
         this->selectionBackground->setPosition(this->getBackgroundPosition());
         this->selectionBackButton = new GameSprite::BackButton(backButtonImage);
@@ -51,7 +51,7 @@ namespace GameScene
         spriteManager->releaseByKey("SelectionScene_Background");
         spriteManager->releaseByKey("SelectionScene_BackButton");
         spriteManager->releaseByKey("SelectionScene_SelectionTitle");
-        int maxEpisode = DB::CommonSetting::maxEpisode;
+        int maxEpisode = DB::EpisodeSetting::getInstance()->getMax();
         for (int i = 0; i < maxEpisode; i++) {
             std::stringstream key;
             key << "SelectionScene_EpisodeButton_" << i;

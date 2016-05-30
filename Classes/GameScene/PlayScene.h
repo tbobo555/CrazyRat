@@ -11,6 +11,10 @@
 #include "GameSprite/Sweet.h"
 #include "GameSprite/Pig.h"
 #include "GameSprite/Cloud.h"
+#include "Db/EpisodeSetting.h"
+#include "Db/StageSetting.h"
+#include "Db/StarSetting.h"
+
 
 USING_NS_CC;
 

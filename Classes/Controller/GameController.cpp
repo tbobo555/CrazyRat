@@ -307,10 +307,12 @@ namespace Controller
         int newEpisodeNumber = episodeNumber;
         auto current = static_cast<GameScene::PlayScene*>(SceneManager::getInstance()->getCurrent());
         if (current->getIsVictory()) {
-            if (stageNumber == 4) {
+            int maxStage = DB::StageSetting::getInstance()->getMax() - 1;
+            int maxEpisode = DB::EpisodeSetting::getInstance()->getMax() - 1;
+            if (stageNumber == maxStage) {
                 newEpisodeNumber++;
             }
-            if (newEpisodeNumber > 5) {
+            if (newEpisodeNumber > maxEpisode) {
                 newEpisodeNumber = episodeNumber;
             }
         }
