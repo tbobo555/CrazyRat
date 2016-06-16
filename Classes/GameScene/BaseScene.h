@@ -24,6 +24,10 @@ namespace GameScene
         Vec2 rightTop;
         Vec2 leftBottom;
         Vec2 rightBottom;
+        Vec2 centerTop;
+        Vec2 centerBottom;
+        Vec2 centerLeft;
+        Vec2 centerRight;
     };
 }
 

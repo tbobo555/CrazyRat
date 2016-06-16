@@ -235,6 +235,7 @@ namespace Controller
         SceneManager::getInstance()->setCurrent(scene);
         this->addMenuSceneToCurrentScene();
         Director::getInstance()->runWithScene(scene);
+        scene->runAnimation();
     }
     
     void GameController::startSceneToSelectionScene()

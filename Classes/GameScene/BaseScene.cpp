@@ -16,6 +16,14 @@ namespace GameScene
                                 visibleOrigin.y);
         this->rightBottom = (Vec2(visibleOrigin.x + visibleSize.width,
                                   visibleOrigin.y ));
+        this->centerTop = Vec2(visibleOrigin.x + visibleSize.width / 2,
+                               visibleOrigin.y + visibleSize.height);
+        this->centerBottom = Vec2(visibleOrigin.x + visibleSize.width / 2,
+                                  visibleOrigin.y);
+        this->centerLeft = Vec2(visibleOrigin.x,
+                                visibleOrigin.y + visibleSize.height / 2);
+        this->centerRight = Vec2(visibleOrigin.x + visibleSize.width,
+                                 visibleOrigin.y + visibleSize.height / 2);
         this->init();
         this->autorelease();
         this->retain();

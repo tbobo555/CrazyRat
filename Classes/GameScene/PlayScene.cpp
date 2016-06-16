@@ -9,6 +9,7 @@ namespace GameScene
         this->episodeNumber = pEpisodeNumber;
         this->stageNumber = pStageNumber;
         this->isVictory = false;
+        this->overGameTime = 25.f;
     }
     
     void PlayScene::initScene()
@@ -246,8 +247,8 @@ namespace GameScene
         this->road2CurrentIndex = 0;
         this->initConfig();
         this->progressBarUp->setVisible(true);
-        this->progressBarUp->runProgress(10.f);
-        this->timeBar->runAction(ProgressTo::create(10.f, 100));
+        //this->progressBarUp->runProgress(this->overGameTime);
+        this->timeBar->runAction(ProgressTo::create(this->overGameTime, 100));
         schedule(CC_SCHEDULE_SELECTOR(PlayScene::gameUpdate), 0.1f);
         schedule(CC_SCHEDULE_SELECTOR(PlayScene::road0Update), 0.1f);
         schedule(CC_SCHEDULE_SELECTOR(PlayScene::road1Update), 0.1f);
@@ -309,7 +310,7 @@ namespace GameScene
     {
         if (! this->isPaused) {
             this->playTime += delta;
-            if (this->playTime > 1.f) {
+            if (this->playTime > this->overGameTime) {
                 unschedule(schedule_selector(PlayScene::gameUpdate));
                 unschedule(schedule_selector(PlayScene::road0Update));
                 unschedule(schedule_selector(PlayScene::road1Update));
@@ -398,67 +399,28 @@ namespace GameScene
     void PlayScene::initConfig()
     {
         this->road0TimeConfig = {
-            0.5f,
-            0.8f,
-            1.0f,
             1.3f,
-            1.7f,
-            2.2f,
-            2.9f,
-            3.3f,
-            3.5f,
-            4.0f,
-            4.5f,
-            5.1f,
-            5.5f,
-            6.4f,
-            7.1f,
-            7.7f,
-            7.9f,
-            8.5f,
-            9.6f
+            1.9f,
+            11.3f,
+            15.8f,
+            16.8f,
+            17.9f
         };
         
         this->road1TimeConfig = {
-            0.9f,
-            1.8f,
-            2.1f,
-            2.5f,
             3.7f,
-            4.0f,
-            4.5f,
-            4.9f,
-            5.3f,
-            5.5f,
-            5.8f,
-            6.1f,
-            6.5f,
-            6.7f,
-            7.6f,
-            8.1f,
-            8.4f
+            7.1f,
+            8.5f,
+            10.0f,
         };
 
         this->road2TimeConfig = {
-            0.8f,
-            1.5f,
-            2.3f,
-            2.9f,
-            3.2f,
-            3.6f,
-            4.1f,
-            4.6f,
+            2.6f,
             4.9f,
-            5.3f,
-            5.5f,
-            6.0f,
-            6.6f,
-            7.0f,
-            7.4f,
-            7.8f,
-            8.2f,
-            8.9f,
-            9.5f
+            5.8f,
+            12.2f,
+            12.9f,
+            14.5f,
         };
     }
 }

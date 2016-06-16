@@ -40,11 +40,11 @@ namespace GameSprite
             float sweetPosition = nearestSweet->getPosition().y;
             float pigPosition = this->getPosition().y;
             float diffPosition = sweetPosition - pigPosition;
-            if (diffPosition > 0 && diffPosition < 54) {
+            if (diffPosition > 0 && diffPosition < 70) {
                 scores =  100;
-            } else if (diffPosition >= 54 && diffPosition <= 90) {
+            } else if (diffPosition >= 70 && diffPosition <= 100) {
                 scores =  80;
-            } else if (diffPosition > 90 && diffPosition <= 126) {
+            } else if (diffPosition > 100 && diffPosition <= 130) {
                 scores =  60;
             } else {
                 this->hp --;

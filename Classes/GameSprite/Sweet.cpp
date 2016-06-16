@@ -8,7 +8,7 @@ namespace GameSprite
     {
         this->sweetId = pSweetId;
         this->roadIndex = pRoadIndex;
-        this->runningTime = 3.f;
+        this->runningTime = 6.f;
     }
 
     void Sweet::eaten()
@@ -41,7 +41,12 @@ namespace GameSprite
     
     void Sweet::run()
     {
-        auto actionBy = MoveBy::create(this->runningTime, Vec2(0, -1000));
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        Vec2 visibleOrigin = Director::getInstance()->getVisibleOrigin();
+
+        float distance = (visibleOrigin.y + 0.87 * visibleSize.height) - (0.24 * 1920);
+        CCLOG("distance %f", distance);
+        auto actionBy = MoveBy::create(this->runningTime, Vec2(0, -1 * distance));
         //auto blink = Blink::create(0.3f, 3);
         this->runAction(Sequence::create(actionBy, CallFunc::create(CC_CALLBACK_0(Sweet::missEat, this)), nullptr));
     }
