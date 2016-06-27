@@ -246,6 +246,7 @@ namespace Controller
         SceneManager::getInstance()->setCurrent(scene);
         this->addMenuSceneToCurrentScene();
         Director::getInstance()->replaceScene(scene);
+        scene->runConstantAnimation();
     }
     
     void GameController::selectionSceneToStartScene()
@@ -280,6 +281,7 @@ namespace Controller
         SceneManager::getInstance()->setCurrent(scene);
         this->addMenuSceneToCurrentScene();
         Director::getInstance()->replaceScene(scene);
+        scene->runConstantAnimation();
     }
     
     void GameController::EpisodeSceneToPlayScene(int episodeNumber, int stageNumber)
@@ -307,7 +309,10 @@ namespace Controller
     {
         int newEpisodeNumber = episodeNumber;
         auto current = static_cast<GameScene::PlayScene*>(SceneManager::getInstance()->getCurrent());
-        if (current->getIsVictory()) {
+        bool isNewHighscore = current->getIsNewHighScore();
+        int newHighScorediff = current->getNewHighScoreDiff();
+
+        if (current->getIsVictory() && current->getAlreadyComplete() == false) {
             int maxStage = DB::StageSetting::getInstance()->getMax() - 1;
             int maxEpisode = DB::EpisodeSetting::getInstance()->getMax() - 1;
             if (stageNumber == maxStage) {
@@ -331,9 +336,13 @@ namespace Controller
         std::stringstream key;
         key << "EpisodeScene_" << newEpisodeNumber;
         EpisodeScene *scene = static_cast<EpisodeScene*>(SceneManager::getInstance()->getByKey(key.str()));
+        scene->isNewHighScore = isNewHighscore;
+        scene->newHighScoreDiff = newHighScorediff;
+        scene->newHighScoreStage = stageNumber;
         SceneManager::getInstance()->setCurrent(scene);
         this->addMenuSceneToCurrentScene();
         Director::getInstance()->replaceScene(scene);
+        scene->runStarAnimation();
     }
     
     void GameController::RetryPlayScene(int episodeNumber, int stageNumber)

@@ -31,6 +31,10 @@ namespace GameScene
         void resumeScene();
         bool getIsPaused();
         bool getIsVictory();
+        bool getVictoryStar();
+        bool getIsNewHighScore();
+        bool getAlreadyComplete();
+        int getNewHighScoreDiff();
         int episodeNumber;
         int stageNumber;
         GameSprite::Background* playBackground;
@@ -58,6 +62,10 @@ namespace GameScene
         float overGameTime;
         bool isVictory;
         bool isPaused;
+        bool alreadyComplete;
+        int alreadycompleteStar;
+        bool isNewHighScore;
+        int newHighScoreDiff;
         int prepareTime;
         Label* prepareLabel;
         void prepareUpdate(float delta);

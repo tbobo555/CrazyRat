@@ -7,6 +7,9 @@ namespace GameScene
     {
         this->name = "EpisodeScene";
         this->episodeNumber = pEpisodeNumber;
+        this->isNewHighScore = false;
+        this->newHighScoreDiff = 0;
+        this->newHighScoreStage = -1;
     }
     
     void EpisodeScene::initScene()
@@ -142,6 +145,41 @@ namespace GameScene
             spriteManager->releaseByKey(key.str());
         }
     }
+    
+    void EpisodeScene::runStarAnimation()
+    {
+        if (isNewHighScore == true && this->newHighScoreStage != -1) {
+            int starNum = DB::StarSetting::getInstance()->getStarNumber(this->episodeNumber, this->newHighScoreStage);
+            auto spriteManager = Manager::SpriteManager::getInstance();
+            int firstIndex = starNum - newHighScoreDiff;
+            Vec2 buttonPosition = this->getStageButtonPosition(this->newHighScoreStage);
+            spriteManager->getByKey("MenuScene_SettingButton")->setVisible(false);
+            this->episodeBackButton->cocos2d::Node::setVisible(false);
+            CCLOG("newHighScoreDiff : %i", newHighScoreDiff);
+            CCLOG("starNum : %i", starNum);
+            for (int i = firstIndex; i < starNum; i++) {
+                std::stringstream key;
+                key << "EpisodeScene_Star_" << this->episodeNumber << "_" << this->newHighScoreStage << "_" << i;
+                auto star = spriteManager->getByKey(key.str());
+                star->setScale(3.0f);
+                star->setPosition(Vec2(this->center.x - buttonPosition.x, this->center.y - buttonPosition.y));
+                star->runAction(RotateBy::create(0.3f, 1080));
+                star->runAction(ScaleTo::create(0.3f, 1.0f));
+                star->runAction(MoveTo::create(0.3f, this->getStarPosition(this->newHighScoreStage, i)));
+            }
+            this->episodeBackground->runAction(Sequence::create(DelayTime::create(1.0f),
+                                                         CallFunc::create( CC_CALLBACK_0(EpisodeScene::animationCallback, this)),nullptr));
+
+        }
+    }
+    
+    void EpisodeScene::animationCallback()
+    {
+        auto spriteManager = Manager::SpriteManager::getInstance();
+        spriteManager->getByKey("MenuScene_SettingButton")->setVisible(true);
+        this->episodeBackButton->cocos2d::Node::setVisible(true);
+    }
+
     
     Vec2 EpisodeScene::getStageButtonPosition(int stageNumber)
     {

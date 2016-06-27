@@ -73,7 +73,6 @@ namespace GameScene
             key << "SelectionScene_EpisodeButton_" << i;
             spriteManager->setWithKey(key.str(), episodeButton);
         }
-        this->runConstantAnimation();
     }
     
     void SelectionScene::releaseScene()
@@ -99,6 +98,11 @@ namespace GameScene
     
     void SelectionScene::runConstantAnimation()
     {
+        this->moveCloud0->setPosition(this->getMoveCloudPosition(0));
+        this->moveCloud1->setPosition(this->getMoveCloudPosition(1));
+        this->moveCloud2->setPosition(this->getMoveCloudPosition(2));
+        this->moveCloud3->setPosition(this->getMoveCloudPosition(3));
+        this->moveCloud4->setPosition(this->getMoveCloudPosition(4));
         auto move100 = MoveBy::create(15.f, Vec2(100, 0));
         auto moveNegative100 = MoveBy::create(15.f, Vec2(-100, 0));
         auto move150 = MoveBy::create(15.f, Vec2(150, 0));

@@ -10,6 +10,15 @@ namespace GameScene
         this->stageNumber = pStageNumber;
         this->isVictory = false;
         this->overGameTime = 25.f;
+        this->alreadycompleteStar = 0;
+        this->alreadyComplete = false;
+        this->isNewHighScore = false;
+        this->newHighScoreDiff = 0;
+        int starResult = DB::StarSetting::getInstance()->getStarNumber(this->episodeNumber, this->stageNumber);
+        if (starResult != 0) {
+            this->alreadyComplete = true;
+            this->alreadycompleteStar = starResult;
+        }
     }
     
     void PlayScene::initScene()
@@ -162,6 +171,21 @@ namespace GameScene
     bool PlayScene::getIsVictory()
     {
         return this->isVictory;
+    }
+    
+    bool PlayScene::getIsNewHighScore()
+    {
+        return this->isNewHighScore;
+    }
+    
+    int PlayScene::getNewHighScoreDiff()
+    {
+        return this->newHighScoreDiff;
+    }
+    
+    bool PlayScene::getAlreadyComplete()
+    {
+        return this->alreadyComplete;
     }
     
     void PlayScene::releaseScene()
@@ -320,39 +344,57 @@ namespace GameScene
                 }
                 log("Victory!");
                 this->isVictory = true;
-                auto controller = Controller::GameController::getInstance();
-                controller->addVictorySceneToCurrentScene();
                 int maxStage = DB::StageSetting::getInstance()->getMax() - 1;
-                int currentStage = DB::StageSetting::getInstance()->getCurrent();
                 int maxEpisode = DB::EpisodeSetting::getInstance()->getMax() - 1;
-                int currentEpisode = DB::EpisodeSetting::getInstance()->getCurrent();
                 int newStage;
                 int newEpisode;
-                if (this->episodeNumber == maxEpisode && this->stageNumber == maxStage) {
-                    CCLOG("%d %d",this->episodeNumber, this->stageNumber);
-                    int result = DB::StarSetting::getInstance()->missionComplete(this->episodeNumber, this->stageNumber, 3);
-                    if (result == -1) {
-                        DB::StarSetting::getInstance()->updateStar(this->episodeNumber, this->stageNumber, 3);
+                auto controller = Controller::GameController::getInstance();
+                if (this->alreadyComplete == true) {
+                    int newScore = 3;
+                    int oldScore = DB::StarSetting::getInstance()->getStarNumber(this->episodeNumber, this->stageNumber);
+                    if (oldScore < newScore) {
+                        this->isNewHighScore = true;
+                        this->newHighScoreDiff = newScore - oldScore;
+                        DB::StarSetting::getInstance()->updateStar(this->episodeNumber, this->stageNumber, newScore);
                     }
+                    controller->addVictorySceneToCurrentScene();
                     return;
-                } else if ((maxStage * currentEpisode + currentStage) > (maxStage * this->episodeNumber + this->stageNumber)) {
-                    DB::StarSetting::getInstance()->updateStar(this->episodeNumber, this->stageNumber, 2);
+                } else if (this->episodeNumber == maxEpisode && this->stageNumber == maxStage) {
+                    int newScore = 1;
+                    DB::StarSetting::getInstance()->missionComplete(this->episodeNumber, this->stageNumber, 1);
+                    this->isNewHighScore = true;
+                    this->newHighScoreDiff = newScore;
+                    controller->addVictorySceneToCurrentScene();
+                    return;
+                } else if (this->episodeNumber == 0 && this->stageNumber == 0) {
+                    int newScore = 1;
+                    this->isNewHighScore = true;
+                    this->newHighScoreDiff = newScore;
+                    newStage = this->stageNumber + 1;
+                    newEpisode = this->episodeNumber;
+                    DB::StarSetting::getInstance()->updateStar(this->episodeNumber, this->stageNumber, newScore);
+                    DB::StageSetting::getInstance()->updateCurrent(newStage);
+                    DB::EpisodeSetting::getInstance()->updateCurrent(newEpisode);
+                    controller->addVictorySceneToCurrentScene();
                     return;
                 } else if (this->stageNumber == maxStage) {
+                    int newScore = 1;
+                    this->isNewHighScore = false;
+                    this->newHighScoreDiff = 0;
                     newStage = 0;
                     newEpisode = this->episodeNumber + 1;
-                    DB::StarSetting::getInstance()->missionComplete(this->episodeNumber, this->stageNumber, 3);
-                } else if (this->episodeNumber == 0 && this->stageNumber == 0) {
-                    newStage = this->stageNumber + 1;
-                    newEpisode = this->episodeNumber;
-                    DB::StarSetting::getInstance()->updateStar(0, 0, 3);
                 } else {
+                    int newScore = 1;
+                    this->isNewHighScore = true;
+                    this->newHighScoreDiff = newScore;
                     newStage = this->stageNumber + 1;
                     newEpisode = this->episodeNumber;
-                    DB::StarSetting::getInstance()->missionComplete(this->episodeNumber, this->stageNumber, 3);
                 }
+                DB::StarSetting::getInstance()->missionComplete(this->episodeNumber, this->stageNumber, 1);
                 DB::StageSetting::getInstance()->updateCurrent(newStage);
                 DB::EpisodeSetting::getInstance()->updateCurrent(newEpisode);
+                controller->addVictorySceneToCurrentScene();
+                return;
             }
             if (this->road0Pig->hp <= 0 || this->road1Pig->hp <= 0 || this->road2Pig->hp <= 0) {
                 unschedule(schedule_selector(PlayScene::gameUpdate));

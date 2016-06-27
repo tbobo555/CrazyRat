@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "BaseScene.h"
+#include "GameSprite/Image.h"
 #include "GameSprite/Background.h"
 #include "GameSprite/StageButton.h"
 #include "GameSprite/BackButton.h"
@@ -22,7 +23,12 @@ namespace GameScene
         EpisodeScene(int pEpisodeNumber);
         void initScene();
         void releaseScene();
+        void runStarAnimation();
+        void animationCallback();
         int episodeNumber;
+        bool isNewHighScore;
+        int newHighScoreDiff;
+        int newHighScoreStage;
         GameSprite::Background* episodeBackground;
         GameSprite::Master* master;
         GameSprite::BackButton* episodeBackButton;
