@@ -290,6 +290,7 @@ namespace Controller
         this->releaseMenuSceneResource();
         this->releaseEpisodeSceneResource(episodeNumber);
         this->releaseSelectionSceneResource();
+        Director::getInstance()->purgeCachedData();
         this->loadPauseSceneResource();
         this->loadVictorySceneResource();
         this->loadLoseSceneResource();
@@ -329,6 +330,7 @@ namespace Controller
         this->releaseVictorySceneResource();
         this->releaseLoseSceneResource();
         this->releasePlaySceneResource(episodeNumber, stageNumber);
+        Director::getInstance()->purgeCachedData();
         this->loadMenuSceneResource();
         this->loadStartSceneResource();
         this->loadSelectionSceneResource();

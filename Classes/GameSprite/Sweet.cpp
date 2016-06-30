@@ -36,7 +36,8 @@ namespace GameSprite
         std::stringstream key;
         key << "PlayScene_Road" << this->roadIndex << "Pig";
         auto pig = static_cast<Pig*>(Manager::SpriteManager::getInstance()->getByKey(key.str()));
-        pig->hp -- ;
+        pig->hurt();
+        CCLOG("missEat hurt!!!");
     }
     
     void Sweet::run()

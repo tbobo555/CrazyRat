@@ -59,6 +59,7 @@ namespace GameScene
         int getNearestSweetIndex(int road);
         GameSprite::Sweet* getNearestSweet(int road);
     private:
+        SpriteFrameCache* spriteCache;
         float overGameTime;
         bool isVictory;
         bool isPaused;

@@ -23,6 +23,11 @@ namespace GameScene
     
     void PlayScene::initScene()
     {
+        this->spriteCache = SpriteFrameCache::getInstance();
+        this->spriteCache->addSpriteFramesWithFile("image/Pig0Animation.plist");
+        this->spriteCache->addSpriteFramesWithFile("image/Pig1Animation.plist");
+        this->spriteCache->addSpriteFramesWithFile("image/Pig2Animation.plist");
+        this->spriteCache->addSpriteFramesWithFile("image/MouthAnimation.plist");
         auto spriteManager = Manager::SpriteManager::getInstance();
         std::string backgroundImage = "image/PlayBackground.png";
         std::string progressBarDownImage = "image/ProgressBarDown.png";
@@ -34,9 +39,9 @@ namespace GameScene
         std::string backHomeButtonImage = "image/BackHomeButton.png";
         std::string retryButtonImage = "image/RetryButton.png";
         std::string pauseBackButtonImage = "image/BackButton.png";
-        std::string pig0Image = "image/Pig0.png";
-        std::string pig1Image = "image/Pig1.png";
-        std::string pig2Image = "image/Pig2.png";
+        std::string pig0Image = "Pig0Animation_0.png";
+        std::string pig1Image = "Pig1Animation_0.png";
+        std::string pig2Image = "Pig2Animation_0.png";
         std::string cloud0Image = "image/Cloud0.png";
         std::string cloud1Image = "image/Cloud1.png";
         std::string cloud2Image = "image/Cloud2.png";
@@ -95,15 +100,15 @@ namespace GameScene
             this->road2AvailableIndex.push_back(sweetId);
         }
         
-        this->road0Pig = new Pig(pig0Image, 0);
+        this->road0Pig = new Pig(pig0Image, 0, 0);
         this->road0Pig->setPosition(this->getPigPosition(0));
         this->addChild(this->road0Pig, 2);
         spriteManager->setWithKey("PlayScene_Road0Pig", this->road0Pig);
-        this->road1Pig = new Pig(pig1Image, 1);
+        this->road1Pig = new Pig(pig1Image, 1, 1);
         this->road1Pig->setPosition(this->getPigPosition(1));
         this->addChild(this->road1Pig, 2);
         spriteManager->setWithKey("PlayScene_Road1Pig", this->road1Pig);
-        this->road2Pig = new Pig(pig2Image, 2);
+        this->road2Pig = new Pig(pig2Image, 2, 2);
         this->road2Pig->setPosition(this->getPigPosition(2));
         this->addChild(this->road2Pig, 2);
         spriteManager->setWithKey("PlayScene_Road2Pig", this->road2Pig);
@@ -209,12 +214,15 @@ namespace GameScene
         spriteManager->releaseByKey("PlayScene_Road0Cloud");
         spriteManager->releaseByKey("PlayScene_Road1Cloud");
         spriteManager->releaseByKey("PlayScene_Road2Cloud");
-
         for (int i = 0; i < 10; i++) {
             this->road0SweetVector[i]->release();
             this->road1SweetVector[i]->release();
             this->road2SweetVector[i]->release();
         }
+        this->spriteCache->removeSpriteFramesFromFile("image/Pig0Animation.plist");
+        this->spriteCache->removeSpriteFramesFromFile("image/Pig1Animation.plist");
+        this->spriteCache->removeSpriteFramesFromFile("image/Pig2Animation.plist");
+        this->spriteCache->removeSpriteFramesFromFile("image/MouthAnimation.plist");
     }
     
     void PlayScene::play()
@@ -277,6 +285,9 @@ namespace GameScene
         schedule(CC_SCHEDULE_SELECTOR(PlayScene::road0Update), 0.1f);
         schedule(CC_SCHEDULE_SELECTOR(PlayScene::road1Update), 0.1f);
         schedule(CC_SCHEDULE_SELECTOR(PlayScene::road2Update), 0.1f);
+        this->road0Pig->wink();
+        this->road1Pig->wink();
+        this->road2Pig->wink();
     }
     
     void PlayScene::road0Update(float delta)
@@ -416,7 +427,7 @@ namespace GameScene
     {
         if (road == 0 && ! this->road0RunningIndex.empty()) {
             return this->road0SweetVector.at(this->road0RunningIndex.front());
-        } else if (road == 1 && ! this->road2RunningIndex.empty()) {
+        } else if (road == 1 && ! this->road1RunningIndex.empty()) {
             return this->road1SweetVector.at(this->road1RunningIndex.front());
         } else if (road == 2 && ! this->road2RunningIndex.empty()) {
             return this->road2SweetVector.at(this->road2RunningIndex.front());
@@ -429,7 +440,7 @@ namespace GameScene
     {
         if (road == 0 && ! this->road0RunningIndex.empty()) {
             return this->road0RunningIndex.front();
-        } else if (road == 1 && ! this->road2RunningIndex.empty()) {
+        } else if (road == 1 && ! this->road1RunningIndex.empty()) {
             return this->road1RunningIndex.front();
         } else if (road == 2 && ! this->road2RunningIndex.empty()) {
             return this->road2RunningIndex.front();

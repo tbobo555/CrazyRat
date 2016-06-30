@@ -9,6 +9,7 @@ class TextureCreator
 {
 public:
     static TextureCreator* getInstance();
+    Texture2D* getAutoSizeTexture2d(Texture2D* texture);
     Texture2D* getAutoSizeTexture2d(std::string img);
 private:
     TextureCreator();

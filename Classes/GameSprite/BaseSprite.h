@@ -14,6 +14,7 @@ namespace GameSprite
         BaseSprite();
         virtual ~BaseSprite();
         BaseSprite(std::string image);
+        BaseSprite(std::string image, bool fromCache);
         virtual void addEventListener();
     private:
     };
