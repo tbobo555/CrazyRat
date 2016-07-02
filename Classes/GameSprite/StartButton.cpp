@@ -17,7 +17,7 @@ namespace GameSprite
         listener->onTouchMoved = StartButton::onTouchMoved;
         listener->onTouchCancelled = StartButton::onTouchCanceled;
         Director::getInstance()->getEventDispatcher()
-        ->addEventListenerWithSceneGraphPriority(listener, this);
+        ->addEventListenerWithSceneGraphPriority(listener, this);        
     }
     
     bool StartButton::onTouchBegan(Touch* touch, Event* event)

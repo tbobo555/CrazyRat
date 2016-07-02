@@ -37,6 +37,30 @@ namespace GameScene
         spriteManager->releaseByKey("VictoryScene_StarRight");
     }
     
+    void VictoryScene::runAnimation()
+    {
+        Director::getInstance()->getEventDispatcher()->setEnabled(false);
+        this->nextButton->setVisible(false);
+        this->starRight->setPosition(this->leftBottom);
+        this->starMiddle->setPosition(this->leftBottom);
+        this->starLeft->setPosition(this->leftBottom);
+        
+        auto actionTo = MoveTo::create(0.3, this->getStarPosition(0));
+        this->starRight->runAction(actionTo);
+        
+        actionTo = MoveTo::create(0.3, this->getStarPosition(1));
+        this->starMiddle->runAction(Sequence::create(DelayTime::create(0.15f), actionTo, NULL));
+        
+        actionTo = MoveTo::create(0.3, this->getStarPosition(2));
+        this->starLeft->runAction(Sequence::create(DelayTime::create(0.3f), actionTo, CallFunc::create(CC_CALLBACK_0(VictoryScene::animationCallback, this)), NULL));
+    }
+    
+    void VictoryScene::animationCallback()
+    {
+        Director::getInstance()->getEventDispatcher()->setEnabled(true);
+        this->nextButton->setVisible(true);
+    }
+    
     Vec2 VictoryScene::getBackgroundPosition()
     {
         return this->center;

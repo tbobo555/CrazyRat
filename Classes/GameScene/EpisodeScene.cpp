@@ -149,6 +149,7 @@ namespace GameScene
     void EpisodeScene::runStarAnimation()
     {
         if (isNewHighScore == true && this->newHighScoreStage != -1) {
+            Director::getInstance()->getEventDispatcher()->setEnabled(false);
             int starNum = DB::StarSetting::getInstance()->getStarNumber(this->episodeNumber, this->newHighScoreStage);
             auto spriteManager = Manager::SpriteManager::getInstance();
             int firstIndex = starNum - newHighScoreDiff;
@@ -168,13 +169,14 @@ namespace GameScene
                 star->runAction(MoveTo::create(0.3f, this->getStarPosition(this->newHighScoreStage, i)));
             }
             this->episodeBackground->runAction(Sequence::create(DelayTime::create(1.0f),
-                                                         CallFunc::create( CC_CALLBACK_0(EpisodeScene::animationCallback, this)),nullptr));
+                                                         CallFunc::create(CC_CALLBACK_0(EpisodeScene::animationCallback, this)),nullptr));
 
         }
     }
     
     void EpisodeScene::animationCallback()
     {
+        Director::getInstance()->getEventDispatcher()->setEnabled(true);
         auto spriteManager = Manager::SpriteManager::getInstance();
         spriteManager->getByKey("MenuScene_SettingButton")->setVisible(true);
         this->episodeBackButton->cocos2d::Node::setVisible(true);

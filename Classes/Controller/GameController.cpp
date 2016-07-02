@@ -184,6 +184,7 @@ namespace Controller
     
     void GameController::addVictorySceneToCurrentScene()
     {
+        auto victoryScene = static_cast<VictoryScene*>(SceneManager::getInstance()->getByKey("VictoryScene"));
         auto scene = SceneManager::getInstance()->getCurrent();
         Manager::SpriteManager* spriteManager = Manager::SpriteManager::getInstance();
         auto victoryBackground = spriteManager->getByKey("VictoryScene_VictoryBackground");
@@ -196,6 +197,7 @@ namespace Controller
         scene->addChild(starLeft, 201);
         scene->addChild(starRight, 201);
         scene->addChild(starMiddle, 201);
+        victoryScene->runAnimation();
     }
     
     void GameController::removeVictorySceneFromCurrentScene()
@@ -210,12 +212,16 @@ namespace Controller
     
     void GameController::addLoseSceneToCurrentScene()
     {
+        auto loseScene = static_cast<LoseScene*>(SceneManager::getInstance()->getByKey("LoseScene"));
         auto scene = SceneManager::getInstance()->getCurrent();
         Manager::SpriteManager* spriteManager = Manager::SpriteManager::getInstance();
         auto loseBackground = spriteManager->getByKey("LoseScene_LoseBackground");
         auto nextButton = spriteManager->getByKey("LoseScene_NextButton");
+        auto loseTitle = spriteManager->getByKey("LoseScene_LoseTitle");
         scene->addChild(loseBackground, 200);
+        scene->addChild(loseTitle, 201);
         scene->addChild(nextButton, 201);
+        loseScene->runAnimation();
     }
     
     void GameController::removeLoseSceneFromCurrentScene()
@@ -223,6 +229,7 @@ namespace Controller
         auto scene = SceneManager::getInstance()->getCurrent();
         scene->removeChild(SpriteManager::getInstance()->getByKey("LoseScene_LoseBackground"));
         scene->removeChild(SpriteManager::getInstance()->getByKey("LoseScene_NextButton"));
+        scene->removeChild(SpriteManager::getInstance()->getByKey("LoseScene_LoseTitle"));
     }
     
     void GameController::runStartScene()

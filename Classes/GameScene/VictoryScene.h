@@ -18,6 +18,8 @@ namespace GameScene
         VictoryScene();
         void initScene();
         void releaseScene();
+        void runAnimation();
+        void animationCallback();
         GameSprite::Background* victoryBackground;
         GameSprite::NextButton* nextButton;
         GameSprite::Star* starLeft;

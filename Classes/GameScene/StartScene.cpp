@@ -51,6 +51,7 @@ namespace GameScene
     
     void StartScene::runAnimation()
     {
+        Director::getInstance()->getEventDispatcher()->setEnabled(false);
         auto spriteManager = Manager::SpriteManager::getInstance();
         Vec2 titleEndPosition = this->getStartTitlePosition();
         Vec2 titleStartposition = Vec2(this->centerTop.x, this->centerTop.y + this->startTitle->getContentSize().height);
@@ -79,6 +80,7 @@ namespace GameScene
         auto spriteManager = Manager::SpriteManager::getInstance();
         spriteManager->getByKey("MenuScene_SettingButton")->setVisible(true);
         this->startButton->cocos2d::Node::setVisible(true);
+        Director::getInstance()->getEventDispatcher()->setEnabled(true);
     }
     
     Vec2 StartScene::getStartButtonPosition()
