@@ -37,22 +37,38 @@ namespace GameScene
         spriteManager->releaseByKey("VictoryScene_StarRight");
     }
     
-    void VictoryScene::runAnimation()
+    void VictoryScene::runAnimation(int newScores)
     {
+        if (newScores < 1 || newScores > 3) {
+            return;
+        }
         Director::getInstance()->getEventDispatcher()->setEnabled(false);
         this->nextButton->setVisible(false);
-        this->starRight->setPosition(this->leftBottom);
-        this->starMiddle->setPosition(this->leftBottom);
-        this->starLeft->setPosition(this->leftBottom);
+        if (newScores == 3) {
+            this->starRight->setPosition(this->leftBottom);
+        }
+        if (newScores >= 2) {
+            this->starMiddle->setPosition(this->leftBottom);
+        }
+        if (newScores >= 1) {
+            this->starLeft->setPosition(this->leftBottom);
+        }
+
+        auto actionTo = MoveTo::create(0.3, this->getStarPosition(2));
         
-        auto actionTo = MoveTo::create(0.3, this->getStarPosition(0));
-        this->starRight->runAction(actionTo);
+        if (newScores == 3) {
+            this->starRight->runAction(actionTo);
+        }
         
-        actionTo = MoveTo::create(0.3, this->getStarPosition(1));
-        this->starMiddle->runAction(Sequence::create(DelayTime::create(0.15f), actionTo, NULL));
-        
-        actionTo = MoveTo::create(0.3, this->getStarPosition(2));
-        this->starLeft->runAction(Sequence::create(DelayTime::create(0.3f), actionTo, CallFunc::create(CC_CALLBACK_0(VictoryScene::animationCallback, this)), NULL));
+        if (newScores >= 2) {
+            actionTo = MoveTo::create(0.3, this->getStarPosition(1));
+            this->starMiddle->runAction(Sequence::create(DelayTime::create(0.15f), actionTo, NULL));
+        }
+
+        if (newScores >= 1) {
+            actionTo = MoveTo::create(0.3, this->getStarPosition(0));
+            this->starLeft->runAction(Sequence::create(DelayTime::create(0.3f), actionTo, CallFunc::create(CC_CALLBACK_0(VictoryScene::animationCallback, this)), NULL));
+        }
     }
     
     void VictoryScene::animationCallback()

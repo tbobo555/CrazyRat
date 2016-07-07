@@ -5,7 +5,10 @@
 #include "BaseSprite.h"
 #include "Mouth.h"
 #include "Image.h"
+#include "ScoreStar.h"
 #include "Manager/SceneManager.h"
+#include "Manager/ScoresManager.h"
+#include "Manager/SpriteManager.h"
 
 namespace GameSprite
 {

@@ -182,22 +182,30 @@ namespace Controller
         pauseBackground->GameScene::BaseScene::removeChild(SpriteManager::getInstance()->getByKey("PauseScene_RetryButton"));
     }
     
-    void GameController::addVictorySceneToCurrentScene()
+    void GameController::addVictorySceneToCurrentScene(int newScores)
     {
         auto victoryScene = static_cast<VictoryScene*>(SceneManager::getInstance()->getByKey("VictoryScene"));
         auto scene = SceneManager::getInstance()->getCurrent();
         Manager::SpriteManager* spriteManager = Manager::SpriteManager::getInstance();
         auto victoryBackground = spriteManager->getByKey("VictoryScene_VictoryBackground");
         auto nextButton = spriteManager->getByKey("VictoryScene_NextButton");
-        auto starLeft = spriteManager->getByKey("VictoryScene_StarLeft");
-        auto starRight = spriteManager->getByKey("VictoryScene_StarRight");
-        auto starMiddle = spriteManager->getByKey("VictoryScene_StarMiddle");
+        auto starLeft = static_cast<GameSprite::Star*>(spriteManager->getByKey("VictoryScene_StarLeft"));
+        auto starRight = static_cast<GameSprite::Star*>(spriteManager->getByKey("VictoryScene_StarRight"));
+        auto starMiddle = static_cast<GameSprite::Star*>(spriteManager->getByKey("VictoryScene_StarMiddle"));
+        
+        if (newScores == 2) {
+            starRight->setBlank();
+        }
+        if (newScores == 1) {
+            starRight->setBlank();
+            starMiddle->setBlank();
+        }
         scene->addChild(victoryBackground, 200);
         scene->addChild(nextButton, 201);
         scene->addChild(starLeft, 201);
         scene->addChild(starRight, 201);
         scene->addChild(starMiddle, 201);
-        victoryScene->runAnimation();
+        victoryScene->runAnimation(newScores);
     }
     
     void GameController::removeVictorySceneFromCurrentScene()

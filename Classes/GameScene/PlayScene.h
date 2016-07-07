@@ -5,12 +5,14 @@
 #include "cocos2d.h"
 #include "BaseScene.h"
 #include "Manager/SpriteManager.h"
+#include "Manager/ScoresManager.h"
 #include "GameSprite/Background.h"
 #include "GameSprite/ProgressBarUp.h"
 #include "GameSprite/ProgressBarDown.h"
 #include "GameSprite/Sweet.h"
 #include "GameSprite/Pig.h"
 #include "GameSprite/Cloud.h"
+#include "GameSprite/ScoreStar.h"
 #include "Db/EpisodeSetting.h"
 #include "Db/StageSetting.h"
 #include "Db/StarSetting.h"
@@ -47,6 +49,11 @@ namespace GameScene
         GameSprite::Cloud* road0Cloud;
         GameSprite::Cloud* road1Cloud;
         GameSprite::Cloud* road2Cloud;
+        GameSprite::Image* scoreHalo;
+        GameSprite::ScoreStar* scoreRightStar;
+        GameSprite::ScoreStar* scoreLeftStar;
+        GameSprite::ScoreStar* scoreMiddleStar;
+        Label* scores;
         std::vector<GameSprite::Sweet*> road0SweetVector;
         std::vector<GameSprite::Sweet*> road1SweetVector;
         std::vector<GameSprite::Sweet*> road2SweetVector;
@@ -74,6 +81,7 @@ namespace GameScene
         void initConfig();
         float playTime;
         void gameUpdate(float delta);
+        int calculateScores();
         int road0MaxSpriteNumber;
         int road1MaxSpriteNumber;
         int road2MaxSpriteNumber;
@@ -94,6 +102,9 @@ namespace GameScene
         Vec2 getCloudPosition(int roadNumber);
         Vec2 getProgressPosition();
         Vec2 getSweetPosition(int roadNumber);
+        Vec2 getScoreHaloPosition();
+        Vec2 getScoreStarPosition(int index);
+        Vec2 getScoresPosition();
     };
 }
 

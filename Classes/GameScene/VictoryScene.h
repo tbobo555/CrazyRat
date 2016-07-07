@@ -18,7 +18,7 @@ namespace GameScene
         VictoryScene();
         void initScene();
         void releaseScene();
-        void runAnimation();
+        void runAnimation(int newScores);
         void animationCallback();
         GameSprite::Background* victoryBackground;
         GameSprite::NextButton* nextButton;

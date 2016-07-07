@@ -49,7 +49,7 @@ namespace Controller
         void removeMenuSceneFromCurrentScene();
         void addPauseSceneToCurrentScene();
         void removePauseSceneFromCurrentScene();
-        void addVictorySceneToCurrentScene();
+        void addVictorySceneToCurrentScene(int newScores);
         void removeVictorySceneFromCurrentScene();
         void addLoseSceneToCurrentScene();
         void removeLoseSceneFromCurrentScene();

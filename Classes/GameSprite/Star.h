@@ -12,6 +12,7 @@ namespace GameSprite
     {
     public:
         Star(std::string image);
+        void setBlank();
         void addEventListener();
     private:
         static bool onTouchBegan(Touch *touch, Event *event);

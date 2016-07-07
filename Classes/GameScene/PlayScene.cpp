@@ -23,6 +23,7 @@ namespace GameScene
     
     void PlayScene::initScene()
     {
+        Manager::ScoresManager::getInstance()->initScores();
         this->spriteCache = SpriteFrameCache::getInstance();
         this->spriteCache->addSpriteFramesWithFile("image/Pig0Animation.plist");
         this->spriteCache->addSpriteFramesWithFile("image/Pig1Animation.plist");
@@ -45,6 +46,7 @@ namespace GameScene
         std::string cloud0Image = "image/Cloud0.png";
         std::string cloud1Image = "image/Cloud1.png";
         std::string cloud2Image = "image/Cloud2.png";
+        std::string scoreHaloImage = "image/ScoreHalo.png";
         
         this->playBackground = new GameSprite::Background(backgroundImage);
         this->playBackground->setPosition(this->getBackgroundPosition());
@@ -125,6 +127,32 @@ namespace GameScene
         this->road2Cloud->setPosition(this->getCloudPosition(2));
         this->addChild(this->road2Cloud, 20);
         spriteManager->setWithKey("PlayScene_Road2Cloud", this->road2Cloud);
+        
+        this->scoreHalo = new GameSprite::Image(scoreHaloImage);
+        this->scoreHalo->setPosition(this->getScoreHaloPosition());
+        this->scoreHalo->setOpacity(0);
+        spriteManager->setWithKey("PlayScene_ScoreHalo", this->scoreHalo);
+        this->addChild(this->scoreHalo, 21);
+        
+        this->scoreRightStar = new GameSprite::ScoreStar();
+        this->scoreRightStar->setPosition(this->getScoreStarPosition(2));
+        spriteManager->setWithKey("PlayScene_ScoreRightStar", this->scoreRightStar);
+        this->addChild(this->scoreRightStar, 22);
+        
+        this->scoreLeftStar = new GameSprite::ScoreStar();
+        this->scoreLeftStar->setPosition(this->getScoreStarPosition(0));
+        spriteManager->setWithKey("PlayScene_ScoreLeftStar", this->scoreLeftStar);
+        this->addChild(this->scoreLeftStar, 22);
+        
+        this->scoreMiddleStar = new GameSprite::ScoreStar();
+        this->scoreMiddleStar->setPosition(this->getScoreStarPosition(1));
+        spriteManager->setWithKey("PlayScene_ScoreMiddleStar", this->scoreMiddleStar);
+        this->addChild(this->scoreMiddleStar, 22);
+        
+        this->scores = Manager::ScoresManager::getInstance()->getScoresLabel();
+        this->scores->setPosition(this->getScoresPosition());
+        this->scores->setColor(Color3B(255, 114, 18));
+        this->addChild(this->scores, 23);
     }
     
     Vec2 PlayScene::getBackgroundPosition()
@@ -165,9 +193,40 @@ namespace GameScene
     
     Vec2 PlayScene::getProgressPosition()
     {
-        return Vec2(600, this->visibleOrigin.y + this->visibleSize.height - this->visibleSize.width / 11);
+        return Vec2(480, this->visibleOrigin.y + this->visibleSize.height - this->visibleSize.width / 11);
     }
+    
+    Vec2 PlayScene::getScoreHaloPosition()
+    {
+        return Vec2(925, this->visibleOrigin.y + this->visibleSize.height - this->visibleSize.width / 11);
+    }
+    
+    Vec2 PlayScene::getScoreStarPosition(int index)
+    {
+        int x = 0;
+        switch (index) {
+            case 0:
+                x = 865;
+                break;
+            case 1:
+                x = 925;
+                break;
+            case 2:
+                x = 985;
+                break;
+            default:
+                break;
+        }
         
+        return Vec2(x, this->visibleOrigin.y + this->visibleSize.height - this->visibleSize.width / 11 + 40);
+    }
+    
+    Vec2 PlayScene::getScoresPosition()
+    {
+        return Vec2(925, this->visibleOrigin.y + this->visibleSize.height - this->visibleSize.width / 11 - 15);
+    }
+
+    
     bool PlayScene::getIsPaused()
     {
         return this->isPaused;
@@ -214,6 +273,13 @@ namespace GameScene
         spriteManager->releaseByKey("PlayScene_Road0Cloud");
         spriteManager->releaseByKey("PlayScene_Road1Cloud");
         spriteManager->releaseByKey("PlayScene_Road2Cloud");
+        
+        spriteManager->releaseByKey("PlayScene_ScoreHalo");
+        spriteManager->releaseByKey("PlayScene_ScoreRightStar");
+        spriteManager->releaseByKey("PlayScene_ScoreLeftStar");
+        spriteManager->releaseByKey("PlayScene_ScoreMiddleStar");
+        Manager::ScoresManager::getInstance()->releaseScores();
+        
         for (int i = 0; i < 10; i++) {
             this->road0SweetVector[i]->release();
             this->road1SweetVector[i]->release();
@@ -341,6 +407,21 @@ namespace GameScene
         }
     }
     
+    int PlayScene::calculateScores()
+    {
+        int totalScores = Manager::ScoresManager::getInstance()->getScores();
+        if (totalScores >= 100 && totalScores < 1000) {
+            return 1;
+        }
+        if (totalScores >= 1000 && totalScores < 1400) {
+            return 2;
+        }
+        if (totalScores >= 1400) {
+            return 3;
+        }
+        return 0;
+    }
+    
     void PlayScene::gameUpdate(float delta)
     {
         if (! this->isPaused) {
@@ -359,26 +440,24 @@ namespace GameScene
                 int maxEpisode = DB::EpisodeSetting::getInstance()->getMax() - 1;
                 int newStage;
                 int newEpisode;
+                int newScore = this->calculateScores();
                 auto controller = Controller::GameController::getInstance();
                 if (this->alreadyComplete == true) {
-                    int newScore = 3;
                     int oldScore = DB::StarSetting::getInstance()->getStarNumber(this->episodeNumber, this->stageNumber);
                     if (oldScore < newScore) {
                         this->isNewHighScore = true;
                         this->newHighScoreDiff = newScore - oldScore;
                         DB::StarSetting::getInstance()->updateStar(this->episodeNumber, this->stageNumber, newScore);
                     }
-                    controller->addVictorySceneToCurrentScene();
+                    controller->addVictorySceneToCurrentScene(newScore);
                     return;
                 } else if (this->episodeNumber == maxEpisode && this->stageNumber == maxStage) {
-                    int newScore = 1;
                     DB::StarSetting::getInstance()->missionComplete(this->episodeNumber, this->stageNumber, 1);
                     this->isNewHighScore = true;
                     this->newHighScoreDiff = newScore;
-                    controller->addVictorySceneToCurrentScene();
+                    controller->addVictorySceneToCurrentScene(newScore);
                     return;
                 } else if (this->episodeNumber == 0 && this->stageNumber == 0) {
-                    int newScore = 1;
                     this->isNewHighScore = true;
                     this->newHighScoreDiff = newScore;
                     newStage = this->stageNumber + 1;
@@ -386,25 +465,23 @@ namespace GameScene
                     DB::StarSetting::getInstance()->updateStar(this->episodeNumber, this->stageNumber, newScore);
                     DB::StageSetting::getInstance()->updateCurrent(newStage);
                     DB::EpisodeSetting::getInstance()->updateCurrent(newEpisode);
-                    controller->addVictorySceneToCurrentScene();
+                    controller->addVictorySceneToCurrentScene(newScore);
                     return;
                 } else if (this->stageNumber == maxStage) {
-                    int newScore = 1;
                     this->isNewHighScore = false;
                     this->newHighScoreDiff = 0;
                     newStage = 0;
                     newEpisode = this->episodeNumber + 1;
                 } else {
-                    int newScore = 1;
                     this->isNewHighScore = true;
                     this->newHighScoreDiff = newScore;
                     newStage = this->stageNumber + 1;
                     newEpisode = this->episodeNumber;
                 }
-                DB::StarSetting::getInstance()->missionComplete(this->episodeNumber, this->stageNumber, 1);
+                DB::StarSetting::getInstance()->missionComplete(this->episodeNumber, this->stageNumber, newScore);
                 DB::StageSetting::getInstance()->updateCurrent(newStage);
                 DB::EpisodeSetting::getInstance()->updateCurrent(newEpisode);
-                controller->addVictorySceneToCurrentScene();
+                controller->addVictorySceneToCurrentScene(newScore);
                 return;
             }
             if (this->road0Pig->hp <= 0 || this->road1Pig->hp <= 0 || this->road2Pig->hp <= 0) {

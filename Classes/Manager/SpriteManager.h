@@ -1,5 +1,5 @@
-#ifndef _Manager_Spritemanager_H_
-#define _Manager_Spritemanager_H_
+#ifndef _Manager_SpriteManager_H_
+#define _Manager_SpriteManager_H_
 
 #include "GameSprite/BaseSprite.h"
 
@@ -23,4 +23,4 @@ namespace Manager
     };
 }
 
-#endif /* defined(_Manager_Spritemanager_H_) */
+#endif /* defined(_Manager_SpriteManager_H_) */
