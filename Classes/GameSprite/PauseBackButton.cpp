@@ -29,7 +29,7 @@ namespace GameSprite
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
             log("PauseBackButon began... x = %f, y = %f", locationInNode.x, locationInNode.y);
-            target->setScale(1.2);
+            target->setScale(0.9);
             return true;
         }
         return false;

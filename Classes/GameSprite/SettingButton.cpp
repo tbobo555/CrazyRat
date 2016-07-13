@@ -29,7 +29,7 @@ namespace GameSprite
         
         if (rect.containsPoint(locationInNode)) {
             log("SettingButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
-            target->setScale(1.2);
+            target->setScale(0.9);
             return true;
         }
         return false;

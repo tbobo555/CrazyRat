@@ -114,8 +114,8 @@ namespace GameSprite
         Vector<SpriteFrame*> animFrames(1);
         char str[100] = {0};
         sprintf(str, "MouthAnimation_%d.png", 0);
-        auto frame = cache->getSpriteFrameByName(str);
-        animFrames.pushBack(frame);
+        auto autoSizeFrame = TextureCreator::getInstance()->getAutoSizeFrame(cache->getSpriteFrameByName(str));
+        animFrames.pushBack(autoSizeFrame);
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
         this->mouth->runAction(Sequence::create(Animate::create(animation), CallFunc::create(CC_CALLBACK_0(Pig::hideMouth, this)) , NULL));
     }
@@ -147,7 +147,8 @@ namespace GameSprite
             status = 4;
         }
         sprintf(str, "Pig%dAnimation_%d.png", this->pigType, status);
-        this->setSpriteFrame(str);
+        auto autoSizeFrame = TextureCreator::getInstance()->getAutoSizeFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(str));
+        this->setSpriteFrame(autoSizeFrame);
         this->wink();
     }
     
@@ -184,14 +185,17 @@ namespace GameSprite
             status = 4;
         }
         sprintf(str, "Pig%dAnimation_%d.png", this->pigType, status);
-        auto frame = cache->getSpriteFrameByName(str);
-        animFrames.pushBack(frame);
+        auto autoSizeFrame = TextureCreator::getInstance()->getAutoSizeFrame(cache->getSpriteFrameByName(str));
+        animFrames.pushBack(autoSizeFrame);
+        
         sprintf(str, "Pig%dAnimation_%d.png", this->pigType, status + 1);
-        frame = cache->getSpriteFrameByName(str);
-        animFrames.pushBack(frame);
+        autoSizeFrame = TextureCreator::getInstance()->getAutoSizeFrame(cache->getSpriteFrameByName(str));
+        animFrames.pushBack(autoSizeFrame);
+        
         sprintf(str, "Pig%dAnimation_%d.png", this->pigType, status);
-        frame = cache->getSpriteFrameByName(str);
-        animFrames.pushBack(frame);
+        autoSizeFrame = TextureCreator::getInstance()->getAutoSizeFrame(cache->getSpriteFrameByName(str));
+        animFrames.pushBack(autoSizeFrame);
+        
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.1f);
         this->runAction(RepeatForever::create(Sequence::create(DelayTime::create(rand() % 5 + 1), Animate::create(animation), NULL)));
     }

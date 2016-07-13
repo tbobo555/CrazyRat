@@ -42,3 +42,11 @@ Texture2D* TextureCreator::getAutoSizeTexture2d(Texture2D* texture)
     renderTexture->end();
     return renderTexture->getSprite()->getTexture();
 }
+
+SpriteFrame* TextureCreator::getAutoSizeFrame(SpriteFrame* frame)
+{
+    float scaleFactor = Director::getInstance()->getContentScaleFactor();
+    Texture2D* texture = TextureCreator::getInstance()->getAutoSizeTexture2d(frame->getTexture());
+    Rect* rect = new Rect(frame->getRect().origin.x * scaleFactor , frame->getRect().origin.y * scaleFactor, frame->getRect().size.width * scaleFactor, frame->getRect().size.height * scaleFactor);
+    return SpriteFrame::createWithTexture(texture, *rect);
+}

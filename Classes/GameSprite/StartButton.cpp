@@ -41,7 +41,7 @@ namespace GameSprite
                 Director::getInstance()->getOpenGLView()->getFrameSize().height);
             log("contetn factor: %f  ", Director::getInstance()->getContentScaleFactor());
             log("StartButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
-            target->setScale(1.2);
+            target->setScale(0.9);
             return true;
         }
         return false;

@@ -8,7 +8,6 @@
 #include "GameSprite/StageButton.h"
 #include "GameSprite/BackButton.h"
 #include "GameSprite/Star.h"
-#include "GameSprite/Master.h"
 #include "Db/EpisodeSetting.h"
 #include "Db/StageSetting.h"
 #include "Db/StarSetting.h"
@@ -30,12 +29,10 @@ namespace GameScene
         int newHighScoreDiff;
         int newHighScoreStage;
         GameSprite::Background* episodeBackground;
-        GameSprite::Master* master;
         GameSprite::BackButton* episodeBackButton;
         std::vector<GameSprite::StageButton*> stageButtonVector;
     private:
         Vec2 getBackgroundPosition();
-        Vec2 getMasterPosition(int currentStage);
         Vec2 getBackButtonPosition();
         Vec2 getStageButtonPosition(int stageNumber);
         Vec2 getStarPosition(int stageNumber, int starNumber);

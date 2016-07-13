@@ -19,7 +19,6 @@ namespace GameScene
         std::string stageButtonImagePrefix = "image/StageButton_";
         std::string backButtonImage = "image/BackButton.png";
         std::string starImage = "image/Star.png";
-        std::string masterImage = "image/Master.png";
         int currentEpisode = DB::EpisodeSetting::getInstance()->getCurrent();
         int currentStage = DB::StageSetting::getInstance()->getCurrent();
         std::vector<int> starOfStage = {0};
@@ -45,14 +44,6 @@ namespace GameScene
         spriteManager->setWithKey(key.str(), this->episodeBackButton);
         key.clear();
         key.str("");
-        if (this->episodeNumber == currentEpisode) {
-            this->master = new GameSprite::Master(masterImage);
-            this->master->setPosition(
-                this->getMasterPosition(currentStage)
-            );
-            this->addChild(this->master, 4);
-            spriteManager->setWithKey("Master", this->master);
-        }
         int maxStage = DB::StageSetting::getInstance()->getMax();
         int maxEpisode = DB::EpisodeSetting::getInstance()->getMax();
         for (int i = 0; i < maxStage; i++) {
@@ -125,9 +116,6 @@ namespace GameScene
         spriteManager->releaseByKey(key.str());
         key.clear();
         key.str("");
-        if (this->episodeNumber == currentEpisode) {
-            spriteManager->releaseByKey("Master");
-        }
         int maxStage = DB::StageSetting::getInstance()->getMax();
         for (int i = 0; i < maxStage; i++) {
             key.clear();
@@ -209,12 +197,6 @@ namespace GameScene
             }
         };
         return stageButtonPositionSet[stageNumber];
-    }
-    
-    Vec2 EpisodeScene::getMasterPosition(int currentStage)
-    {
-        Vec2 position = this->getStageButtonPosition(currentStage);
-        return Vec2(position.x, position.y + 100);
     }
     
     Vec2 EpisodeScene::getStarPosition(int stageNumber, int starNumber)
