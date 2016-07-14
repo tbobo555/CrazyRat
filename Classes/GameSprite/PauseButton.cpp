@@ -55,6 +55,7 @@ namespace GameSprite
             auto soundsButton = spriteManager->getByKey("PauseScene_SoundsButton");
             auto backHomeButton = spriteManager->getByKey("PauseScene_BackHomeButton");
             auto retryButton = spriteManager->getByKey("PauseScene_RetryButton");
+            auto pauseMask = spriteManager->getByKey("PauseScene_PauseMask");
             pauseBackground->setVisible(true);
             pauseBackground->setLocalZOrder(100);
             pauseBackButton->setVisible(true);
@@ -67,7 +68,8 @@ namespace GameSprite
             musicButton->setLocalZOrder(101);
             soundsButton->setVisible(true);
             soundsButton->setLocalZOrder(101);
-            
+            pauseMask->setVisible(true);
+            pauseMask->setLocalZOrder(99);
             target->setScale(1.0);
         } else {
             target->setScale(1.0);

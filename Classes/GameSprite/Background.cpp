@@ -23,7 +23,14 @@ namespace GameSprite
     
     bool Background::onTouchBegan(Touch *touch, Event *event)
     {
-        return true;
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
+        Size s = target->getContentSize();
+        Rect rect = Rect(0, 0, s.width, s.height);
+        if (rect.containsPoint(locationInNode)) {
+            return true;
+        }
+        return false;
     }
     
     void Background::onTouchEnded(Touch *touch, Event *event)

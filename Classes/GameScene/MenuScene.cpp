@@ -29,6 +29,10 @@ namespace GameScene
         this->soundsButton = new SoundsButton("image/SoundsOnButton.png");
         this->soundsButton->setPosition(this->getSoundsButtonPosition());
         spriteManager->setWithKey("MenuScene_SoundsButton", this->soundsButton);
+        
+        this->settingMask = new SettingMask("image/Mask.png");
+        this->settingMask->setPosition(this->center);
+        spriteManager->setWithKey("MenuScene_SettingMask", this->settingMask);
     }
     
     void MenuScene::releaseScene()
@@ -39,6 +43,7 @@ namespace GameScene
         spriteManager->releaseByKey("MenuScene_SettingBackButton");
         spriteManager->releaseByKey("MenuScene_MusicButton");
         spriteManager->releaseByKey("MenuScene_SoundsButton");
+        spriteManager->releaseByKey("MenuScene_SettingMask");
     }
     
     Vec2 MenuScene::getSettingBackgroundPosition()

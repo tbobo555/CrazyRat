@@ -12,6 +12,7 @@
 #include "GameSprite/PauseBackButton.h"
 #include "GameSprite/MusicButton.h"
 #include "GameSprite/SoundsButton.h"
+#include "GameSprite/PauseMask.h"
 
 USING_NS_CC;
 
@@ -30,6 +31,7 @@ namespace GameScene
         GameSprite::PauseBackButton* pauseBackButton;
         GameSprite::MusicButton* musicButton;
         GameSprite::SoundsButton* soundsButton;
+        GameSprite::PauseMask* pauseMask;
     private:
         Vec2 getPauseButtonPosition();
         Vec2 getPauseBackgroundPosition();

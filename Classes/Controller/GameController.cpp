@@ -146,6 +146,7 @@ namespace Controller
         scene->removeChild(SpriteManager::getInstance()->getByKey("MenuScene_SettingBackButton"));
         scene->removeChild(SpriteManager::getInstance()->getByKey("MenuScene_MusicButton"));
         scene->removeChild(SpriteManager::getInstance()->getByKey("MenuScene_SoundsButton"));
+        scene->removeChild(SpriteManager::getInstance()->getByKey("MenuScene_SettingMask"));
     }
     
     void GameController::addPauseSceneToCurrentScene()
@@ -159,8 +160,10 @@ namespace Controller
         auto soundsButton = spriteManager->getByKey("PauseScene_SoundsButton");
         auto backHomeButton = spriteManager->getByKey("PauseScene_BackHomeButton");
         auto retryButton = spriteManager->getByKey("PauseScene_RetryButton");
+        auto pauseMask = spriteManager->getByKey("PauseScene_PauseMask");
         scene->addChild(pauseButton, 1);
         scene->addChild(pauseBackground, -100);
+        scene->addChild(pauseMask, -100);
         pauseBackground->addChild(pauseBackButton, -100);
         pauseBackground->addChild(musicButton, -100);
         pauseBackground->addChild(soundsButton, -100);
@@ -175,6 +178,7 @@ namespace Controller
         auto pauseBackground = spriteManager->getByKey("PauseScene_PauseBackground");
         scene->removeChild(SpriteManager::getInstance()->getByKey("PauseScene_PauseButton"));
         scene->removeChild(SpriteManager::getInstance()->getByKey("PauseScene_PauseBackground"));
+        scene->removeChild(SpriteManager::getInstance()->getByKey("PauseScene_PauseMask"));
         pauseBackground->GameScene::BaseScene::removeChild(SpriteManager::getInstance()->getByKey("PauseScene_PauseBackButton"));
         pauseBackground->GameScene::BaseScene::removeChild(SpriteManager::getInstance()->getByKey("PauseScene_MusicButton"));
         pauseBackground->GameScene::BaseScene::removeChild(SpriteManager::getInstance()->getByKey("PauseScene_SoundsButton"));

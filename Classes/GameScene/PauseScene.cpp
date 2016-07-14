@@ -18,8 +18,10 @@ namespace GameScene
         std::string backHomeButtonImage = "image/BackHomeButton.png";
         std::string retryButtonImage = "image/RetryButton.png";
         std::string pauseBackButtonImage = "image/CloseSettingButton.png";
+        std::string pauseMaskImage = "image/Mask.png";
         
         this->pauseBackground = new Background(pauseBackgroundImage);
+        pauseBackground->setName("PauseBackground");
         this->pauseBackground->setPosition(this->getPauseBackgroundPosition());
         this->pauseBackground->setVisible(false);
         spriteManager->setWithKey("PauseScene_PauseBackground", this->pauseBackground);
@@ -52,6 +54,10 @@ namespace GameScene
         this->pauseButton = new GameSprite::PauseButton(pauseButtonImage);
         this->pauseButton->setPosition(this->getPauseButtonPosition());
         spriteManager->setWithKey("PauseScene_PauseButton", this->pauseButton);
+        
+        this->pauseMask = new GameSprite::PauseMask(pauseMaskImage);
+        this->pauseMask->setPosition(this->center);
+        spriteManager->setWithKey("PauseScene_PauseMask", this->pauseMask);
     }
     
     void PauseScene::releaseScene()
@@ -64,6 +70,7 @@ namespace GameScene
         spriteManager->releaseByKey("PauseScene_RetryButton");
         spriteManager->releaseByKey("PauseScene_PauseBackButton");
         spriteManager->releaseByKey("PauseScene_PauseButton");
+        spriteManager->releaseByKey("PauseScene_PauseMask");
     }
     
     Vec2 PauseScene::getPauseButtonPosition()

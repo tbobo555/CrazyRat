@@ -8,6 +8,7 @@
 #include "GameSprite/SettingBackButton.h"
 #include "GameSprite/MusicButton.h"
 #include "GameSprite/SoundsButton.h"
+#include "GameSprite/SettingMask.h"
 #include "Config/ImageConfig.h"
 #include "Manager/SpriteManager.h"
 
@@ -24,6 +25,7 @@ namespace GameScene
         GameSprite::SettingBackButton* settingBackButton;
         GameSprite::MusicButton* musicButton;
         GameSprite::SoundsButton* soundsButton;
+        GameSprite::SettingMask* settingMask;
     private:
         Vec2 getSettingBackgroundPosition();
         Vec2 getSettingButtonPosition();

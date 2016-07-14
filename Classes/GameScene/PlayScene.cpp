@@ -304,7 +304,8 @@ namespace GameScene
         for (const auto &child : this->getChildren()) {
             if (child->getName() != "MusicButton" && child->getName() != "SoundsButton" &&
                 child->getName() != "PauseBackButton" && child->getName() != "BackHomeButton" &&
-                child->getName() != "RetryButton") {
+                child->getName() != "RetryButton" && child->getName() != "PauseMask" &&
+                child->getName() != "PauseBackground") {
                 child->pause();
             }
         }

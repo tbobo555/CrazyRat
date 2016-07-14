@@ -1,48 +1,60 @@
-#include "PauseBackButton.h"
+#include "PauseMask.h"
 #include "GameScene/PlayScene.h"
 
 namespace GameSprite
 {
-    PauseBackButton::PauseBackButton(std::string image) : GameSprite::BaseSprite(image)
+    PauseMask::PauseMask(std::string image) : GameSprite::BaseSprite(image)
     {
-        this->setName("PauseBackButton");
+        this->setName("PauseMask");
         this->addEventListener();
     }
     
-    void PauseBackButton::addEventListener()
+    void PauseMask::addEventListener()
     {
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);
-        listener->onTouchBegan = PauseBackButton::onTouchBegan;
-        listener->onTouchEnded = PauseBackButton::onTouchEnded;
-        listener->onTouchMoved = PauseBackButton::onTouchMoved;
-        listener->onTouchCancelled = PauseBackButton::onTouchCanceled;
+        listener->onTouchBegan = PauseMask::onTouchBegan;
+        listener->onTouchEnded = PauseMask::onTouchEnded;
+        listener->onTouchMoved = PauseMask::onTouchMoved;
+        listener->onTouchCancelled = PauseMask::onTouchCanceled;
         Director::getInstance()->getEventDispatcher()
         ->addEventListenerWithSceneGraphPriority(listener, this);
     }
     
-    bool PauseBackButton::onTouchBegan(Touch* touch, Event* event)
+    bool PauseMask::onTouchBegan(Touch* touch, Event* event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
-            log("PauseBackButon began... x = %f, y = %f", locationInNode.x, locationInNode.y);
-            target->setScale(0.9);
+            log("PauseMask began... x = %f, y = %f", locationInNode.x, locationInNode.y);
             return true;
         }
         return false;
     }
     
-    void PauseBackButton::onTouchEnded(Touch* touch, Event* event)
+    void PauseMask::onTouchEnded(Touch* touch, Event* event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
-        if (rect.containsPoint(locationInNode)) {
-            target->setScale(1.0);
+        auto pauseBackground = Manager::SpriteManager::getInstance()->getByKey("PauseScene_PauseBackground");
+        Size pauseBackgroundSize = pauseBackground->getContentSize();
+        Rect pauseBackgroundRect = Rect(pauseBackground->getPositionX() - pauseBackgroundSize.width / 2,
+                                        pauseBackground->getPositionY() - pauseBackgroundSize.height / 2,
+                                        pauseBackgroundSize.width,
+                                        pauseBackgroundSize.height);
+        auto pauseBackButton = Manager::SpriteManager::getInstance()->getByKey("PauseScene_PauseBackButton");
+        Size pauseBackButtonSize = pauseBackButton->getContentSize();
+        Rect pauseBackButtonRect = Rect(
+                                        (pauseBackground->getPositionX() + pauseBackgroundSize.width / 2) - pauseBackButtonSize.width / 2,
+                                        (pauseBackground->getPositionY() + pauseBackgroundSize.height / 2) - pauseBackButtonSize.height / 2,
+                                        pauseBackButtonSize.width, pauseBackButtonSize.height);
+        if (!pauseBackgroundRect.containsPoint(locationInNode) &&
+            !pauseBackButtonRect.containsPoint(locationInNode) &&
+            rect.containsPoint(locationInNode)) {
             auto scene = static_cast<GameScene::PlayScene*>(Manager::SceneManager::getInstance()->getCurrent());
             Manager::SpriteManager* spriteManager = Manager::SpriteManager::getInstance();
             auto pauseBackground = spriteManager->getByKey("PauseScene_PauseBackground");
@@ -67,19 +79,15 @@ namespace GameSprite
             soundsButton->setVisible(false);
             soundsButton->setLocalZOrder(-100);
             scene->resumeScene();
-        } else {
-            target->setScale(1.0);
         }
     }
     
-    void PauseBackButton::onTouchMoved(Touch* touch, Event* event)
+    void PauseMask::onTouchMoved(Touch* touch, Event* event)
     {
-        
     }
     
-    void PauseBackButton::onTouchCanceled(Touch* touch, Event* event)
+    void PauseMask::onTouchCanceled(Touch* touch, Event* event)
     {
-        auto target = static_cast<Sprite*>(event->getCurrentTarget());
-        target->setScale(1.0);
     }
+
 }
