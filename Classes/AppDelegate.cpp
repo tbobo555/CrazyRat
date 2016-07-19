@@ -62,8 +62,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setContentScaleFactor(scaleFactor);
 
     register_all_packages();
-    
-    Sqlite3Engine::getInstance()->checkIsFirstCreate();
+
+    Sqlite3Engine::getInstance()->initEngine();
     Sqlite3Engine::getInstance()->connect();
     SwitchSetting *switchSetting = SwitchSetting::getInstance();
     EpisodeSetting *episodeSetting = EpisodeSetting::getInstance();

@@ -453,7 +453,7 @@ namespace GameScene
                     controller->addVictorySceneToCurrentScene(newScore);
                     return;
                 } else if (this->episodeNumber == maxEpisode && this->stageNumber == maxStage) {
-                    DB::StarSetting::getInstance()->missionComplete(this->episodeNumber, this->stageNumber, 1);
+                    DB::StarSetting::getInstance()->insertStar(this->episodeNumber, this->stageNumber, newScore);
                     this->isNewHighScore = true;
                     this->newHighScoreDiff = newScore;
                     controller->addVictorySceneToCurrentScene(newScore);
@@ -479,7 +479,7 @@ namespace GameScene
                     newStage = this->stageNumber + 1;
                     newEpisode = this->episodeNumber;
                 }
-                DB::StarSetting::getInstance()->missionComplete(this->episodeNumber, this->stageNumber, newScore);
+                DB::StarSetting::getInstance()->insertStar(this->episodeNumber, this->stageNumber, newScore);
                 DB::StageSetting::getInstance()->updateCurrent(newStage);
                 DB::EpisodeSetting::getInstance()->updateCurrent(newEpisode);
                 controller->addVictorySceneToCurrentScene(newScore);

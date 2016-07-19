@@ -9,8 +9,7 @@ namespace DB
     
     Sqlite3Engine::Sqlite3Engine()
     {
-        Sqlite3Engine::isFirstCreate = false;
-        this->isConnect = false;
+        this->isInit = false;
     }
     
     Sqlite3Engine* Sqlite3Engine::getInstance()
@@ -18,25 +17,38 @@ namespace DB
         return instance;
     }
     
+    void Sqlite3Engine::initEngine()
+    {
+        CCAssert(this->isInit == false, "Error : Sqlite3 Engine already init.");
+        this->isFirstCreate = false;
+        this->isConnect = false;
+        this->dbPath = FileUtils::getInstance()->getWritablePath();
+        this->dbPath.append("GreedyPig.sqlite");
+        this->isInit = true;
+        this->checkIsFirstCreate();
+    }
+    
     bool Sqlite3Engine::getIsConnect()
     {
+        CCAssert(this->isInit == true, "Error : Sqlite3 Engine no init.");
         return this->isConnect;
     }
     
     bool Sqlite3Engine::getIsFirstCreate()
     {
+        CCAssert(this->isInit == true, "Error : Sqlite3 Engine no init.");
         return this->isFirstCreate;
     }
     
     sqlite3* Sqlite3Engine::getDb()
     {
+        CCAssert(this->isInit == true, "Error : Sqlite3 Engine no init.");
         return this->db;
     }
     
     void Sqlite3Engine::checkIsFirstCreate()
     {
-        this->dbPath = FileUtils::getInstance()->getWritablePath();
-        this->dbPath.append("GreedyPig.sqlite");
+        CCAssert(this->isInit == true, "Error : Sqlite3 Engine no init.");
         std::cout << this->dbPath << std::endl;
         if (std::ifstream(dbPath.c_str())) {
             std::cout << "Sqlite3Engine::init  File already exists" << std::endl;
@@ -49,6 +61,7 @@ namespace DB
     
     void Sqlite3Engine::connect()
     {
+        CCAssert(this->isInit == true, "Error : Sqlite3 Engine no init.");
         if (this->isConnect == true) {
             CCLOG("Already Connect.");
             return;
@@ -59,6 +72,7 @@ namespace DB
         if (result != SQLITE_OK) {
             this->isConnect = false;
             CCLOG("OPENING WRONG, %d, MSG:%s", result, errMsg);
+            CCAssert(false, "Sqlite3 connect failed.");
         } else {
             this->isConnect = true;
         }
@@ -67,6 +81,7 @@ namespace DB
     
     void Sqlite3Engine::close()
     {
+        CCAssert(this->isInit == true, "Error : Sqlite3 Engine no init.");
         if (this->isConnect == false) {
             CCLOG("Already Close Connect.");
             return;
