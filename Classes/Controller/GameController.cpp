@@ -134,6 +134,7 @@ namespace Controller
     void GameController::addMenuSceneToCurrentScene()
     {
         auto scene = SceneManager::getInstance()->getCurrent();
+        // 僅放上settingButton，其餘的物件會在settingButton被點擊後加至目前的場景
         auto settingButton = SpriteManager::getInstance()->getByKey("MenuScene_SettingButton");
         scene->addChild(settingButton, 1);
     }
@@ -152,6 +153,8 @@ namespace Controller
     void GameController::addPauseSceneToCurrentScene()
     {
         auto scene = SceneManager::getInstance()->getCurrent();
+        // 與addMenuScene不同，此方法將所有相關物件加至目前的場景
+        // 但是只顯示pauseButton，其餘物件會在pauseButton被點擊後顯示
         Manager::SpriteManager* spriteManager = Manager::SpriteManager::getInstance();
         auto pauseButton = spriteManager->getByKey("PauseScene_PauseButton");
         auto pauseBackground = spriteManager->getByKey("PauseScene_PauseBackground");
@@ -197,6 +200,7 @@ namespace Controller
         auto starRight = static_cast<GameSprite::Star*>(spriteManager->getByKey("VictoryScene_StarRight"));
         auto starMiddle = static_cast<GameSprite::Star*>(spriteManager->getByKey("VictoryScene_StarMiddle"));
         
+        // 依據不同的分數(星星數)來決定勝利畫面的樣式
         if (newScores == 2) {
             starRight->setBlank();
         }
@@ -309,6 +313,7 @@ namespace Controller
         this->releaseMenuSceneResource();
         this->releaseEpisodeSceneResource(episodeNumber);
         this->releaseSelectionSceneResource();
+        // 將一些被cocos2d核心程式快取，殘留在記憶體沒有被釋放的物件做記憶體釋放
         Director::getInstance()->purgeCachedData();
         this->loadPauseSceneResource();
         this->loadVictorySceneResource();
@@ -327,17 +332,26 @@ namespace Controller
     
     void GameController::PlaySceneToEpisodeScene(int episodeNumber, int stageNumber)
     {
+        // 若玩家完成某章節的最後一關，那麼PlayScene將返回至下一章節的關卡選擇畫面。
         int newEpisodeNumber = episodeNumber;
         auto current = static_cast<GameScene::PlayScene*>(SceneManager::getInstance()->getCurrent());
+        // 是否有突破新高分(較多的星星數)
         bool isNewHighscore = current->getIsNewHighScore();
+        // 新分數與舊有分數的差距
         int newHighScorediff = current->getNewHighScoreDiff();
 
+        // 如果勝利且是第一次完成此關卡
         if (current->getIsVictory() && current->getAlreadyComplete() == false) {
+            // 取得每個章節最多的關卡數，-1是為了與關卡編號做比較，關卡編號從0開始
             int maxStage = DB::StageSetting::getInstance()->getMax() - 1;
+            // 取得app的總章節數，-1是為了與章節編號做比較，章節編號從0開始
             int maxEpisode = DB::EpisodeSetting::getInstance()->getMax() - 1;
+            
+            // 如果完成的關卡是章節裡的最後一關，場景將切至下一章節的關卡選擇畫面
             if (stageNumber == maxStage) {
                 newEpisodeNumber++;
             }
+            // 如果章節是最後一個章節(沒有下一章節)，場景將切回原章節的關卡選擇畫面(既最後一章節)
             if (newEpisodeNumber > maxEpisode) {
                 newEpisodeNumber = episodeNumber;
             }
@@ -349,6 +363,7 @@ namespace Controller
         this->releaseVictorySceneResource();
         this->releaseLoseSceneResource();
         this->releasePlaySceneResource(episodeNumber, stageNumber);
+        // 將一些被cocos2d核心程式快取，殘留在記憶體沒有被釋放的物件做記憶體釋放
         Director::getInstance()->purgeCachedData();
         this->loadMenuSceneResource();
         this->loadStartSceneResource();
@@ -357,6 +372,7 @@ namespace Controller
         std::stringstream key;
         key << "EpisodeScene_" << newEpisodeNumber;
         EpisodeScene *scene = static_cast<EpisodeScene*>(SceneManager::getInstance()->getByKey(key.str()));
+        // 將是否為新高分與分差，傳入EpisodeScene，目的是用來播放星星的動畫
         scene->isNewHighScore = isNewHighscore;
         scene->newHighScoreDiff = newHighScorediff;
         scene->newHighScoreStage = stageNumber;
