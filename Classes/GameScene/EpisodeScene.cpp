@@ -19,14 +19,21 @@ namespace GameScene
         std::string stageButtonImagePrefix = "image/StageButton_";
         std::string backButtonImage = "image/BackButton.png";
         std::string starImage = "image/Star.png";
+
+        // 取得玩家目前破到第幾章的第幾小關
+        // ex: 玩家破到第二章的第三關
         int currentEpisode = DB::EpisodeSetting::getInstance()->getCurrent();
         int currentStage = DB::StageSetting::getInstance()->getCurrent();
+
         std::vector<int> starOfStage = {0};
         try {
+            // 取得玩家選擇的這個章節各關卡的星星數
             starOfStage = DB::StarSetting::getInstance()->getAllStarNumber().at(this->episodeNumber);
         } catch (std::out_of_range ex) {
             
         }
+
+        // 載入並設置背景與返回按鈕
         std::stringstream backgroundPath;
         backgroundPath << backgroundImagePrefix << this->episodeNumber << ".png";
         this->episodeBackground = new GameSprite::Background(backgroundPath.str());
@@ -44,17 +51,25 @@ namespace GameScene
         spriteManager->setWithKey(key.str(), this->episodeBackButton);
         key.clear();
         key.str("");
+
+        // 取得最多的章節數，還有每一章節最多的關卡數
         int maxStage = DB::StageSetting::getInstance()->getMax();
         int maxEpisode = DB::EpisodeSetting::getInstance()->getMax();
+
+        // 創造和配置關卡按鈕
         for (int i = 0; i < maxStage; i++) {
             key.clear();
             key.str("");
             std::stringstream stagePath;
-            stagePath << stageButtonImagePrefix << i << ".png";            
+            stagePath << stageButtonImagePrefix << i << ".png";
+            // 創建一個關卡按鈕並存到stageButtonVector裡
             auto stageButton = new GameSprite::StageButton(stagePath.str(), this->episodeNumber, i);
             this->stageButtonVector.push_back(stageButton);
+
+            // 當此章節為玩家最新破關的章節，且關卡大於最新破關的關卡，就將關卡按鈕鎖住
             if (this->episodeNumber == currentEpisode && i > currentStage) {
                 stageButton->locked();
+            // 當章節小於最新破關的章節 或是 章節為最新破關章節但關卡小於最新破關的關卡，就配置該關卡的星星
             } else if (
                 this->episodeNumber < currentEpisode ||
                 (this->episodeNumber == currentEpisode && i < currentStage)
@@ -69,6 +84,7 @@ namespace GameScene
                     key.clear();
                     key.str("");
                 }
+            // 當關卡與章節是最後一關時，配置該關卡的星星
             } else if (this->episodeNumber == maxEpisode - 1 && currentStage == maxStage - 1 && i == currentStage) {
                 try {
                     int starNum = starOfStage.at(i);
@@ -136,7 +152,8 @@ namespace GameScene
     
     void EpisodeScene::runStarAnimation()
     {
-        if (isNewHighScore == true && this->newHighScoreStage != -1) {
+        // 當玩家獲得最新高分時，會播放星星動畫
+        if (this->isNewHighScore && this->newHighScoreStage != -1) {
             Director::getInstance()->getEventDispatcher()->setEnabled(false);
             int starNum = DB::StarSetting::getInstance()->getStarNumber(this->episodeNumber, this->newHighScoreStage);
             auto spriteManager = Manager::SpriteManager::getInstance();
