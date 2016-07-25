@@ -14,6 +14,8 @@ namespace GameScene
         this->alreadyComplete = false;
         this->isNewHighScore = false;
         this->newHighScoreDiff = 0;
+        
+        // 取得目前關卡在DB中已獲得的星星數，如果不是0代表玩家已破過該關卡，此次為重新挑戰。
         int starResult = DB::StarSetting::getInstance()->getStarNumber(this->episodeNumber, this->stageNumber);
         if (starResult != 0) {
             this->alreadyComplete = true;
@@ -74,6 +76,7 @@ namespace GameScene
         this->prepareLabel->retain();
         this->addChild(this->prepareLabel, 1);
 
+        // 將各個路線的會用到的甜點物件初始化，每個路線都創造10個甜點。
         for (int i = 0; i < 10; i++) {
             std::string path = "image/Sweet";
             std::stringstream key;
@@ -301,6 +304,7 @@ namespace GameScene
     void PlayScene::pauseScene()
     {
         this->isPaused = true;
+        // 將該場景中所有的子物件取出，除了暫停場景裡的物件，其他的都進行並暫停
         for (const auto &child : this->getChildren()) {
             if (child->getName() != "MusicButton" && child->getName() != "SoundsButton" &&
                 child->getName() != "PauseBackButton" && child->getName() != "BackHomeButton" &&
@@ -322,6 +326,7 @@ namespace GameScene
     
     void PlayScene::prepareUpdate(float delta)
     {
+        // 更新倒數計時
         if (! this->isPaused) {
             if (this->prepareTime == 0) {
                 this->prepareDone();
@@ -360,7 +365,9 @@ namespace GameScene
     void PlayScene::road0Update(float delta)
     {
         if (! this->isPaused) {
+            // 判斷是否還有甜點需要落下
             if (this->road0CurrentIndex < this->road0TimeConfig.size()) {
+                // 判斷該時間點是否有甜點需要落下
                 if (this->playTime >= this->road0TimeConfig.at(this->road0CurrentIndex)) {
                     ++this->road0CurrentIndex;
                     int availabelIndex = this->road0AvailableIndex.back();
@@ -377,7 +384,9 @@ namespace GameScene
     void PlayScene::road1Update(float delta)
     {
         if (! this->isPaused) {
+            // 判斷是否還有甜點需要落下
             if (this->road1CurrentIndex < this->road1TimeConfig.size()) {
+                // 判斷該時間點是否有甜點需要落下
                 if (this->playTime >= this->road1TimeConfig.at(this->road1CurrentIndex)) {
                     ++this->road1CurrentIndex;
                     int availabelIndex = this->road1AvailableIndex.back();
@@ -394,7 +403,9 @@ namespace GameScene
     void PlayScene::road2Update(float delta)
     {
         if (! this->isPaused) {
+            // 判斷是否還有甜點需要落下
             if (this->road2CurrentIndex < this->road2TimeConfig.size()) {
+                // 判斷該時間點是否有甜點需要落下
                 if (this->playTime >= this->road2TimeConfig.at(this->road2CurrentIndex)) {
                     ++this->road2CurrentIndex;
                     int availabelIndex = this->road2AvailableIndex.back();
@@ -427,6 +438,7 @@ namespace GameScene
     {
         if (! this->isPaused) {
             this->playTime += delta;
+            // 時間結束玩家尚未lose，代表玩家獲勝
             if (this->playTime > this->overGameTime) {
                 unschedule(schedule_selector(PlayScene::gameUpdate));
                 unschedule(schedule_selector(PlayScene::road0Update));
@@ -437,12 +449,15 @@ namespace GameScene
                 }
                 log("Victory!");
                 this->isVictory = true;
+                // 取得最多章節數與每章節最多的關卡數，-1主要目的是該變數要用來當作索引判斷
                 int maxStage = DB::StageSetting::getInstance()->getMax() - 1;
                 int maxEpisode = DB::EpisodeSetting::getInstance()->getMax() - 1;
                 int newStage;
                 int newEpisode;
                 int newScore = this->calculateScores();
                 auto controller = Controller::GameController::getInstance();
+                
+                // 如果該關卡已經被破過了(玩家不是第一次破此關卡)
                 if (this->alreadyComplete == true) {
                     int oldScore = DB::StarSetting::getInstance()->getStarNumber(this->episodeNumber, this->stageNumber);
                     if (oldScore < newScore) {
@@ -452,12 +467,14 @@ namespace GameScene
                     }
                     controller->addVictorySceneToCurrentScene(newScore);
                     return;
+                // 如果該關卡是最後一章節的最後一關
                 } else if (this->episodeNumber == maxEpisode && this->stageNumber == maxStage) {
                     DB::StarSetting::getInstance()->insertStar(this->episodeNumber, this->stageNumber, newScore);
                     this->isNewHighScore = true;
                     this->newHighScoreDiff = newScore;
                     controller->addVictorySceneToCurrentScene(newScore);
                     return;
+                // 如果該關卡是第一張的第一關
                 } else if (this->episodeNumber == 0 && this->stageNumber == 0) {
                     this->isNewHighScore = true;
                     this->newHighScoreDiff = newScore;
@@ -468,11 +485,13 @@ namespace GameScene
                     DB::EpisodeSetting::getInstance()->updateCurrent(newEpisode);
                     controller->addVictorySceneToCurrentScene(newScore);
                     return;
+                // 如果該關卡是某章節的最後一關
                 } else if (this->stageNumber == maxStage) {
                     this->isNewHighScore = false;
                     this->newHighScoreDiff = 0;
                     newStage = 0;
                     newEpisode = this->episodeNumber + 1;
+                // 非以上條件時
                 } else {
                     this->isNewHighScore = true;
                     this->newHighScoreDiff = newScore;
@@ -485,6 +504,7 @@ namespace GameScene
                 controller->addVictorySceneToCurrentScene(newScore);
                 return;
             }
+            // 有任何一隻豬的生命歸0，則遊戲結束，玩家闖關失敗
             if (this->road0Pig->hp <= 0 || this->road1Pig->hp <= 0 || this->road2Pig->hp <= 0) {
                 unschedule(schedule_selector(PlayScene::gameUpdate));
                 unschedule(schedule_selector(PlayScene::road0Update));

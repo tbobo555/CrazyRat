@@ -86,7 +86,6 @@ namespace GameScene
     Vec2 StartScene::getStartButtonPosition()
     {
         return Vec2(this->center.x, this->visibleOrigin.y + this->visibleSize.height / 4.0);
-        //return Vec2(0, 0);
     }
     
     Vec2 StartScene::getStartTitlePosition()

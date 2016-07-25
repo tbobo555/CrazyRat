@@ -17,29 +17,91 @@ USING_NS_CC;
 
 namespace GameScene
 {
+    /**
+     @brief 章節選擇場景，可以讓玩家選擇要玩的章節
+     */
     class SelectionScene : public BaseScene
     {
     public:
+        /**
+         @brief 建構式
+         */
         SelectionScene();
+        
+        /**
+         @brief 初始化場景，將選擇場景中需要使用到資源載入
+         */
         void initScene();
+        
+        /**
+         @brief 釋放選擇場景的所有資源
+         */
         void releaseScene();
+        
+        /**
+         @brief 執行常態的動畫，會讓選擇場景的雲進行飄移
+         */
         void runConstantAnimation();
+        
+        // 背景圖檔物件
         GameSprite::Background* selectionBackground;
+        
+        // 返回按鈕
         GameSprite::BackButton* selectionBackButton;
+        
+        // 選擇場景的標題
         GameSprite::SelectionTitle* selectionTitle;
+        
+        // 章節按鈕，讓玩家選擇不同的章節來進行遊戲
         std::vector<GameSprite::EpisodeButton*> episodeButtonVector;
+        
+        // 移動的雲
         GameSprite::Image* moveCloud0;
         GameSprite::Image* moveCloud1;
         GameSprite::Image* moveCloud2;
         GameSprite::Image* moveCloud3;
         GameSprite::Image* moveCloud4;
+        
+        // 彩虹
         GameSprite::Image* rainbow;
     private:
+        
+        /**
+         @brief 取得背景圖檔的位置
+         @return 一個二維向量，代表背景圖檔的座標
+         */
         Vec2 getBackgroundPosition();
+        
+        /**
+         @brief 取得標題的位置
+         @return 一個二維向量，代表標題的座標
+         */
         Vec2 getTitlePosition();
+        
+        /**
+         @brief 取得返回按鈕的位置
+         @return 一個二維向量，代表返回按鈕的座標
+         */
         Vec2 getBackButtonPosition();
+        
+        /**
+         @brief 取得章節按鈕的位置
+         @param episodeNumber 指定的章節編號
+         @return 一個二維向量，代表指定的章節編號的座標
+         */
         Vec2 getEpisodeButtonPosition(int episodeNumber);
+        
+        /**
+         @brief 取得彩虹的位置
+         @return 一個二維向量，代表彩虹的座標
+         */
         Vec2 getRainbowPosition();
+        
+        /**
+         @brief 取得指定索引的雲的位置
+         @param index 代表雲的索引
+         @return 一個二維向量，代表雲的座標
+         */
         Vec2 getMoveCloudPosition(int index);
     };
 }
