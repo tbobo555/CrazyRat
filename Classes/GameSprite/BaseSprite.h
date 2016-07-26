@@ -8,13 +8,38 @@ USING_NS_CC;
 
 namespace GameSprite
 {
+    /**
+     @brief 基礎精靈，所有GameSprite皆需繼承此類別
+     */
     class BaseSprite : public Sprite
     {
     public:
+        /**
+         @brief 建構式
+         */
         BaseSprite();
+
+        /**
+         @brief 解構式
+         */
         virtual ~BaseSprite();
+
+        /**
+         @brief 建構式
+         @param image 精靈要套用的圖檔
+         */
         BaseSprite(std::string image);
+
+        /**
+         @brief 建構式
+         @param image 精靈要套用的圖檔
+         @param fromCache 若設置此參數，圖檔會從cache抓取
+         */
         BaseSprite(std::string image, bool fromCache);
+
+        /**
+         @brief 將精靈加入事件監聽，精靈會開始偵測觸控輸入
+         */
         virtual void addEventListener();
     private:
     };

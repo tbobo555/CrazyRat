@@ -7,9 +7,16 @@
 
 namespace GameSprite
 {
+    /**
+     @brief 雲
+     */
     class Cloud : public BaseSprite
     {
     public:
+        /**
+         @brief 建構式
+         @param image 雲要使用的圖檔
+         */
         Cloud(std::string image);
     };
 }
