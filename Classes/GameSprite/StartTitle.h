@@ -8,9 +8,16 @@ USING_NS_CC;
 
 namespace GameSprite
 {
+    /**
+     @brief 開始標題
+     */
     class StartTitle : public BaseSprite
     {
     public:
+        /**
+         @brief 建構式
+         @param image 開始標題要使用的圖檔
+         */
         StartTitle(std::string image);
     };
 }

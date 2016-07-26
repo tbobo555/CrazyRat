@@ -351,7 +351,6 @@ namespace GameScene
         this->road2CurrentIndex = 0;
         this->initConfig();
         this->progressBarUp->setVisible(true);
-        //this->progressBarUp->runProgress(this->overGameTime);
         this->timeBar->runAction(ProgressTo::create(this->overGameTime, 100));
         schedule(CC_SCHEDULE_SELECTOR(PlayScene::gameUpdate), 0.1f);
         schedule(CC_SCHEDULE_SELECTOR(PlayScene::road0Update), 0.1f);

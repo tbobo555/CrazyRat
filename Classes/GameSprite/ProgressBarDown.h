@@ -9,16 +9,17 @@ USING_NS_CC;
 
 namespace GameSprite
 {
+    /**
+     @brief 進度條的容器
+     */
     class ProgressBarDown : public BaseSprite
     {
     public:
+        /**
+         @brief 建構式
+         @param 進度條容器要使用的圖檔
+         */
         ProgressBarDown(std::string image);
-        void addEventListener();
-    private:
-        static bool onTouchBegan(Touch *touch, Event *event);
-        static void onTouchEnded(Touch *touch, Event *event);
-        static void onTouchMoved(Touch *touch, Event *event);
-        static void onTouchCanceled(Touch *touch, Event *event);
     };
 }
 

@@ -7,12 +7,28 @@
 
 namespace GameSprite
 {
+    /**
+     @brief 計分板星星
+     */
     class ScoreStar : public BaseSprite
     {
     public:
+        /**
+         @brief 建構式
+         */
         ScoreStar();
+        
+        /**
+         @brief 將星星點亮
+         */
         void setLight();
+        
+        /**
+         @brief 將星星改為灰階
+         */
         void setDark();
+
+        // 星星是否被點亮
         bool isLight;
     };
 }

@@ -8,17 +8,17 @@ USING_NS_CC;
 
 namespace GameSprite
 {
+    /**
+     @brief 進度條
+     */
     class ProgressBarUp : public BaseSprite
     {
     public:
+        /**
+         @brief 建構式
+         @param image 進度條的圖檔
+         */
         ProgressBarUp(std::string image);
-        void runProgress(float time);
-        void addEventListener();
-    private:
-        static bool onTouchBegan(Touch *touch, Event *event);
-        static void onTouchEnded(Touch *touch, Event *event);
-        static void onTouchMoved(Touch *touch, Event *event);
-        static void onTouchCanceled(Touch *touch, Event *event);
     };
 }
 
