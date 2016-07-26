@@ -9,9 +9,16 @@ USING_NS_CC;
 
 namespace GameSprite
 {
+    /**
+     @brief 純圖片物件
+     */
     class Image : public BaseSprite
     {
     public:
+        /**
+         @brief 建構式
+         @param image 該物件要使用的圖檔
+         */
         Image(std::string image);
     };
 }
