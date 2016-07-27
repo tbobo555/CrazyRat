@@ -71,10 +71,10 @@ namespace GameScene
         this->timeBar->retain();
         this->timeBar->setPosition(this->getProgressPosition());
         
-        this->prepareLabel = Label::createWithTTF("3", "fonts/arial.ttf", 100);
-        this->prepareLabel->setPosition(this->center);
-        this->prepareLabel->retain();
-        this->addChild(this->prepareLabel, 1);
+        this->prepareNumber = new GameSprite::Image("image/PrepareThree.png");
+        spriteManager->setWithKey("PlayScene_ProgressNumber", this->prepareNumber);
+        this->prepareNumber->setPosition(this->center);
+        this->addChild(this->prepareNumber, 1);
 
         // 將各個路線的會用到的甜點物件初始化，每個路線都創造10個甜點。
         for (int i = 0; i < 10; i++) {
@@ -269,7 +269,7 @@ namespace GameScene
         spriteManager->releaseByKey("PlayScene_ProgressBarDown");
         spriteManager->releaseByKey("PlayScene_ProgressBarUp");
         this->timeBar->release();
-        this->prepareLabel->release();
+        spriteManager->releaseByKey("PlayScene_ProgressNumber");
         spriteManager->releaseByKey("PlayScene_Road0Pig");
         spriteManager->releaseByKey("PlayScene_Road1Pig");
         spriteManager->releaseByKey("PlayScene_Road2Pig");
@@ -331,11 +331,21 @@ namespace GameScene
             if (this->prepareTime == 0) {
                 this->prepareDone();
             } else {
-                std::stringstream timeString;
+                std::string imagePath;
                 -- this->prepareTime;
-                timeString << this->prepareTime;
-                this->prepareLabel->setString(timeString.str());
-                timeString.str("");
+                switch (this->prepareTime) {
+                    case 2 :
+                        imagePath = "image/PrepareTwo.png";
+                        break;
+                    case 1 :
+                        imagePath = "image/PrepareOne.png";
+                        break;
+                    case 0 :
+                        imagePath = "image/PrepareGo.png";
+                    break;
+                }
+                auto texture = TextureCreator::getInstance()->getAutoSizeTexture2d(imagePath);
+                this->prepareNumber->setTexture(texture);
             }
         }
     }
@@ -343,7 +353,9 @@ namespace GameScene
     void PlayScene::prepareDone()
     {
         unschedule(CC_SCHEDULE_SELECTOR(PlayScene::prepareUpdate));
-        this->removeChild(this->prepareLabel);
+        this->prepareNumber->runAction(Sequence::create(FadeOut::create(1.5f),
+                                                        CallFunc::create(CC_CALLBACK_0(PlayScene::removePrepareNumber, this)),
+                                                        NULL));
         log("Start!!");
         this->playTime = 0.f;
         this->road0CurrentIndex = 0;
@@ -359,6 +371,11 @@ namespace GameScene
         this->road0Pig->wink();
         this->road1Pig->wink();
         this->road2Pig->wink();
+    }
+    
+    void PlayScene::removePrepareNumber()
+    {
+        this->removeChild(this->prepareNumber);
     }
     
     void PlayScene::road0Update(float delta)
@@ -558,6 +575,7 @@ namespace GameScene
         };
         
         this->road1TimeConfig = {
+            0.0f,
             3.7f,
             7.1f,
             8.5f,

@@ -12,6 +12,7 @@
 #include "GameSprite/Sweet.h"
 #include "GameSprite/Pig.h"
 #include "GameSprite/Cloud.h"
+#include "GameSprite/Image.h"
 #include "GameSprite/ScoreStar.h"
 #include "Db/EpisodeSetting.h"
 #include "Db/StageSetting.h"
@@ -218,7 +219,7 @@ namespace GameScene
         int prepareTime;
         
         // 倒數時間的實體物件
-        Label* prepareLabel;
+        GameSprite::Image* prepareNumber;
         
         /**
          @brief 更新倒數時間的schedule
@@ -360,6 +361,11 @@ namespace GameScene
          @return 一個二維向量，代表分數的二維坐標
          */
         Vec2 getScoresPosition();
+        
+        /**
+         @brief 將Prepare Number從場景中移除
+         */
+        void removePrepareNumber();
     };
 }
 
