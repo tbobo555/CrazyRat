@@ -105,6 +105,9 @@ namespace GameScene
         // 本關卡的關卡編號
         int stageNumber;
         
+        // 失敗路線的索引
+        int failRoadIndex;
+        
         // 背景物件
         GameSprite::Background* playBackground;
         
@@ -116,6 +119,15 @@ namespace GameScene
         
         // 進度條實體物件，用來呈現遊戲進度
         ProgressTimer* timeBar;
+        
+        // 豬陣亡的爆破圖片
+        GameSprite::Image* deadExplode;
+        
+        // 鬼魂
+        GameSprite::Image* ghost;
+        
+        // 陣亡的豬的圖片
+        GameSprite::Image* deadPig;
         
         // 白豬
         GameSprite::Pig* road0Pig;
@@ -366,6 +378,44 @@ namespace GameScene
          @brief 將Prepare Number從場景中移除
          */
         void removePrepareNumber();
+        
+        /**
+         @brief 取得失敗豬的物件
+         @brief 豬的實體物件
+         */
+        GameSprite::Pig* getFailedPig();
+        
+        /**
+         @brief 取得失敗豬的圖片路徑
+         @return 圖檔路徑
+         */
+        std::string getDeadPigImagePath();
+        
+        /**
+         @brief 顯示失敗動畫
+         @param failRoadIndex 造成遊戲失敗的路線索引
+         */
+        void showFailAnimation();
+        
+        /**
+         @brief 更換陣亡爆炸的圖片
+         */
+        void changeDeadExplode();
+        
+        /**
+         @brief 顯示陣亡豬的圖檔
+         */
+        void showDeadPig();
+        
+        /**
+         @brief 顯示豬的鬼混
+         */
+        void showGhost();
+        
+        /**
+         @brief 加上失敗場景
+         */
+        void addLoseScene();
     };
 }
 

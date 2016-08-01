@@ -14,6 +14,7 @@ namespace GameScene
         this->alreadyComplete = false;
         this->isNewHighScore = false;
         this->newHighScoreDiff = 0;
+        this->failRoadIndex = 0;
         
         // 取得目前關卡在DB中已獲得的星星數，如果不是0代表玩家已破過該關卡，此次為重新挑戰。
         int starResult = DB::StarSetting::getInstance()->getStarNumber(this->episodeNumber, this->stageNumber);
@@ -104,6 +105,9 @@ namespace GameScene
             this->addChild(this->road2SweetVector[sweetId], 3);
             this->road2AvailableIndex.push_back(sweetId);
         }
+        
+        this->ghost = new GameSprite::Image("image/Ghost.png");
+        spriteManager->setWithKey("PlayScene_Ghost", this->ghost);
         
         this->road0Pig = new Pig(pig0Image, 0, 0);
         this->road0Pig->setPosition(this->getPigPosition(0));
@@ -270,6 +274,7 @@ namespace GameScene
         spriteManager->releaseByKey("PlayScene_ProgressBarUp");
         this->timeBar->release();
         spriteManager->releaseByKey("PlayScene_ProgressNumber");
+        spriteManager->releaseByKey("PlayScene_Ghost");
         spriteManager->releaseByKey("PlayScene_Road0Pig");
         spriteManager->releaseByKey("PlayScene_Road1Pig");
         spriteManager->releaseByKey("PlayScene_Road2Pig");
@@ -526,15 +531,118 @@ namespace GameScene
                 unschedule(schedule_selector(PlayScene::road0Update));
                 unschedule(schedule_selector(PlayScene::road1Update));
                 unschedule(schedule_selector(PlayScene::road2Update));
+                int failRoadIndex = 0;
+                if (this->road1Pig->hp <= 0) {
+                    failRoadIndex = 1;
+                } else if (this->road2Pig->hp <= 0) {
+                    failRoadIndex = 2;
+                }
                 for (const auto &child : this->getChildren()) {
                     child->pause();
                 }
                 log("Lose!");
                 this->isVictory = false;
-                auto controller = Controller::GameController::getInstance();
-                controller->addLoseSceneToCurrentScene();
+                this->failRoadIndex = failRoadIndex;
+                this->showFailAnimation();
             }
         }
+    }
+    
+    GameSprite::Pig* PlayScene::getFailedPig()
+    {
+        GameSprite::Pig* pig;
+        switch (this->failRoadIndex) {
+            case 0:
+                pig = this->road0Pig;
+                break;
+            case 1:
+                pig = this->road1Pig;
+                break;
+            case 2:
+                pig = this->road2Pig;
+                break;
+            default:
+                pig = this->road0Pig;
+                break;
+        }
+        return pig;
+    }
+    
+    std::string PlayScene::getDeadPigImagePath()
+    {
+        std::string deadImagePath;
+        switch (this->failRoadIndex) {
+            case 0:
+                deadImagePath = "image/DeadPig0.png";
+                break;
+            case 1:
+                deadImagePath = "image/DeadPig1.png";
+                break;
+            case 2:
+                deadImagePath = "image/DeadPig2.png";
+                break;
+            default:
+                deadImagePath = "image/DeadPig0.png";
+                break;
+        }
+        return deadImagePath;
+    }
+
+    void PlayScene::showDeadPig()
+    {
+        this->deadPig = new GameSprite::Image(this->getDeadPigImagePath());
+        this->deadPig->setPosition(this->getFailedPig()->getPosition());
+        this->addChild(this->deadPig, 2);
+    }
+    
+    void PlayScene::showGhost()
+    {
+        auto pig = this->getFailedPig();
+        this->ghost->setPosition(Vec2(pig->getPositionX(), pig->getPositionY() + 50));
+        this->addChild(this->ghost);
+        this->ghost->runAction(Sequence::create(MoveBy::create(1.f, Vec2(0, 250)), FadeOut::create(0.1f), NULL));
+    }
+    
+    void PlayScene::addLoseScene()
+    {
+        auto controller = Controller::GameController::getInstance();
+        this->deadExplode->release();
+        this->deadPig->release();
+        controller->addLoseSceneToCurrentScene();
+    }
+    
+    void PlayScene::showFailAnimation()
+    {
+        int x = rand() % 5;
+        char str[100] = {0};
+        sprintf(str, "image/Explode%d.png", x);
+        this->deadExplode = new GameSprite::Image(str);
+        this->deadExplode->setPosition(Vec2(this->getFailedPig()->getPositionX(),
+                                            this->getFailedPig()->getPositionY() + 50));
+        this->addChild(this->deadExplode, 3);
+        this->deadExplode->runAction(Sequence::create(CallFunc::create(CC_CALLBACK_0(PlayScene::showDeadPig, this)),
+                                                      DelayTime::create(0.3f),
+                                                      CallFunc::create(CC_CALLBACK_0(PlayScene::changeDeadExplode, this)),
+                                                      MoveBy::create(0.0f, Vec2(-50, -50)),
+                                                      DelayTime::create(0.3f),
+                                                      CallFunc::create(CC_CALLBACK_0(PlayScene::changeDeadExplode, this)),
+                                                      MoveBy::create(0.0f, Vec2(100, 0)),
+                                                      DelayTime::create(0.3f),
+                                                      FadeOut::create(0.0f),
+                                                      CallFunc::create(CC_CALLBACK_0(PlayScene::showGhost, this)),
+                                                      DelayTime::create(1.5f),
+                                                      CallFunc::create(CC_CALLBACK_0(PlayScene::addLoseScene, this)),
+                                                      NULL));
+    }
+    
+    void PlayScene::changeDeadExplode()
+    {
+        int x = rand() % 5;
+        char str[100] = {0};
+        sprintf(str, "image/Explode%d.png", x);
+        TextureCreator* textureCreator = TextureCreator::getInstance();
+        Texture2D* texutre = textureCreator->getAutoSizeTexture2d(str);
+        this->deadExplode->setTexture(texutre);
     }
     
     GameSprite::Sweet* PlayScene::getNearestSweet(int road)
