@@ -189,6 +189,9 @@ namespace GameScene
         // 取得路線2目前正在被使用的甜點索引
         std::queue<int> road2RunningIndex;
         
+        // 時間結束
+        GameSprite::Image* timesUp;
+        
         /** 
          @brief 取得指定路線最靠近豬的甜點索引
          @param road 路線編號
@@ -375,6 +378,12 @@ namespace GameScene
         Vec2 getScoresPosition();
         
         /**
+         @brief 取得時間終止標示的座標位置
+         @return 一個二維向量，代表時間終止標示的二維坐標
+         */
+        Vec2 getTimesUpPosition();
+        
+        /**
          @brief 將Prepare Number從場景中移除
          */
         void removePrepareNumber();
@@ -416,6 +425,16 @@ namespace GameScene
          @brief 加上失敗場景
          */
         void addLoseScene();
+        
+        /**
+         @brief 顯示時間中止標示
+         */
+        void showTimesUp();
+        
+        /**
+         @brief 加上勝利場景
+         */
+        void addWinScene();
     };
 }
 

@@ -160,6 +160,10 @@ namespace GameScene
         this->scores->setPosition(this->getScoresPosition());
         this->scores->setColor(Color3B(255, 114, 18));
         this->addChild(this->scores, 23);
+        
+        this->timesUp = new GameSprite::Image("image/TimesUp.png");
+        this->timesUp->setPosition(this->getTimesUpPosition());
+        spriteManager->setWithKey("PlayScene_TimesUp", this->timesUp);
     }
     
     Vec2 PlayScene::getBackgroundPosition()
@@ -232,7 +236,11 @@ namespace GameScene
     {
         return Vec2(925, this->visibleOrigin.y + this->visibleSize.height - this->visibleSize.width / 11 - 15);
     }
-
+    
+    Vec2 PlayScene::getTimesUpPosition()
+    {
+        return Vec2(this->center.x, this->center.y + 100);
+    }
     
     bool PlayScene::getIsPaused()
     {
@@ -286,6 +294,7 @@ namespace GameScene
         spriteManager->releaseByKey("PlayScene_ScoreRightStar");
         spriteManager->releaseByKey("PlayScene_ScoreLeftStar");
         spriteManager->releaseByKey("PlayScene_ScoreMiddleStar");
+        spriteManager->releaseByKey("PlayScene_TimesUp");
         Manager::ScoresManager::getInstance()->releaseScores();
         
         for (int i = 0; i < 10; i++) {
@@ -476,7 +485,6 @@ namespace GameScene
                 int newStage;
                 int newEpisode;
                 int newScore = this->calculateScores();
-                auto controller = Controller::GameController::getInstance();
                 
                 // 如果該關卡已經被破過了(玩家不是第一次破此關卡)
                 if (this->alreadyComplete == true) {
@@ -486,14 +494,14 @@ namespace GameScene
                         this->newHighScoreDiff = newScore - oldScore;
                         DB::StarSetting::getInstance()->updateStar(this->episodeNumber, this->stageNumber, newScore);
                     }
-                    controller->addVictorySceneToCurrentScene(newScore);
+                    this->showTimesUp();
                     return;
                 // 如果該關卡是最後一章節的最後一關
                 } else if (this->episodeNumber == maxEpisode && this->stageNumber == maxStage) {
                     DB::StarSetting::getInstance()->insertStar(this->episodeNumber, this->stageNumber, newScore);
                     this->isNewHighScore = true;
                     this->newHighScoreDiff = newScore;
-                    controller->addVictorySceneToCurrentScene(newScore);
+                    this->showTimesUp();
                     return;
                 // 如果該關卡是第一張的第一關
                 } else if (this->episodeNumber == 0 && this->stageNumber == 0) {
@@ -504,7 +512,7 @@ namespace GameScene
                     DB::StarSetting::getInstance()->updateStar(this->episodeNumber, this->stageNumber, newScore);
                     DB::StageSetting::getInstance()->updateCurrent(newStage);
                     DB::EpisodeSetting::getInstance()->updateCurrent(newEpisode);
-                    controller->addVictorySceneToCurrentScene(newScore);
+                    this->showTimesUp();
                     return;
                 // 如果該關卡是某章節的最後一關
                 } else if (this->stageNumber == maxStage) {
@@ -522,7 +530,7 @@ namespace GameScene
                 DB::StarSetting::getInstance()->insertStar(this->episodeNumber, this->stageNumber, newScore);
                 DB::StageSetting::getInstance()->updateCurrent(newStage);
                 DB::EpisodeSetting::getInstance()->updateCurrent(newEpisode);
-                controller->addVictorySceneToCurrentScene(newScore);
+                this->showTimesUp();
                 return;
             }
             // 有任何一隻豬的生命歸0，則遊戲結束，玩家闖關失敗
@@ -546,6 +554,24 @@ namespace GameScene
                 this->showFailAnimation();
             }
         }
+    }
+    
+    void PlayScene::showTimesUp()
+    {
+        this->timesUp->setScale(0.1f);
+        this->addChild(this->timesUp, 100);
+        this->timesUp->runAction(Sequence::create(ScaleTo::create(0.3f, 1.f),
+                                                  DelayTime::create(0.8f),
+                                                  FadeOut::create(0.5f),
+                                                  DelayTime::create(0.5f),
+                                                  CallFunc::create(CC_CALLBACK_0(PlayScene::addWinScene, this)),
+                                                  NULL));
+    }
+    
+    void PlayScene::addWinScene()
+    {
+        int newScore = this->calculateScores();
+        Controller::GameController::getInstance()->addVictorySceneToCurrentScene(newScore);
     }
     
     GameSprite::Pig* PlayScene::getFailedPig()
