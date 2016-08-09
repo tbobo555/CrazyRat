@@ -17,7 +17,7 @@
 #include "Db/EpisodeSetting.h"
 #include "Db/StageSetting.h"
 #include "Db/StarSetting.h"
-
+#include "Lib/LevelDesigner.h"
 
 USING_NS_CC;
 
@@ -251,7 +251,7 @@ namespace GameScene
         /**
          @brief 初始化關卡參數設定
          */
-        void initConfig();
+        void initLevelSetting();
         
         // 遊戲已經開始的時間
         float playTime;

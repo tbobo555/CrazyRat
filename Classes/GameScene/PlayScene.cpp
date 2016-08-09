@@ -375,7 +375,7 @@ namespace GameScene
         this->road0CurrentIndex = 0;
         this->road1CurrentIndex = 0;
         this->road2CurrentIndex = 0;
-        this->initConfig();
+        this->initLevelSetting();
         this->progressBarUp->setVisible(true);
         this->timeBar->runAction(ProgressTo::create(this->overGameTime, 100));
         schedule(CC_SCHEDULE_SELECTOR(PlayScene::gameUpdate), 0.1f);
@@ -697,32 +697,10 @@ namespace GameScene
         }
     }
     
-    void PlayScene::initConfig()
+    void PlayScene::initLevelSetting()
     {
-        this->road0TimeConfig = {
-            1.3f,
-            1.9f,
-            11.3f,
-            15.8f,
-            16.8f,
-            17.9f
-        };
-        
-        this->road1TimeConfig = {
-            0.0f,
-            3.7f,
-            7.1f,
-            8.5f,
-            10.0f,
-        };
-
-        this->road2TimeConfig = {
-            2.6f,
-            4.9f,
-            5.8f,
-            12.2f,
-            12.9f,
-            14.5f,
-        };
+        this->road0TimeConfig = LevelDeisgner::getInstance()->loadLevelSetting(this->episodeNumber, this->stageNumber, 0);
+        this->road1TimeConfig = LevelDeisgner::getInstance()->loadLevelSetting(this->episodeNumber, this->stageNumber, 1);
+        this->road2TimeConfig = LevelDeisgner::getInstance()->loadLevelSetting(this->episodeNumber, this->stageNumber, 2);
     }
 }
