@@ -9,7 +9,7 @@ namespace GameScene
         this->episodeNumber = pEpisodeNumber;
         this->stageNumber = pStageNumber;
         this->isVictory = false;
-        this->overGameTime = 25.f;
+        this->overGameTime = 90.f;
         this->alreadycompleteStar = 0;
         this->alreadyComplete = false;
         this->isNewHighScore = false;
@@ -76,31 +76,31 @@ namespace GameScene
         spriteManager->setWithKey("PlayScene_ProgressNumber", this->prepareNumber);
         this->prepareNumber->setPosition(this->center);
         this->addChild(this->prepareNumber, 1);
-
+        float runningTime = LevelDeisgner::getInstance()->loadRunningTimeByEpisodeAndStage(this->episodeNumber, this->stageNumber);
         // 將各個路線的會用到的甜點物件初始化，每個路線都創造10個甜點。
         for (int i = 0; i < 10; i++) {
             std::string path = "image/Sweet";
             std::stringstream key;
-            int type = rand() % 3;
+            int type = rand() % 10;
             int sweetId = i;
             key << path << type << ".png";
-            this->road0SweetVector.push_back(new GameSprite::Sweet(key.str(), 0, sweetId));
+            this->road0SweetVector.push_back(new GameSprite::Sweet(key.str(), 0, sweetId, runningTime));
             this->road0SweetVector[sweetId]->setPosition(Vec2(-150, -200));
             this->addChild(this->road0SweetVector[sweetId], 3);
             this->road0AvailableIndex.push_back(sweetId);
             key.clear();
             key.str("");
-            type = rand() % 3;
+            type = rand() % 10;
             key << path << type << ".png";
-            this->road1SweetVector.push_back(new GameSprite::Sweet(key.str(), 1, sweetId));
+            this->road1SweetVector.push_back(new GameSprite::Sweet(key.str(), 1, sweetId, runningTime));
             this->road1SweetVector[sweetId]->setPosition(Vec2(-150, -200));
             this->addChild(this->road1SweetVector[sweetId], 3);
             this->road1AvailableIndex.push_back(sweetId);
             key.clear();
             key.str("");
-            type = rand() % 3;
+            type = rand() % 10;
             key << path << type << ".png";
-            this->road2SweetVector.push_back(new GameSprite::Sweet(key.str(), 2, sweetId));
+            this->road2SweetVector.push_back(new GameSprite::Sweet(key.str(), 2, sweetId, runningTime));
             this->road2SweetVector[sweetId]->setPosition(Vec2(-150, -200));
             this->addChild(this->road2SweetVector[sweetId], 3);
             this->road2AvailableIndex.push_back(sweetId);

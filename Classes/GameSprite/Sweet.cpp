@@ -10,6 +10,13 @@ namespace GameSprite
         this->roadIndex = pRoadIndex;
         this->runningTime = 6.f;
     }
+    
+    Sweet::Sweet(std::string image, int pRoadIndex, int pSweetId, float pRunningTime) : GameSprite::BaseSprite(image)
+    {
+        this->sweetId = pSweetId;
+        this->roadIndex = pRoadIndex;
+        this->runningTime = pRunningTime;
+    }
 
     void Sweet::eaten()
     {
@@ -38,6 +45,11 @@ namespace GameSprite
         auto pig = static_cast<Pig*>(Manager::SpriteManager::getInstance()->getByKey(key.str()));
         pig->hurt();
         CCLOG("missEat hurt!!!");
+    }
+    
+    void Sweet::setRunningTime(float time)
+    {
+        this->runningTime = time;
     }
     
     void Sweet::run()

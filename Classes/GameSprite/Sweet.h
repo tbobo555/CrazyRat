@@ -25,6 +25,17 @@ namespace GameSprite
          */
         Sweet(std::string image, int pRoadIndex, int pSweetId);
         
+        
+        /**
+         @brief 建構式
+         @param image 甜點要使用的圖檔
+         @param pRoadIndex 甜點被放置的路線
+         @param pSweetId 這個甜點的索引，遊戲迴圈會用索引來取得可以被使用的甜點(正在降落的甜點不可被使用)
+         @param pRunningTime 甜點降落的時間
+         */
+        Sweet(std::string image, int pRoadIndex, int pSweetId, float pRunningTime);
+
+        
         // 甜點被放置的路徑
         int roadIndex;
         
@@ -43,6 +54,11 @@ namespace GameSprite
          @brief 甜點沒被吃到的動作
          */
         void missEat();
+        
+        /**
+         @brief 設置糖果掉落的時間
+         */
+        void setRunningTime(float time);
         
         /**
          @brief 甜點開始降落

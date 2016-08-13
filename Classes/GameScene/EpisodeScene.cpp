@@ -202,15 +202,22 @@ namespace GameScene
                 
                 Vec2(this->center.x - 2 * width / 5.4, 0.75 * height - width / 5.4),
                 Vec2(this->center.x - width / 5.4, 0.75 * height - width / 5.4),
-                Vec2(this->center.x, 0.75 * height - 5.4 * width),
+                Vec2(this->center.x, 0.75 * height - width / 5.4),
                 Vec2(this->center.x + width / 5.4, 0.75 * height - width / 5.4),
                 Vec2(this->center.x + 2 * width / 5.4, 0.75 * height - width / 5.4),
                 
                 Vec2(this->center.x - 2 * width / 5.4, 0.75 * height - 2 * width / 5.4),
                 Vec2(this->center.x - width / 5.4, 0.75 * height - 2 * width / 5.4),
-                Vec2(this->center.x, 0.75 * height - 2 * 5.4 * width),
+                Vec2(this->center.x, 0.75 * height - 2 * width / 5.4),
                 Vec2(this->center.x + width / 5.4, 0.75 * height - 2 * width / 5.4),
                 Vec2(this->center.x + 2 * width / 5.4, 0.75 * height - 2 * width / 5.4),
+                
+                Vec2(this->center.x - 2 * width / 5.4, 0.75 * height - 3 * width / 5.4),
+                Vec2(this->center.x - width / 5.4, 0.75 * height - 3 * width / 5.4),
+                Vec2(this->center.x, 0.75 * height - 3 * width / 5.4),
+                Vec2(this->center.x + width / 5.4, 0.75 * height - 3 * width / 5.4),
+                Vec2(this->center.x + 2 * width / 5.4, 0.75 * height - 3 * width / 5.4),
+
             }
         };
         return stageButtonPositionSet[stageNumber];

@@ -62,6 +62,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setContentScaleFactor(scaleFactor);
 
     register_all_packages();
+    srand(static_cast<unsigned int>(time(NULL)));
 
     Sqlite3Engine::getInstance()->initEngine();
     Sqlite3Engine::getInstance()->connect();
@@ -81,7 +82,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         starSetting->initTable();
     }
     episodeSetting->updateMax(2);
-    stageSetting->updateMax(5);
+    stageSetting->updateMax(20);
     //stageSetting->updateCurrent(0);
     Director::getInstance()->getEventDispatcher()->setEnabled(true);
     Controller::GameController* controller = Controller::GameController::getInstance();
