@@ -9,7 +9,7 @@ namespace GameScene
         this->episodeNumber = pEpisodeNumber;
         this->stageNumber = pStageNumber;
         this->isVictory = false;
-        this->overGameTime = 90.f;
+        this->overGameTime = LevelDeisgner::getInstance()->loadGameOverTimeSetting(this->episodeNumber, this->stageNumber);
         this->alreadycompleteStar = 0;
         this->alreadyComplete = false;
         this->isNewHighScore = false;
@@ -18,6 +18,7 @@ namespace GameScene
         
         // 取得目前關卡在DB中已獲得的星星數，如果不是0代表玩家已破過該關卡，此次為重新挑戰。
         int starResult = DB::StarSetting::getInstance()->getStarNumber(this->episodeNumber, this->stageNumber);
+        CCLOG("Star Result %d, %d, %d",this->episodeNumber, this->stageNumber, starResult);
         if (starResult != 0) {
             this->alreadyComplete = true;
             this->alreadycompleteStar = starResult;
@@ -76,7 +77,7 @@ namespace GameScene
         spriteManager->setWithKey("PlayScene_ProgressNumber", this->prepareNumber);
         this->prepareNumber->setPosition(this->center);
         this->addChild(this->prepareNumber, 1);
-        float runningTime = LevelDeisgner::getInstance()->loadRunningTimeByEpisodeAndStage(this->episodeNumber, this->stageNumber);
+        float runningTime = LevelDeisgner::getInstance()->loadSweetSpeedSetting(this->episodeNumber, this->stageNumber);
         // 將各個路線的會用到的甜點物件初始化，每個路線都創造10個甜點。
         for (int i = 0; i < 10; i++) {
             std::string path = "image/Sweet";
@@ -449,16 +450,32 @@ namespace GameScene
         }
     }
     
+    void PlayScene::updateScoreBarStar()
+    {
+        int starNumber = this->calculateScores();
+        if (starNumber == 1 && this->scoreLeftStar->isLight == false) {
+            this->scoreLeftStar->setLight();
+        }
+        if (starNumber == 2 && this->scoreMiddleStar->isLight == false) {
+            this->scoreMiddleStar->setLight();
+        }
+        if (starNumber == 3 && this->scoreRightStar->isLight == false) {
+            this->scoreRightStar->setLight();
+        }
+    }
+    
     int PlayScene::calculateScores()
     {
         int totalScores = Manager::ScoresManager::getInstance()->getScores();
-        if (totalScores >= 100 && totalScores < 1000) {
+        std::vector<int> starForScoresSet = LevelDeisgner::getInstance()->loadStarAndScoresSetting(this->episodeNumber, this->stageNumber);
+        
+        if (totalScores >= starForScoresSet.at(0) && totalScores < starForScoresSet.at(1)) {
             return 1;
         }
-        if (totalScores >= 1000 && totalScores < 1400) {
+        if (totalScores >= starForScoresSet.at(1) && totalScores < starForScoresSet.at(2)) {
             return 2;
         }
-        if (totalScores >= 1400) {
+        if (totalScores >= starForScoresSet.at(2)) {
             return 3;
         }
         return 0;
@@ -699,8 +716,8 @@ namespace GameScene
     
     void PlayScene::initLevelSetting()
     {
-        this->road0TimeConfig = LevelDeisgner::getInstance()->loadLevelSetting(this->episodeNumber, this->stageNumber, 0);
-        this->road1TimeConfig = LevelDeisgner::getInstance()->loadLevelSetting(this->episodeNumber, this->stageNumber, 1);
-        this->road2TimeConfig = LevelDeisgner::getInstance()->loadLevelSetting(this->episodeNumber, this->stageNumber, 2);
+        this->road0TimeConfig = LevelDeisgner::getInstance()->loadSweetTimingSetting(this->episodeNumber, this->stageNumber, 0);
+        this->road1TimeConfig = LevelDeisgner::getInstance()->loadSweetTimingSetting(this->episodeNumber, this->stageNumber, 1);
+        this->road2TimeConfig = LevelDeisgner::getInstance()->loadSweetTimingSetting(this->episodeNumber, this->stageNumber, 2);
     }
 }

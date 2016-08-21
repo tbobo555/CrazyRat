@@ -205,6 +205,11 @@ namespace GameScene
          @return 甜點物件
          */
         GameSprite::Sweet* getNearestSweet(int road);
+        
+        /**
+         @brief 依據玩家目前取得的分數來更新記分板上的星星狀態(亮或暗)
+         */
+        void updateScoreBarStar();
     private:
         // 存放sprite sheet的快取物件
         SpriteFrameCache* spriteCache;

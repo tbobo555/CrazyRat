@@ -79,26 +79,7 @@ namespace GameSprite
             scoreHalo->setOpacity(0);
             auto fadeIn = FadeIn::create(0.1f);
             scoreHalo->runAction(Sequence::create(fadeIn, fadeIn->reverse(), NULL));
-            
-            int totalScores = Manager::ScoresManager::getInstance()->getScores();
-            if (totalScores >= 100 && totalScores < 1000) {
-                auto scoreLeftStar = static_cast<ScoreStar*>(Manager::SpriteManager::getInstance()->getByKey("PlayScene_ScoreLeftStar"));
-                if (!scoreLeftStar->isLight) {
-                    scoreLeftStar->setLight();
-                }
-            }
-            if (totalScores >= 1000 && totalScores < 1400) {
-                auto scoreMiddleStar = static_cast<ScoreStar*>(Manager::SpriteManager::getInstance()->getByKey("PlayScene_ScoreMiddleStar"));
-                if (!scoreMiddleStar->isLight) {
-                    scoreMiddleStar->setLight();
-                }
-            }
-            if (totalScores >= 1400) {
-                auto scoreRightStar = static_cast<ScoreStar*>(Manager::SpriteManager::getInstance()->getByKey("PlayScene_ScoreRightStar"));
-                if (!scoreRightStar->isLight) {
-                    scoreRightStar->setLight();
-                }
-            }
+            currentScene->updateScoreBarStar();
             return scores;
         }
     }
