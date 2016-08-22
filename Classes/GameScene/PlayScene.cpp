@@ -81,6 +81,9 @@ namespace GameScene
         // 將各個路線的會用到的甜點物件初始化，每個路線都創造10個甜點。
         for (int i = 0; i < 10; i++) {
             std::string path = "image/Sweet";
+            if (this->episodeNumber == 1) {
+                path = "image/Cookie";
+            }
             std::stringstream key;
             int type = rand() % 10;
             int sweetId = i;

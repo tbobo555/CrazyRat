@@ -137,15 +137,9 @@ namespace GameScene
     
     Vec2 SelectionScene::getEpisodeButtonPosition(int episodeNumber)
     {
-        float width = Director::getInstance()->getWinSize().width;
-        float height = Director::getInstance()->getWinSize().height;
         std::vector<Vec2> episodeButtonPositionSet = {
-            {Vec2(height / 10, 7 * height / 12)},
-            {Vec2(this->center.x, 7 * height / 12)},
-            {Vec2(width - height / 10, 7 * height / 12)},
-            {Vec2(height / 10, 5 * height / 12)},
-            {Vec2(this->center.x, 5 * height / 12)},
-            {Vec2(width - height / 10, 5 * height / 12)},
+            {Vec2(280, 900)},
+            {Vec2(800, 900)}
         };
         
         return episodeButtonPositionSet[episodeNumber];

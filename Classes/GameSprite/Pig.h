@@ -63,6 +63,15 @@ namespace GameSprite
     private:
         // 豬被甜點砸到的爆炸圖片
         Image* explode;
+        
+        // 得分特效 - Good
+        Image* goodEffect;
+        
+        // 得分特效 - Great
+        Image* greatEffect;
+
+        // 得分特效 - Perfect
+        Image* perfectEffect;
 
         // 豬的嘴巴圖片，吃東西時會顯示
         Mouth* mouth;
@@ -87,6 +96,23 @@ namespace GameSprite
          @param delta 時間常數，代表要多久執行一次
          */
         void hideExplode(float delta);
+        
+        /**
+         @brief 顯示得分特效
+         @param type 得分的種類[Good, Great, Perfect]
+         */
+        void showScoreEffect(int type);
+        
+        /**
+         @brief 初始化得分特效的資訊
+         */
+        void initAllScoreEffect();
+        
+        
+        /**
+         @brief 得分特效的座標位置
+         */
+        Vec2 getEffectPosition();
 
         /**
          @brief 偵測豬被按下的狀態，會顯示豬吃東西的動畫

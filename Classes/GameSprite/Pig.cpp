@@ -20,12 +20,30 @@ namespace GameSprite
         this->explode->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height*2/3));
         this->addChild(this->explode);
         this->explode->setVisible(false);
+        
+        this->goodEffect = new Image("image/Good.png");
+        this->goodEffect->setGlobalZOrder(4);
+        this->addChild(this->goodEffect);
+        
+        this->greatEffect = new Image("image/Great.png");
+        this->greatEffect->setGlobalZOrder(4);
+        this->addChild(this->greatEffect);
+
+        this->perfectEffect = new Image("image/Perfect.png");
+        this->perfectEffect->setGlobalZOrder(4);
+        this->addChild(this->perfectEffect);
+        
+        this->initAllScoreEffect();
+
     }
     
     Pig::~Pig()
     {
         this->mouth->release();
         this->explode->release();
+        this->goodEffect->release();
+        this->greatEffect->release();
+        this->perfectEffect->release();
     }
 
     void Pig::addEventListener()
@@ -56,10 +74,13 @@ namespace GameSprite
             float pigPosition = this->getPosition().y;
             float diffPosition = sweetPosition - pigPosition;
             if (diffPosition > 0 && diffPosition < 70) {
+                this->showScoreEffect(2);
                 scores =  100;
             } else if (diffPosition >= 70 && diffPosition <= 100) {
+                this->showScoreEffect(1);
                 scores =  80;
             } else if (diffPosition > 100 && diffPosition <= 150) {
+                this->showScoreEffect(0);
                 scores =  60;
             } else if (diffPosition > 150 && diffPosition <= 200){
                 this->hideMouth();
@@ -179,6 +200,46 @@ namespace GameSprite
         
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.1f);
         this->runAction(RepeatForever::create(Sequence::create(DelayTime::create(rand() % 5 + 1), Animate::create(animation), NULL)));
+    }
+    
+    Vec2 Pig::getEffectPosition()
+    {
+        return Vec2(this->getContentSize().width/2, this->getContentSize().height);
+    }
+    
+    void Pig::initAllScoreEffect()
+    {
+        this->goodEffect->setPosition(this->getEffectPosition());
+        this->goodEffect->setOpacity(0);
+        
+        this->greatEffect->setPosition(this->getEffectPosition());
+        this->greatEffect->setOpacity(0);
+        
+        this->perfectEffect->setPosition(this->getEffectPosition());
+        this->perfectEffect->setOpacity(0);
+    }
+    
+    void Pig::showScoreEffect(int type)
+    {
+        this->goodEffect->cleanup();
+        this->greatEffect->cleanup();
+        this->perfectEffect->cleanup();
+        this->initAllScoreEffect();
+        auto moveBy = Sequence::create(FadeIn::create(0), MoveBy::create(0.3, Vec2(0, 50)), FadeOut::create(0), NULL) ;
+        switch (type) {
+            case 0:
+                this->goodEffect->runAction(moveBy);
+                break;
+            case 1:
+                this->greatEffect->runAction(moveBy);
+                break;
+            case 2:
+                this->perfectEffect->runAction(moveBy);
+                break;
+            default:
+                this->goodEffect->runAction(moveBy);
+                break;
+        }
     }
     
     bool Pig::onTouchBegan(Touch* touch, Event* event)
