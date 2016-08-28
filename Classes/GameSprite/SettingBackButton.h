@@ -5,6 +5,7 @@
 #include "cocos2d.h"
 #include "Manager/SceneManager.h"
 #include "Manager/SpriteManager.h"
+#include "Manager/SoundsManager.h"
 
 USING_NS_CC;
 

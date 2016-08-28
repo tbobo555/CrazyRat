@@ -4,6 +4,8 @@
 #include "BaseSprite.h"
 #include "cocos2d.h"
 #include "Db/SwitchSetting.h"
+#include "Manager/MusicManager.h"
+#include "Manager/SoundsManager.h"
 
 USING_NS_CC;
 

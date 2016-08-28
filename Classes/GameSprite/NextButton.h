@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "BaseSprite.h"
+#include "Manager/SoundsManager.h"
 
 USING_NS_CC;
 

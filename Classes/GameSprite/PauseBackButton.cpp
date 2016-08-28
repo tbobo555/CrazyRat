@@ -28,8 +28,9 @@ namespace GameSprite
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
+            Manager::SoundsManager::getInstance()->playSound("audio/sounds/ButtonClick.caf");
             log("PauseBackButon began... x = %f, y = %f", locationInNode.x, locationInNode.y);
-            target->setScale(0.9);
+            target->setScale(0.95);
             return true;
         }
         return false;

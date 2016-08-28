@@ -7,7 +7,7 @@
 #include "GameSprite/image.h"
 #include "Manager/SpriteManager.h"
 #include "BaseScene.h"
-
+#include "Manager/MusicManager.h"
 namespace GameScene
 {
     /**

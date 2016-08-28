@@ -28,7 +28,7 @@ namespace GameSprite
     
     void MusicButton::turnOn()
     {
-        DB::SwitchSetting::getInstance()->turnOnMusic();
+        Manager::MusicManager::getInstance()->turnOnMusic();
         TextureCreator* textureCreator = TextureCreator::getInstance();
         std::string musicOnButtonImage = "image/MusicOnButton.png";
         Texture2D* onTexutre =
@@ -40,7 +40,7 @@ namespace GameSprite
     
     void MusicButton::turnOff()
     {
-        DB::SwitchSetting::getInstance()->turnOffMusic();
+        Manager::MusicManager::getInstance()->turnOffMusic();
         TextureCreator* textureCreator = TextureCreator::getInstance();
         std::string musicOffButtonImage = "image/MusicOffButton.png";
         Texture2D* offTexutre =
@@ -56,9 +56,11 @@ namespace GameSprite
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
+
         if (rect.containsPoint(locationInNode)) {
+            Manager::SoundsManager::getInstance()->playSound("audio/sounds/ButtonClick.caf");
             log("MusicButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
-            target->setScale(0.9);
+            target->setScale(0.95);
             return true;
         }
         return false;

@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "BaseSprite.h"
 #include "Manager/SceneManager.h"
+#include "Manager/SoundsManager.h"
 
 USING_NS_CC;
 

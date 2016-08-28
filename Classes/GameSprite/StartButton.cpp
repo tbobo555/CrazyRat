@@ -26,8 +26,9 @@ namespace GameSprite
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
-        
+
         if (rect.containsPoint(locationInNode)) {
+            Manager::SoundsManager::getInstance()->playSound("audio/sounds/ButtonClick.caf");
             log("Win Size: %f  %f",
                 Director::getInstance()->getWinSize().width, Director::getInstance()->getWinSize().height);
             log("Win Size In pixels: %f  %f",
@@ -41,7 +42,7 @@ namespace GameSprite
                 Director::getInstance()->getOpenGLView()->getFrameSize().height);
             log("contetn factor: %f  ", Director::getInstance()->getContentScaleFactor());
             log("StartButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
-            target->setScale(0.9);
+            target->setScale(0.95);
             return true;
         }
         return false;

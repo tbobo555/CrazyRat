@@ -58,7 +58,7 @@ namespace GameSprite
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
             log("SoundsButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
-            target->setScale(0.9);
+            target->setScale(0.95);
             return true;
         }
         return false;
@@ -76,6 +76,7 @@ namespace GameSprite
             int soundsSwitch = target->isOpen;
             if (soundsSwitch == false) {
                 target->turnOn();
+                Manager::SoundsManager::getInstance()->playSound("audio/sounds/ButtonClick.caf");
             } else {
                 target->turnOff();
             }
