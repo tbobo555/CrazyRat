@@ -10,10 +10,6 @@ This is my first game.
 $ git clone https://github.com/tbobo555/CrazyRat.git
 ```
 
-License
-----
-MIT
-
 ## Requirement
  - Cocos2d-x v3
 
