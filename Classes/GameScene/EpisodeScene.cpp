@@ -173,6 +173,7 @@ namespace GameScene
                 star->runAction(ScaleTo::create(0.3f, 1.0f));
                 star->runAction(MoveTo::create(0.3f, this->getStarPosition(this->newHighScoreStage, i)));
             }
+            Manager::SoundsManager::getInstance()->playSound("audio/sounds/ShowSmallStar.caf");
             this->episodeBackground->runAction(Sequence::create(DelayTime::create(1.0f),
                                                          CallFunc::create(CC_CALLBACK_0(EpisodeScene::animationCallback, this)),nullptr));
 

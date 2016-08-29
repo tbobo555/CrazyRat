@@ -24,6 +24,27 @@ namespace Manager
         void playMusic(const char* fileName);
         
         /**
+         @brief 播放音樂(單一次)
+         @param fileName 音樂的檔案名稱
+         */
+        void playMusicNoLoop(const char* fileName);
+        
+        /**
+         @brief 停止音樂
+         */
+        void stopMusic();
+        
+        /**
+         @brief 暫停音樂
+         */
+        void pauseMusic();
+
+        /**
+         @brief 繼續播放音樂
+         */
+        void resumeMusic();
+
+        /**
          @brief 開啟音樂(音量調整為1)
          */
         void turnOnMusic();

@@ -22,6 +22,31 @@ namespace Manager
         this->musicName = fileName;
     }
     
+    void MusicManager::playMusicNoLoop(const char *fileName)
+    {
+        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+        CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(fileName, false);
+        if (DB::SwitchSetting::getInstance()->getMusicSwitch() == 0) {
+            this->turnOffMusic();
+        }
+        this->musicName = fileName;
+    }
+    
+    void MusicManager::stopMusic()
+    {
+        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+    }
+    
+    void MusicManager::pauseMusic()
+    {
+        CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+    }
+    
+    void MusicManager::resumeMusic()
+    {
+        CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+    }
+    
     void MusicManager::turnOnMusic()
     {
         if (CocosDenshion::SimpleAudioEngine::getInstance()->getBackgroundMusicVolume() == 0) {

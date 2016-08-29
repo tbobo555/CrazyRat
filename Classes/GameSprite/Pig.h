@@ -9,6 +9,7 @@
 #include "Manager/SceneManager.h"
 #include "Manager/ScoresManager.h"
 #include "Manager/SpriteManager.h"
+#include "Manager/SoundsManager.h"
 
 namespace GameSprite
 {

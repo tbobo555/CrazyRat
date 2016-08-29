@@ -163,6 +163,10 @@ namespace GameSprite
         Texture2D* texutre = textureCreator->getAutoSizeTexture2d(str);
         this->explode->setTexture(texutre);
         this->explode->setVisible(true);
+        int randomNumber = rand() % 7;
+        std::stringstream punchName;
+        punchName << "audio/sounds/Punch" << randomNumber << ".caf";
+        Manager::SoundsManager::getInstance()->playSound(punchName.str().c_str());
     }
     
     void Pig::hideExplode(float delta)
@@ -221,6 +225,7 @@ namespace GameSprite
     
     void Pig::showScoreEffect(int type)
     {
+        Manager::SoundsManager::getInstance()->playSound("audio/sounds/GotScores.caf");
         this->goodEffect->cleanup();
         this->greatEffect->cleanup();
         this->perfectEffect->cleanup();

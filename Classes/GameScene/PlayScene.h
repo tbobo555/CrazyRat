@@ -6,6 +6,8 @@
 #include "BaseScene.h"
 #include "Manager/SpriteManager.h"
 #include "Manager/ScoresManager.h"
+#include "Manager/MusicManager.h"
+#include "Manager/SoundsManager.h"
 #include "GameSprite/Background.h"
 #include "GameSprite/ProgressBarUp.h"
 #include "GameSprite/ProgressBarDown.h"

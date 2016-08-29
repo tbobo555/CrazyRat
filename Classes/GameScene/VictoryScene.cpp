@@ -57,17 +57,27 @@ namespace GameScene
         auto actionTo = MoveTo::create(0.3, this->getStarPosition(2));
         
         if (newScores == 3) {
-            this->starRight->runAction(actionTo);
+            this->starRight->runAction(Sequence::create(DelayTime::create(0.3f),
+                                                        actionTo,
+                                                        CallFunc::create(CC_CALLBACK_0(VictoryScene::playBigStarSound, this)),
+                                                        NULL));
         }
         
         if (newScores >= 2) {
             actionTo = MoveTo::create(0.3, this->getStarPosition(1));
-            this->starMiddle->runAction(Sequence::create(DelayTime::create(0.15f), actionTo, NULL));
+            this->starMiddle->runAction(Sequence::create(DelayTime::create(0.15f),
+                                                         actionTo,
+                                                         CallFunc::create(CC_CALLBACK_0(VictoryScene::playBigStarSound, this)),
+                                                         NULL));
         }
 
         if (newScores >= 1) {
             actionTo = MoveTo::create(0.3, this->getStarPosition(0));
-            this->starLeft->runAction(Sequence::create(DelayTime::create(0.3f), actionTo, CallFunc::create(CC_CALLBACK_0(VictoryScene::animationCallback, this)), NULL));
+            this->starLeft->runAction(Sequence::create(actionTo,
+                                                       CallFunc::create(CC_CALLBACK_0(VictoryScene::playBigStarSound, this)),
+                                                       DelayTime::create(0.5f),
+                                                       CallFunc::create(CC_CALLBACK_0(VictoryScene::animationCallback, this)),
+                                                       NULL));
         }
     }
     
@@ -75,6 +85,11 @@ namespace GameScene
     {
         Director::getInstance()->getEventDispatcher()->setEnabled(true);
         this->nextButton->setVisible(true);
+    }
+    
+    void VictoryScene::playBigStarSound()
+    {
+        Manager::SoundsManager::getInstance()->playSound("audio/sounds/ShowBigStar.caf");
     }
     
     Vec2 VictoryScene::getBackgroundPosition()

@@ -27,6 +27,7 @@ namespace GameScene
     
     void PlayScene::initScene()
     {
+        Manager::MusicManager::getInstance()->stopMusic();
         Manager::ScoresManager::getInstance()->initScores();
         this->spriteCache = SpriteFrameCache::getInstance();
         this->spriteCache->addSpriteFramesWithFile("image/Pig0Animation.plist");
@@ -316,11 +317,13 @@ namespace GameScene
     {
         this->isPaused = false;
         this->prepareTime = 3;
+        Manager::SoundsManager::getInstance()->playSound("audio/sounds/Timer321.caf");
         schedule(CC_SCHEDULE_SELECTOR(PlayScene::prepareUpdate), 1.f);
     }
     
     void PlayScene::pauseScene()
     {
+        Manager::MusicManager::getInstance()->pauseMusic();
         this->isPaused = true;
         // 將該場景中所有的子物件取出，除了暫停場景裡的物件，其他的都進行並暫停
         for (const auto &child : this->getChildren()) {
@@ -336,7 +339,7 @@ namespace GameScene
     void PlayScene::resumeScene()
     {
         this->isPaused = false;
-        
+        Manager::MusicManager::getInstance()->resumeMusic();
         for (const auto &child : this->getChildren()) {
             child->resume();
         }
@@ -354,12 +357,15 @@ namespace GameScene
                 switch (this->prepareTime) {
                     case 2 :
                         imagePath = "image/PrepareTwo.png";
+                        Manager::SoundsManager::getInstance()->playSound("audio/sounds/Timer321.caf");
                         break;
                     case 1 :
                         imagePath = "image/PrepareOne.png";
+                        Manager::SoundsManager::getInstance()->playSound("audio/sounds/Timer321.caf");
                         break;
                     case 0 :
                         imagePath = "image/PrepareGo.png";
+                        Manager::SoundsManager::getInstance()->playSound("audio/sounds/TimerGo.caf");
                     break;
                 }
                 auto texture = TextureCreator::getInstance()->getAutoSizeTexture2d(imagePath);
@@ -380,6 +386,19 @@ namespace GameScene
         this->road1CurrentIndex = 0;
         this->road2CurrentIndex = 0;
         this->initLevelSetting();
+        
+        
+        std::vector<std::string> musicMap = {"BattyMcFaddin", "MerryGo", "RoyalBanana", "RunAmok", "WagonWheel"};
+        int randMusicId = rand() % 5;
+        if (this->overGameTime == 30) {
+            Manager::MusicManager::getInstance()->playMusicNoLoop("audio/music/MerryGo(30s).caf");
+        } else {
+            std::stringstream musicName;
+            int musicLength = (int)this->overGameTime;
+            musicName << "audio/music/" << musicMap.at(randMusicId) << "(" <<  musicLength << "s).caf";
+            Manager::MusicManager::getInstance()->playMusicNoLoop(musicName.str().c_str());
+            CCLOG("Play Game Music : %s", musicName.str().c_str());
+        }
         this->progressBarUp->setVisible(true);
         this->timeBar->runAction(ProgressTo::create(this->overGameTime, 100));
         schedule(CC_SCHEDULE_SELECTOR(PlayScene::gameUpdate), 0.1f);
@@ -555,6 +574,7 @@ namespace GameScene
             }
             // 有任何一隻豬的生命歸0，則遊戲結束，玩家闖關失敗
             if (this->road0Pig->hp <= 0 || this->road1Pig->hp <= 0 || this->road2Pig->hp <= 0) {
+                Manager::MusicManager::getInstance()->stopMusic();
                 unschedule(schedule_selector(PlayScene::gameUpdate));
                 unschedule(schedule_selector(PlayScene::road0Update));
                 unschedule(schedule_selector(PlayScene::road1Update));
@@ -586,12 +606,14 @@ namespace GameScene
                                                   DelayTime::create(0.5f),
                                                   CallFunc::create(CC_CALLBACK_0(PlayScene::addWinScene, this)),
                                                   NULL));
+        Manager::SoundsManager::getInstance()->playSound("audio/sounds/TimesUp.caf");
     }
     
     void PlayScene::addWinScene()
     {
         int newScore = this->calculateScores();
         Controller::GameController::getInstance()->addVictorySceneToCurrentScene(newScore);
+        Manager::SoundsManager::getInstance()->playSound("audio/sounds/Victory.caf");
     }
     
     GameSprite::Pig* PlayScene::getFailedPig()
@@ -646,6 +668,7 @@ namespace GameScene
         auto pig = this->getFailedPig();
         this->ghost->setPosition(Vec2(pig->getPositionX(), pig->getPositionY() + 50));
         this->addChild(this->ghost);
+        Manager::SoundsManager::getInstance()->playSound("audio/sounds/GhostFly.caf");
         this->ghost->runAction(Sequence::create(MoveBy::create(1.f, Vec2(0, 250)), FadeOut::create(0.1f), NULL));
     }
     
@@ -655,7 +678,9 @@ namespace GameScene
         this->deadExplode->release();
         this->deadPig->release();
         controller->addLoseSceneToCurrentScene();
+        Manager::SoundsManager::getInstance()->playSound("audio/sounds/Lose.caf");
     }
+    
     
     void PlayScene::showFailAnimation()
     {
@@ -666,6 +691,11 @@ namespace GameScene
         this->deadExplode->setPosition(Vec2(this->getFailedPig()->getPositionX(),
                                             this->getFailedPig()->getPositionY() + 50));
         this->addChild(this->deadExplode, 3);
+        int randomNumber = rand() % 7;
+        std::stringstream punchName;
+        punchName << "audio/sounds/Punch" << randomNumber << ".caf";
+        Manager::SoundsManager::getInstance()->playSound(punchName.str().c_str());
+
         this->deadExplode->runAction(Sequence::create(CallFunc::create(CC_CALLBACK_0(PlayScene::showDeadPig, this)),
                                                       DelayTime::create(0.3f),
                                                       CallFunc::create(CC_CALLBACK_0(PlayScene::changeDeadExplode, this)),
@@ -688,6 +718,10 @@ namespace GameScene
         sprintf(str, "image/Explode%d.png", x);
         TextureCreator* textureCreator = TextureCreator::getInstance();
         Texture2D* texutre = textureCreator->getAutoSizeTexture2d(str);
+        int randomNumber = rand() % 7;
+        std::stringstream punchName;
+        punchName << "audio/sounds/Punch" << randomNumber << ".caf";
+        Manager::SoundsManager::getInstance()->playSound(punchName.str().c_str());
         this->deadExplode->setTexture(texutre);
     }
     

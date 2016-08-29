@@ -12,6 +12,7 @@
 #include "Db/StageSetting.h"
 #include "Db/StarSetting.h"
 #include "Manager/SpriteManager.h"
+#include "Manager/SoundsManager.h"
 #include "Config/ImageConfig.h"
 
 namespace GameScene

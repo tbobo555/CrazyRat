@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "BaseScene.h"
 #include "Manager/SpriteManager.h"
+#include "Manager/SoundsManager.h"
 #include "GameSprite/Background.h"
 #include "GameSprite/NextButton.h"
 #include "GameSprite/Star.h"
@@ -43,6 +44,11 @@ namespace GameScene
          @brief 動畫播放完畢要執行的方法，此方法用來顯示Next Nutton
          */
         void animationCallback();
+        
+        /**
+         @brief 當星星飛到定位時要播放的音效
+         */
+        void playBigStarSound();
         
         // 背景圖物件
         GameSprite::Background* victoryBackground;
