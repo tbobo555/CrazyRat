@@ -33,6 +33,30 @@ namespace GameScene
         this->settingMask = new SettingMask("image/Mask.png");
         this->settingMask->setPosition(this->center);
         spriteManager->setWithKey("MenuScene_SettingMask", this->settingMask);
+        
+        this->aboutButton = new AboutButton("image/AboutButton.png");
+        this->aboutButton->setPosition(this->getAboutButtonPosition());
+        spriteManager->setWithKey("MenuScene_AboutButton", this->aboutButton);
+        
+        this->donateButton = new DonateButton("image/DonateButton.png");
+        this->donateButton->setPosition(this->getDonateButtonPosition());
+        spriteManager->setWithKey("MenuScene_DonateButton", this->donateButton);
+        
+        this->donateTitle = new GameSprite::Image("image/DonateTitle.png");
+        this->donateTitle->setPosition(this->getDonateTitlePosition());
+        spriteManager->setWithKey("MenuScene_DonateTitle", this->donateTitle);
+
+        this->donate2MoneyButton = new DonateMoneyButton("image/Donate2Button.png", 2);
+        this->donate2MoneyButton->setPosition(this->getDonate2ButtonPoition());
+        spriteManager->setWithKey("MenuScene_Donate2Button", this->donate2MoneyButton);
+        
+        this->donate5MoneyButton = new DonateMoneyButton("image/Donate5Button.png", 5);
+        this->donate5MoneyButton->setPosition(this->getDonate5ButtonPoition());
+        spriteManager->setWithKey("MenuScene_Donate5Button", this->donate5MoneyButton);
+        
+        this->donateBackButton = new DonateBackButton("image/DonateBackButton.png");
+        this->donateBackButton->setPosition(this->getDonateBackButtonPosition());
+        spriteManager->setWithKey("MenuScene_DonateBackButton", this->donateBackButton);
     }
     
     void MenuScene::releaseScene()
@@ -44,6 +68,12 @@ namespace GameScene
         spriteManager->releaseByKey("MenuScene_MusicButton");
         spriteManager->releaseByKey("MenuScene_SoundsButton");
         spriteManager->releaseByKey("MenuScene_SettingMask");
+        spriteManager->releaseByKey("MenuScene_AboutButton");
+        spriteManager->releaseByKey("MenuScene_DonateButton");
+        spriteManager->releaseByKey("MenuScene_DonateTitle");
+        spriteManager->releaseByKey("MenuScene_Donate2Button");
+        spriteManager->releaseByKey("MenuScene_Donate5Button");
+        spriteManager->releaseByKey("MenuScene_DonateBackButton");
     }
     
     Vec2 MenuScene::getSettingBackgroundPosition()
@@ -56,7 +86,7 @@ namespace GameScene
         float width = this->settingBackground->getContentSize().width;
         float height = this->settingBackground->getContentSize().height;
         Vec2 center = Vec2(width / 2, height / 2);
-        return Vec2(center.x - width / 4, center.y);
+        return Vec2(center.x - width / 4, center.y + width / 4);
     }
     
     Vec2 MenuScene::getSoundsButtonPosition()
@@ -64,17 +94,64 @@ namespace GameScene
         float width = this->settingBackground->getContentSize().width;
         float height = this->settingBackground->getContentSize().height;
         Vec2 center = Vec2(width / 2, height / 2);
-        return Vec2(center.x + width / 4, center.y);
+        return Vec2(center.x - width / 4, center.y - width / 4);
+    }
+    
+    Vec2 MenuScene::getAboutButtonPosition()
+    {
+        float width = this->settingBackground->getContentSize().width;
+        float height = this->settingBackground->getContentSize().height;
+        Vec2 center = Vec2(width / 2, height / 2);
+        return Vec2(center.x + width / 4, center.y + width / 4);
+    }
+
+    Vec2 MenuScene::getDonateButtonPosition()
+    {
+        float width = this->settingBackground->getContentSize().width;
+        float height = this->settingBackground->getContentSize().height;
+        Vec2 center = Vec2(width / 2, height / 2);
+        return Vec2(center.x + width / 4, center.y - width / 4);
     }
 
     Vec2 MenuScene::getSettingBackButtonPosition()
     {
         return Vec2(this->settingBackground->getContentSize().width, this->settingBackground->getContentSize().height);
-
     }
     
     Vec2 MenuScene::getSettingButtonPosition()
     {
         return Vec2(this->visibleOrigin.x + this->visibleSize.height / 12, this->visibleOrigin.y + this->visibleSize.height / 12);
+    }
+    
+    Vec2 MenuScene::getDonateTitlePosition()
+    {
+        float width = this->settingBackground->getContentSize().width;
+        float height = this->settingBackground->getContentSize().height;
+        Vec2 center = Vec2(width / 2, height / 2);
+        return Vec2(center.x, center.y + width * 8.5 / 25);
+    }
+    
+    Vec2 MenuScene::getDonate2ButtonPoition()
+    {
+        float width = this->settingBackground->getContentSize().width;
+        float height = this->settingBackground->getContentSize().height;
+        Vec2 center = Vec2(width / 2, height / 2);
+        return Vec2(center.x, center.y + width * 1 / 8 - 10);
+    }
+    
+    Vec2 MenuScene::getDonate5ButtonPoition()
+    {
+        float width = this->settingBackground->getContentSize().width;
+        float height = this->settingBackground->getContentSize().height;
+        Vec2 center = Vec2(width / 2, height / 2);
+        return Vec2(center.x, center.y - width * 1 / 8 - 10);
+    }
+    
+    Vec2 MenuScene::getDonateBackButtonPosition()
+    {
+        float width = this->settingBackground->getContentSize().width;
+        float height = this->settingBackground->getContentSize().height;
+        Vec2 center = Vec2(width / 2, height / 2);
+        return Vec2(center.x, center.y - width * 9 / 25 );
     }
 }

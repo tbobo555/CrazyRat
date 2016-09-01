@@ -1,35 +1,33 @@
-#include "SettingButton.h"
+#include "DonateBackButton.h"
 
 namespace GameSprite
-{    
-    SettingButton::SettingButton(std::string image) : GameSprite::BaseSprite(image)
+{
+    DonateBackButton::DonateBackButton(std::string image) : GameSprite::BaseSprite(image)
     {
         this->addEventListener();
     }
     
-    void SettingButton::addEventListener()
+    void DonateBackButton::addEventListener()
     {
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);
-        listener->onTouchBegan = SettingButton::onTouchBegan;
-        listener->onTouchEnded = SettingButton::onTouchEnded;
-        listener->onTouchMoved = SettingButton::onTouchMoved;
-        listener->onTouchCancelled = SettingButton::onTouchCanceled;
+        listener->onTouchBegan = DonateBackButton::onTouchBegan;
+        listener->onTouchEnded = DonateBackButton::onTouchEnded;
+        listener->onTouchMoved = DonateBackButton::onTouchMoved;
+        listener->onTouchCancelled = DonateBackButton::onTouchCanceled;
         Director::getInstance()->getEventDispatcher()
         ->addEventListenerWithSceneGraphPriority(listener, this);
     }
     
-    bool SettingButton::onTouchBegan(Touch* touch, Event* event)
+    bool DonateBackButton::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
-        
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
-        
         if (rect.containsPoint(locationInNode)) {
             Manager::SoundsManager::getInstance()->playSound("audio/sounds/ButtonClick.caf");
-            log("SettingButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            log("DonateBackButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
             target->setScale(0.95);
             return true;
         }
@@ -37,41 +35,32 @@ namespace GameSprite
 
     }
     
-    void SettingButton::onTouchEnded(Touch* touch, Event* event)
+    void DonateBackButton::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
+            log("DonateBackButton ended... x = %f, y = %f", locationInNode.x, locationInNode.y);
             target->setScale(1.0);
-            Manager::SceneManager* sceneManager = Manager::SceneManager::getInstance();
             Manager::SpriteManager* spriteManager = Manager::SpriteManager::getInstance();
-            auto currentScene = sceneManager->getCurrent();
-            auto settingBackground = spriteManager->getByKey("MenuScene_SettingBackground");
-            auto settingBackButton = spriteManager->getByKey("MenuScene_SettingBackButton");
             auto musicButton = spriteManager->getByKey("MenuScene_MusicButton");
             auto soundsButton = spriteManager->getByKey("MenuScene_SoundsButton");
             auto aboutButton = spriteManager->getByKey("MenuScene_AboutButton");
             auto donateButton = spriteManager->getByKey("MenuScene_DonateButton");
-            auto settingMask = spriteManager->getByKey("MenuScene_SettingMask");
             auto donateTitle = spriteManager->getByKey("MenuScene_DonateTitle");
             auto donate2Button = spriteManager->getByKey("MenuScene_Donate2Button");
             auto donate5Button = spriteManager->getByKey("MenuScene_Donate5Button");
             auto donateBackButton = spriteManager->getByKey("MenuScene_DonateBackButton");
             musicButton->setVisible(true);
+            musicButton->setLocalZOrder(101);
             soundsButton->setVisible(true);
+            soundsButton->setLocalZOrder(101);
             aboutButton->setVisible(true);
+            aboutButton->setLocalZOrder(101);
             donateButton->setVisible(true);
-            settingBackground->addChild(settingBackButton, 101, 2);
-            settingBackground->addChild(musicButton, 101, 3);
-            settingBackground->addChild(soundsButton, 101, 4);
-            settingBackground->addChild(aboutButton, 101, 5);
-            settingBackground->addChild(donateButton, 101, 6);
-            settingBackground->addChild(donateTitle, 101, 7);
-            settingBackground->addChild(donate2Button, 101, 8);
-            settingBackground->addChild(donate5Button, 101, 9);
-            settingBackground->addChild(donateBackButton, 101, 10);
+            donateButton->setLocalZOrder(101);
             donateTitle->setVisible(false);
             donateTitle->setLocalZOrder(-99);
             donate2Button->setVisible(false);
@@ -80,22 +69,19 @@ namespace GameSprite
             donate5Button->setLocalZOrder(-99);
             donateBackButton->setVisible(false);
             donateBackButton->setLocalZOrder(-99);
-            currentScene->addChild(settingBackground, 100, 1);
-            currentScene->addChild(settingMask, 99);
         } else {
             target->setScale(1.0);
         }
     }
     
-    void SettingButton::onTouchMoved(Touch* touch, Event* event)
+    void DonateBackButton::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event)
     {
         
     }
     
-    void SettingButton::onTouchCanceled(Touch* touch, Event* event)
+    void DonateBackButton::onTouchCanceled(cocos2d::Touch *touch, cocos2d::Event *event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         target->setScale(1.0);
     }
-
 }
