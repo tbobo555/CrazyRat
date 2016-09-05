@@ -11,7 +11,6 @@ namespace GameSprite
         this->roadIndex = pRoadIndex;
         this->hp = 3;
         this->pigType = pigType;
-        this->addEventListener();
         this->mouth = new Mouth("MouthAnimation_0.png");
         this->mouth->setVisible(false);
         this->mouth->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height/2));
@@ -58,28 +57,38 @@ namespace GameSprite
         ->addEventListenerWithSceneGraphPriority(listener, this);
     }
     
+    void Pig::recordPigPosition(cocos2d::Vec2 position)
+    {
+        this->originPosition = position;
+    }
+    
     int Pig::eat()
     {
         int scores = 0;
         auto currentScene = static_cast<PlayScene*>(Manager::SceneManager::getInstance()->getCurrent());
         int nearestSweetIndex = currentScene->getNearestSweetIndex(this->roadIndex);
         if (nearestSweetIndex == -1) {
+            this->showEatAnimation();
             return scores;
         } else {
             auto nearestSweet = currentScene->getNearestSweet(this->roadIndex);
             if (nearestSweet == nullptr) {
+                this->showEatAnimation();
                 return scores;
             }
             float sweetPosition = nearestSweet->getPosition().y;
-            float pigPosition = this->getPosition().y;
-            float diffPosition = sweetPosition - pigPosition;
-            if (diffPosition > 0 && diffPosition < 70) {
+            float eatBlockPosition = this->getPosition().y + 200;
+            float diffPosition = sweetPosition - eatBlockPosition;
+            if (diffPosition < 0) {
+                diffPosition = diffPosition * -1;
+            }
+            if (diffPosition <= 50) {
                 this->showScoreEffect(2);
                 scores =  100;
-            } else if (diffPosition >= 70 && diffPosition <= 100) {
+            } else if (diffPosition > 50 && diffPosition <= 75) {
                 this->showScoreEffect(1);
                 scores =  80;
-            } else if (diffPosition > 100 && diffPosition <= 150) {
+            } else if (diffPosition > 75 && diffPosition <= 150) {
                 this->showScoreEffect(0);
                 scores =  60;
             } else if (diffPosition > 150 && diffPosition <= 200){
@@ -120,6 +129,12 @@ namespace GameSprite
         animFrames.pushBack(autoSizeFrame);
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
         this->mouth->runAction(Sequence::create(Animate::create(animation), CallFunc::create(CC_CALLBACK_0(Pig::hideMouth, this)) , NULL));
+        
+        this->resetPigPosition();
+        auto move = MoveBy::create(0.1f, Vec2(0, 150));
+        auto action = Sequence::create(move, move->reverse(), NULL);
+        action->setTag(0);
+        this->runAction(action);
     }
     
     void Pig::hideMouth()
@@ -151,6 +166,7 @@ namespace GameSprite
         sprintf(str, "Pig%dAnimation_%d.png", this->pigType, status);
         auto autoSizeFrame = TextureCreator::getInstance()->getAutoSizeFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(str));
         this->setSpriteFrame(autoSizeFrame);
+        this->resetPigPosition();
         this->wink();
     }
     
@@ -204,6 +220,12 @@ namespace GameSprite
         
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.1f);
         this->runAction(RepeatForever::create(Sequence::create(DelayTime::create(rand() % 5 + 1), Animate::create(animation), NULL)));
+    }
+    
+    void Pig::resetPigPosition()
+    {
+        this->stopActionByTag(0);
+        this->setPosition(this->originPosition);
     }
     
     Vec2 Pig::getEffectPosition()

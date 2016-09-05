@@ -131,6 +131,15 @@ namespace GameScene
         // 陣亡的豬的圖片
         GameSprite::Image* deadPig;
         
+        // 路線0可以吃甜點的提示區塊
+        GameSprite::Image* road0EatBlock;
+        
+        // 路線1可以吃甜點的提示區塊
+        GameSprite::Image* road1EatBlock;
+
+        // 路線2可以吃甜點的提示區塊
+        GameSprite::Image* road2EatBlock;
+        
         // 白豬
         GameSprite::Pig* road0Pig;
         
@@ -344,6 +353,13 @@ namespace GameScene
          @return 一個二維向量，代表豬的二維坐標
          */
         Vec2 getPigPosition(int roadNumber);
+        
+        /**
+         @brief 取得指定路徑上的吃東西區塊的座標位置
+         @param roadNumber 路線編號
+         @return 一個二維向量，代表區塊的二維坐標
+         */
+        Vec2 getEatBlockPosition(int roadNumber);
         
         /**
          @brief 取得指定路線上的雲的座標位置

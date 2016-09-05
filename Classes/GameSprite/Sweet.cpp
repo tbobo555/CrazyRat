@@ -57,7 +57,7 @@ namespace GameSprite
         Size visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 visibleOrigin = Director::getInstance()->getVisibleOrigin();
 
-        float distance = (visibleOrigin.y + 0.87 * visibleSize.height) - (0.24 * 1920);
+        float distance = (visibleOrigin.y + 0.87 * visibleSize.height) - (0.24 * 1920 + 130);
         CCLOG("distance %f", distance);
         auto actionBy = MoveBy::create(this->runningTime, Vec2(0, -1 * distance));
         //auto blink = Blink::create(0.3f, 3);

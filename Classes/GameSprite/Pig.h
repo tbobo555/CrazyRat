@@ -56,12 +56,19 @@ namespace GameSprite
          @brief 豬眨眼的動作
          */
         void wink();
+        
+        /**
+         @brief 紀錄豬的位置
+         */
+        void recordPigPosition(Vec2 position);
 
         /**
          @brief 將按鈕加入事件監聽，按鈕會開始偵測觸控輸入
          */
         void addEventListener();
     private:
+        Vec2 originPosition;
+        
         // 豬被甜點砸到的爆炸圖片
         Image* explode;
         
@@ -109,6 +116,10 @@ namespace GameSprite
          */
         void initAllScoreEffect();
         
+        /**
+         @brief 重設豬的位置
+         */
+        void resetPigPosition();
         
         /**
          @brief 得分特效的座標位置

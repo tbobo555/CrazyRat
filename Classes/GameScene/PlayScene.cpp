@@ -78,6 +78,7 @@ namespace GameScene
         spriteManager->setWithKey("PlayScene_ProgressNumber", this->prepareNumber);
         this->prepareNumber->setPosition(this->center);
         this->addChild(this->prepareNumber, 1);
+        this->prepareNumber->setVisible(false);
         float runningTime = LevelDeisgner::getInstance()->loadSweetSpeedSetting(this->episodeNumber, this->stageNumber);
         // 將各個路線的會用到的甜點物件初始化，每個路線都創造10個甜點。
         for (int i = 0; i < 10; i++) {
@@ -114,16 +115,35 @@ namespace GameScene
         this->ghost = new GameSprite::Image("image/Ghost.png");
         spriteManager->setWithKey("PlayScene_Ghost", this->ghost);
         
+        this->road0EatBlock = new GameSprite::Image("image/EatBlock.png");
+        this->road0EatBlock->setPosition(this->getEatBlockPosition(0));
+        this->road0EatBlock->setOpacity(150);
+        this->addChild(this->road0EatBlock, 1);
+        spriteManager->setWithKey("PlayScene_Road0EatBlock", this->road0EatBlock);
+        this->road1EatBlock = new GameSprite::Image("image/EatBlock.png");
+        this->road1EatBlock->setPosition(this->getEatBlockPosition(1));
+        this->road1EatBlock->setOpacity(150);
+        this->addChild(this->road1EatBlock, 1);
+        spriteManager->setWithKey("PlayScene_Road1EatBlock", this->road1EatBlock);
+        this->road2EatBlock = new GameSprite::Image("image/EatBlock.png");
+        this->road2EatBlock->setPosition(this->getEatBlockPosition(2));
+        this->road2EatBlock->setOpacity(150);
+        this->addChild(this->road2EatBlock, 1);
+        spriteManager->setWithKey("PlayScene_Road2EatBlock", this->road2EatBlock);
+        
         this->road0Pig = new Pig(pig0Image, 0, 0);
         this->road0Pig->setPosition(this->getPigPosition(0));
+        this->road0Pig->recordPigPosition(this->road0Pig->getPosition());
         this->addChild(this->road0Pig, 2);
         spriteManager->setWithKey("PlayScene_Road0Pig", this->road0Pig);
         this->road1Pig = new Pig(pig1Image, 1, 1);
         this->road1Pig->setPosition(this->getPigPosition(1));
+        this->road1Pig->recordPigPosition(this->road1Pig->getPosition());
         this->addChild(this->road1Pig, 2);
         spriteManager->setWithKey("PlayScene_Road1Pig", this->road1Pig);
         this->road2Pig = new Pig(pig2Image, 2, 2);
         this->road2Pig->setPosition(this->getPigPosition(2));
+        this->road2Pig->recordPigPosition(this->road2Pig->getPosition());
         this->addChild(this->road2Pig, 2);
         spriteManager->setWithKey("PlayScene_Road2Pig", this->road2Pig);
         
@@ -183,6 +203,17 @@ namespace GameScene
             Vec2(this->center.x - 365, 0.24 * height),
             Vec2(this->center.x, 0.24 * height),
             Vec2(this->center.x + 365, 0.24 * height),
+        };
+        return pigPositionSet.at(roadNumber);
+    }
+    
+    Vec2 PlayScene::getEatBlockPosition(int roadNumber)
+    {
+        float height = Director::getInstance()->getWinSize().height;
+        std::vector<Vec2> pigPositionSet = {
+            Vec2(this->center.x - 365, 0.24 * height + 200),
+            Vec2(this->center.x, 0.24 * height + 200),
+            Vec2(this->center.x + 365, 0.24 * height + 200),
         };
         return pigPositionSet.at(roadNumber);
     }
@@ -294,7 +325,11 @@ namespace GameScene
         spriteManager->releaseByKey("PlayScene_Road0Cloud");
         spriteManager->releaseByKey("PlayScene_Road1Cloud");
         spriteManager->releaseByKey("PlayScene_Road2Cloud");
-        
+
+        spriteManager->releaseByKey("PlayScene_Road0EatBlock");
+        spriteManager->releaseByKey("PlayScene_Road1EatBlock");
+        spriteManager->releaseByKey("PlayScene_Road2EatBlock");
+
         spriteManager->releaseByKey("PlayScene_ScoreHalo");
         spriteManager->releaseByKey("PlayScene_ScoreRightStar");
         spriteManager->releaseByKey("PlayScene_ScoreLeftStar");
@@ -316,8 +351,8 @@ namespace GameScene
     void PlayScene::play()
     {
         this->isPaused = false;
-        this->prepareTime = 3;
-        Manager::SoundsManager::getInstance()->playSound("audio/sounds/Timer321.caf");
+        this->prepareTime = 4;
+        
         schedule(CC_SCHEDULE_SELECTOR(PlayScene::prepareUpdate), 1.f);
     }
     
@@ -355,6 +390,11 @@ namespace GameScene
                 std::string imagePath;
                 -- this->prepareTime;
                 switch (this->prepareTime) {
+                    case 3:
+                        Manager::SoundsManager::getInstance()->playSound("audio/sounds/Timer321.caf");
+                        this->prepareNumber->setVisible(true);
+                        return;
+                        break;
                     case 2 :
                         imagePath = "image/PrepareTwo.png";
                         Manager::SoundsManager::getInstance()->playSound("audio/sounds/Timer321.caf");
@@ -381,6 +421,9 @@ namespace GameScene
                                                         CallFunc::create(CC_CALLBACK_0(PlayScene::removePrepareNumber, this)),
                                                         NULL));
         log("Start!!");
+        this->road0Pig->addEventListener();
+        this->road1Pig->addEventListener();
+        this->road2Pig->addEventListener();
         this->playTime = 0.f;
         this->road0CurrentIndex = 0;
         this->road1CurrentIndex = 0;
@@ -667,7 +710,7 @@ namespace GameScene
     {
         auto pig = this->getFailedPig();
         this->ghost->setPosition(Vec2(pig->getPositionX(), pig->getPositionY() + 50));
-        this->addChild(this->ghost);
+        this->addChild(this->ghost, 5);
         Manager::SoundsManager::getInstance()->playSound("audio/sounds/GhostFly.caf");
         this->ghost->runAction(Sequence::create(MoveBy::create(1.f, Vec2(0, 250)), FadeOut::create(0.1f), NULL));
     }
