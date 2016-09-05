@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "BaseSprite.h"
+#include "PluginIAP/PluginIAP.h"
 #include "Manager/SoundsManager.h"
 
 namespace GameSprite

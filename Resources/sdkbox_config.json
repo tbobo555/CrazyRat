@@ -1,0 +1,21 @@
+{
+    "android": {
+        "iap": {
+            "items": {
+            },
+            "key": ""
+        }
+    }, 
+    "ios": {
+        "iap": {
+            "items": {
+                "donate2": {
+                    "id": "idv.GameDeisgner555.Dev.Donate2"
+                }, 
+                "donate5": {
+                    "id": "idv.GameDeisgner555.Dev.Donate5"
+                }, 
+            }
+        }
+    }
+}

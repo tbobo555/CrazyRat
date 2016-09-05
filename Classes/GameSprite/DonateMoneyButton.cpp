@@ -44,6 +44,7 @@ namespace GameSprite
         if (rect.containsPoint(locationInNode)) {
             log("DonateButton ended... x = %f, y = %f", locationInNode.x, locationInNode.y);
             target->setScale(1.0);
+            //sdkbox::IAP::purchase("donate2");
         } else {
             target->setScale(1.0);
         }

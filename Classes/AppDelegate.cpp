@@ -83,6 +83,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
     episodeSetting->updateMax(2);
     stageSetting->updateMax(20);
+    sdkbox::IAP::init();
     //stageSetting->updateCurrent(0);
     Director::getInstance()->getEventDispatcher()->setEnabled(true);
     Controller::GameController* controller = Controller::GameController::getInstance();
