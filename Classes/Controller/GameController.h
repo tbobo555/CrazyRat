@@ -214,6 +214,14 @@ namespace Controller
          @param stageNumber 關卡編號
          */
         void PlaySceneToEpisodeScene(int episodeNumber, int stageNumber);
+        
+        /**
+         @brief 畫面從PlayScene切換至EpisodeScene，只有在解鎖新關卡時會呼叫此方法，此方法會釋放PlayScene的資源
+         @param episodeNumber 章節編號
+         @param stageNumber 關卡編號
+         @param unlockedEpisodeNumber 新解鎖的章節編號
+         */
+        void PlaySceneToSelectionScene(int episodeNumber, int stageNumber, int unlockedEpisodeNumber);
     private:
         /**
          @brief 建構式

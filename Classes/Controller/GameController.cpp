@@ -339,7 +339,9 @@ namespace Controller
         bool isNewHighscore = current->getIsNewHighScore();
         // 新分數與舊有分數的差距
         int newHighScorediff = current->getNewHighScoreDiff();
-
+        
+        bool isUnlockedEpisode = false;
+        
         // 如果勝利且是第一次完成此關卡
         if (current->getIsVictory() && current->getAlreadyComplete() == false) {
             // 取得每個章節最多的關卡數，-1是為了與關卡編號做比較，關卡編號從0開始
@@ -347,15 +349,22 @@ namespace Controller
             // 取得app的總章節數，-1是為了與章節編號做比較，章節編號從0開始
             int maxEpisode = DB::EpisodeSetting::getInstance()->getMax() - 1;
             
-            // 如果完成的關卡是章節裡的最後一關，場景將切至下一章節的關卡選擇畫面
+            // 如果完成的關卡是章節裡的最後一關，場景將切至章節選擇畫面
             if (stageNumber == maxStage) {
                 newEpisodeNumber++;
+                isUnlockedEpisode = true;
             }
             // 如果章節是最後一個章節(沒有下一章節)，場景將切回原章節的關卡選擇畫面(既最後一章節)
             if (newEpisodeNumber > maxEpisode) {
+                isUnlockedEpisode = false;
                 newEpisodeNumber = episodeNumber;
             }
         }
+        if (isUnlockedEpisode) {
+            this->PlaySceneToSelectionScene(episodeNumber, stageNumber, newEpisodeNumber);
+            return;
+        }
+        
         this->removePauseSceneFromCurrentScene();
         this->removeLoseSceneFromCurrentScene();
         this->removeVictorySceneFromCurrentScene();
@@ -402,5 +411,27 @@ namespace Controller
         this->addPauseSceneToCurrentScene();
         Director::getInstance()->replaceScene(scene);
         scene->play();
+    }
+    
+    void GameController::PlaySceneToSelectionScene(int episodeNumber, int stageNumber, int unlockedEpisodeNumber)
+    {
+        this->removePauseSceneFromCurrentScene();
+        this->removeLoseSceneFromCurrentScene();
+        this->removeVictorySceneFromCurrentScene();
+        this->releasePauseSceneResource();
+        this->releaseVictorySceneResource();
+        this->releaseLoseSceneResource();
+        this->releasePlaySceneResource(episodeNumber, stageNumber);
+        // 將一些被cocos2d核心程式快取，殘留在記憶體沒有被釋放的物件做記憶體釋放
+        Director::getInstance()->purgeCachedData();
+        this->loadMenuSceneResource();
+        this->loadStartSceneResource();
+        this->loadSelectionSceneResource();
+        SelectionScene* selectionScene = static_cast<SelectionScene*>(SceneManager::getInstance()->getByKey("SelectionScene"));
+        SceneManager::getInstance()->setCurrent(selectionScene);
+        this->addMenuSceneToCurrentScene();
+        Director::getInstance()->replaceScene(selectionScene);
+        selectionScene->runConstantAnimation();
+        selectionScene->runUnlockedEpisodeAnimation(unlockedEpisodeNumber);
     }
 }

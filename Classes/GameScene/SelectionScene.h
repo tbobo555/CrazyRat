@@ -9,6 +9,7 @@
 #include "GameSprite/EpisodeButton.h"
 #include "GameSprite/BackButton.h"
 #include "GameSprite/SelectionTitle.h"
+#include "GameSprite/UnlockedMask.h"
 #include "Db/EpisodeSetting.h"
 #include "Manager/SpriteManager.h"
 #include "Config/ImageConfig.h"
@@ -43,6 +44,21 @@ namespace GameScene
          */
         void runConstantAnimation();
         
+        /**
+         @breief 播放章節解鎖動畫
+         */
+        void runUnlockedEpisodeAnimation(int unlockedEpisodeNumber);
+        
+        /**
+         @brief 將unlocked chapter的物件從畫面中移除
+         */
+        void removeUnlockedSprite();
+        
+        /**
+         @brief 關閉unlocked mask的觸控監聽
+         */
+        void setUnlockedMaskClickable();
+        
         // 背景圖檔物件
         GameSprite::Background* selectionBackground;
         
@@ -54,6 +70,12 @@ namespace GameScene
         
         // 章節按鈕，讓玩家選擇不同的章節來進行遊戲
         std::vector<GameSprite::EpisodeButton*> episodeButtonVector;
+        
+        // 章節解鎖的通知圖示
+        GameSprite::Image* chapterUnlocked;
+        
+        // 章節解鎖的背景遮罩
+        GameSprite::UnlockedMask* unlockedMask;
         
         // 移動的雲
         GameSprite::Image* moveCloud0;

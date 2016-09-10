@@ -73,6 +73,17 @@ namespace GameScene
             key << "SelectionScene_EpisodeButton_" << i;
             spriteManager->setWithKey(key.str(), episodeButton);
         }
+        
+        this->unlockedMask = new GameSprite::UnlockedMask("image/Mask.png");
+        spriteManager->setWithKey("SelectionScene_UnlockedMask", this->unlockedMask);
+        this->unlockedMask->setPosition(Vec2(this->center));
+        this->addChild(this->unlockedMask, -100);
+        
+        this->chapterUnlocked = new GameSprite::Image("image/Chapter1Unlocked.png");
+        spriteManager->setWithKey("SelectionScene_ChapterUnlocked", this->chapterUnlocked);
+        this->chapterUnlocked->setPosition(this->centerTop);
+        this->addChild(this->chapterUnlocked, -100);
+
     }
     
     void SelectionScene::releaseScene()
@@ -94,6 +105,9 @@ namespace GameScene
             key << "SelectionScene_EpisodeButton_" << i;
             spriteManager->releaseByKey(key.str());
         }
+        spriteManager->releaseByKey("SelectionScene_UnlockedMask");
+        spriteManager->releaseByKey("SelectionScene_ChapterUnlocked");
+
     }
     
     void SelectionScene::runConstantAnimation()
@@ -116,6 +130,34 @@ namespace GameScene
         this->moveCloud2->runAction(repeat100->clone());
         this->moveCloud3->runAction(repeat100->clone());
         this->moveCloud4->runAction(repeat150->clone());
+    }
+    
+    void SelectionScene::runUnlockedEpisodeAnimation(int unlockedEpisodeNumber)
+    {
+        Director::getInstance()->getEventDispatcher()->setEnabled(false);
+        std::stringstream key;
+        key << "image/Chapter" << unlockedEpisodeNumber << "Unlocked.png";
+        TextureCreator* textureCreator = TextureCreator::getInstance();
+        Texture2D* unclockedTexutre = textureCreator->getAutoSizeTexture2d(key.str());
+        this->chapterUnlocked->setTexture(unclockedTexutre);
+        this->chapterUnlocked->setPosition(this->centerTop);
+        this->unlockedMask->setLocalZOrder(100);
+        this->chapterUnlocked->setLocalZOrder(101);
+        this->chapterUnlocked->runAction(Sequence::create(
+                                                        MoveTo::create(0.6f, this->center),
+                                                        CallFunc::create(CC_CALLBACK_0(SelectionScene::setUnlockedMaskClickable, this)),
+                                                        NULL));
+    }
+    
+    void SelectionScene::removeUnlockedSprite()
+    {
+        this->chapterUnlocked->setLocalZOrder(-100);
+        this->unlockedMask->setLocalZOrder(-100);
+    }
+    
+    void SelectionScene::setUnlockedMaskClickable()
+    {
+        Director::getInstance()->getEventDispatcher()->setEnabled(true);
     }
     
     Vec2 SelectionScene::getBackgroundPosition()

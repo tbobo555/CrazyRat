@@ -585,7 +585,7 @@ namespace GameScene
                     this->newHighScoreDiff = newScore;
                     this->showTimesUp();
                     return;
-                // 如果該關卡是第一張的第一關
+                // 如果該關卡是第一章的第一關
                 } else if (this->episodeNumber == 0 && this->stageNumber == 0) {
                     this->isNewHighScore = true;
                     this->newHighScoreDiff = newScore;
