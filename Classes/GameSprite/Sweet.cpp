@@ -1,5 +1,5 @@
 #include "Sweet.h"
-#include "GameScene/PlayScene.h"
+#include "GameScene/PlayBaseScene.h"
 #include "Pig.h"
 
 namespace GameSprite
@@ -21,7 +21,7 @@ namespace GameSprite
     void Sweet::eaten()
     {
         this->stopAllActions();
-        auto current = static_cast<GameScene::PlayScene*>(Manager::SceneManager::getInstance()->getCurrent());
+        auto current = static_cast<GameScene::PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent());
         if (this->roadIndex == 0) {
             current->road0AvailableIndex.push_back(this->sweetId);
             current->road0RunningIndex.pop();

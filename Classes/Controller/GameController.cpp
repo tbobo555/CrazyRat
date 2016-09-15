@@ -89,6 +89,20 @@ namespace Controller
         SceneManager::getInstance()->releaseByKey(key.str());
     }
     
+    void GameController::loadPlayInfiniteSceneResource()
+    {
+        PlayInfiniteScene *playInfiniteScene = new PlayInfiniteScene();
+        playInfiniteScene->initScene();
+        SceneManager::getInstance()->setWithKey("PlayInfiniteScene", playInfiniteScene);
+    }
+    
+    void GameController::releasePlayInfiniteSceneResource()
+    {
+        auto playInfiniteScene = SceneManager::getInstance()->getByKey("PlayInfiniteScene");
+        playInfiniteScene->releaseScene();
+        SceneManager::getInstance()->releaseByKey("PlayInfiniteScene");
+    }
+    
     void GameController::loadPauseSceneResource()
     {
         PauseScene* pauseScene = new PauseScene();
@@ -433,5 +447,53 @@ namespace Controller
         Director::getInstance()->replaceScene(selectionScene);
         selectionScene->runConstantAnimation();
         selectionScene->runUnlockedEpisodeAnimation(unlockedEpisodeNumber);
+    }
+    
+    void GameController::startSceneToPlayInfiniteScene()
+    {
+        this->releaseStartSceneResource();
+        this->releaseMenuSceneResource();
+        this->releaseSelectionSceneResource();
+        // 將一些被cocos2d核心程式快取，殘留在記憶體沒有被釋放的物件做記憶體釋放
+        Director::getInstance()->purgeCachedData();
+        this->loadPauseSceneResource();
+        this->loadPlayInfiniteSceneResource();
+        PlayInfiniteScene *scene = static_cast<PlayInfiniteScene*>(SceneManager::getInstance()->getByKey("PlayInfiniteScene"));
+        SceneManager::getInstance()->setCurrent(scene);
+        this->addPauseSceneToCurrentScene();
+        Director::getInstance()->replaceScene(scene);
+        scene->play();
+    }
+    
+    void GameController::retryPlayInfiniteScene()
+    {
+        this->removePauseSceneFromCurrentScene();
+        this->releasePauseSceneResource();
+        this->releasePlayInfiniteSceneResource();
+        // 將一些被cocos2d核心程式快取，殘留在記憶體沒有被釋放的物件做記憶體釋放
+        Director::getInstance()->purgeCachedData();
+        this->loadPauseSceneResource();
+        this->loadPlayInfiniteSceneResource();
+        PlayInfiniteScene *scene = static_cast<PlayInfiniteScene*>(SceneManager::getInstance()->getByKey("PlayInfiniteScene"));
+        SceneManager::getInstance()->setCurrent(scene);
+        this->addPauseSceneToCurrentScene();
+        Director::getInstance()->replaceScene(scene);
+        scene->play();
+    }
+    
+    void GameController::playInfiniteSceneToStartScene()
+    {
+        this->removePauseSceneFromCurrentScene();
+        this->releasePauseSceneResource();
+        this->releasePlayInfiniteSceneResource();
+        // 將一些被cocos2d核心程式快取，殘留在記憶體沒有被釋放的物件做記憶體釋放
+        Director::getInstance()->purgeCachedData();
+        this->loadMenuSceneResource();
+        this->loadStartSceneResource();
+        this->loadSelectionSceneResource();
+        StartScene* startScene = static_cast<StartScene*>(SceneManager::getInstance()->getByKey("StartScene"));
+        SceneManager::getInstance()->setCurrent(startScene);
+        this->addMenuSceneToCurrentScene();
+        Director::getInstance()->replaceScene(startScene);
     }
 }

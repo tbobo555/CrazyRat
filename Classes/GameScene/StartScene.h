@@ -2,12 +2,15 @@
 #define _GameScene_StartScene_H_
 
 #include "GameSprite/Background.h"
-#include "GameSprite/StartButton.h"
-#include "GameSprite/startTitle.h"
+#include "GameSprite/PlayButton.h"
+#include "GameSprite/CareerButton.h"
+#include "GameSprite/HighScoresButton.h"
+#include "GameSprite/StartTitle.h"
 #include "GameSprite/image.h"
 #include "Manager/SpriteManager.h"
 #include "BaseScene.h"
 #include "Manager/MusicManager.h"
+
 namespace GameScene
 {
     /**
@@ -46,8 +49,14 @@ namespace GameScene
         // 背景圖檔物件
         GameSprite::Background* startBackground;
         
-        // 開始按鈕
-        GameSprite::StartButton* startButton;
+        // 遊玩按鈕
+        GameSprite::PlayButton* playButton;
+        
+        // 生涯按鈕
+        GameSprite::CareerButton* careerButton;
+        
+        // 高分成就按鈕
+        GameSprite::HighScoresButton* highScoresButton;
         
         // 開始場景的標題
         GameSprite::StartTitle* startTitle;
@@ -58,12 +67,23 @@ namespace GameScene
         // 粉紅豬
         GameSprite::Image* movePig1;
     private:
+        /**
+         @brief 取得遊玩按鈕的座標位置
+         @return 一個二維向量，代表遊玩按鈕的座標
+         */
+        Vec2 getPlayButtonPosition();
         
         /**
-         @brief 取得開始按鈕的座標位置
-         @return 一個二維向量，代表開始按鈕的座標
+         @brief 取得生涯按鈕的座標位置
+         @return 一個二維向量，代表生涯按鈕的座標
          */
-        Vec2 getStartButtonPosition();
+        Vec2 getCareerButtonPosition();
+        
+        /**
+         @brief 取得高分成就按鈕的座標位置
+         @return 一個二維向量，代表高分成就按鈕的座標
+         */
+        Vec2 getHighScoresButtonPosition();
         
         /**
          @brief 取得開始標題的座標位置

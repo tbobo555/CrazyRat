@@ -3,7 +3,7 @@
 
 namespace GameScene
 {
-    PlayScene::PlayScene(int pEpisodeNumber, int pStageNumber) : GameScene::BaseScene()
+    PlayScene::PlayScene(int pEpisodeNumber, int pStageNumber) : GameScene::PlayBaseScene()
     {
         this->name = "PlayScene";
         this->episodeNumber = pEpisodeNumber;
@@ -191,91 +191,49 @@ namespace GameScene
         spriteManager->setWithKey("PlayScene_TimesUp", this->timesUp);
     }
     
-    Vec2 PlayScene::getBackgroundPosition()
+    void PlayScene::releaseScene()
     {
-        return this->center;
-    }
-    
-    Vec2 PlayScene::getPigPosition(int roadNumber)
-    {
-        float height = Director::getInstance()->getWinSize().height;
-        std::vector<Vec2> pigPositionSet = {
-            Vec2(this->center.x - 365, 0.24 * height),
-            Vec2(this->center.x, 0.24 * height),
-            Vec2(this->center.x + 365, 0.24 * height),
-        };
-        return pigPositionSet.at(roadNumber);
-    }
-    
-    Vec2 PlayScene::getEatBlockPosition(int roadNumber)
-    {
-        float height = Director::getInstance()->getWinSize().height;
-        std::vector<Vec2> pigPositionSet = {
-            Vec2(this->center.x - 365, 0.24 * height + 200),
-            Vec2(this->center.x, 0.24 * height + 200),
-            Vec2(this->center.x + 365, 0.24 * height + 200),
-        };
-        return pigPositionSet.at(roadNumber);
-    }
-    
-    Vec2 PlayScene::getCloudPosition(int roadNumber)
-    {
-        std::vector<Vec2> cloudPositionSet = {
-            Vec2(this->center.x - 365, this->visibleOrigin.y + 0.87 * this->visibleSize.height),
-            Vec2(this->center.x, this->visibleOrigin.y + 0.87 * this->visibleSize.height),
-            Vec2(this->center.x + 365, this->visibleOrigin.y + 0.87 * this->visibleSize.height),
-        };
-        return cloudPositionSet.at(roadNumber);
-    }
-    
-    Vec2 PlayScene::getSweetPosition(int roadNumber)
-    {
-        std::vector<Vec2> sweetPositionSet = {
-            Vec2(this->center.x - 365, this->visibleOrigin.y + 0.87 * this->visibleSize.height),
-            Vec2(this->center.x, this->visibleOrigin.y + 0.87 * this->visibleSize.height),
-            Vec2(this->center.x + 365, this->visibleOrigin.y + 0.87 * this->visibleSize.height),
-        };
-        return sweetPositionSet.at(roadNumber);
-    }
-    
-    Vec2 PlayScene::getProgressPosition()
-    {
-        return Vec2(480, this->visibleOrigin.y + this->visibleSize.height - this->visibleSize.width / 11);
-    }
-    
-    Vec2 PlayScene::getScoreHaloPosition()
-    {
-        return Vec2(925, this->visibleOrigin.y + this->visibleSize.height - this->visibleSize.width / 11);
-    }
-    
-    Vec2 PlayScene::getScoreStarPosition(int index)
-    {
-        int x = 0;
-        switch (index) {
-            case 0:
-                x = 865;
-                break;
-            case 1:
-                x = 925;
-                break;
-            case 2:
-                x = 985;
-                break;
-            default:
-                break;
-        }
+        unscheduleAllCallbacks();
+        unschedule(CC_SCHEDULE_SELECTOR(PlayScene::prepareUpdate));
+        unschedule(CC_SCHEDULE_SELECTOR(PlayScene::gameUpdate));
+        unschedule(CC_SCHEDULE_SELECTOR(PlayScene::road0Update));
+        unschedule(CC_SCHEDULE_SELECTOR(PlayScene::road1Update));
+        unschedule(CC_SCHEDULE_SELECTOR(PlayScene::road2Update));
+        this->removeAllChildren();
+        auto spriteManager = Manager::SpriteManager::getInstance();
+        spriteManager->releaseByKey("PlayScene_Background");
+        spriteManager->releaseByKey("PlayScene_ProgressBarDown");
+        spriteManager->releaseByKey("PlayScene_ProgressBarUp");
+        this->timeBar->release();
+        spriteManager->releaseByKey("PlayScene_ProgressNumber");
+        spriteManager->releaseByKey("PlayScene_Ghost");
+        spriteManager->releaseByKey("PlayScene_Road0Pig");
+        spriteManager->releaseByKey("PlayScene_Road1Pig");
+        spriteManager->releaseByKey("PlayScene_Road2Pig");
+        spriteManager->releaseByKey("PlayScene_Road0Cloud");
+        spriteManager->releaseByKey("PlayScene_Road1Cloud");
+        spriteManager->releaseByKey("PlayScene_Road2Cloud");
         
-        return Vec2(x, this->visibleOrigin.y + this->visibleSize.height - this->visibleSize.width / 11 + 40);
-    }
-    
-    Vec2 PlayScene::getScoresPosition()
-    {
-        return Vec2(925, this->visibleOrigin.y + this->visibleSize.height - this->visibleSize.width / 11 - 15);
-    }
-    
-    Vec2 PlayScene::getTimesUpPosition()
-    {
-        return Vec2(this->center.x, this->center.y + 100);
+        spriteManager->releaseByKey("PlayScene_Road0EatBlock");
+        spriteManager->releaseByKey("PlayScene_Road1EatBlock");
+        spriteManager->releaseByKey("PlayScene_Road2EatBlock");
+        
+        spriteManager->releaseByKey("PlayScene_ScoreHalo");
+        spriteManager->releaseByKey("PlayScene_ScoreRightStar");
+        spriteManager->releaseByKey("PlayScene_ScoreLeftStar");
+        spriteManager->releaseByKey("PlayScene_ScoreMiddleStar");
+        spriteManager->releaseByKey("PlayScene_TimesUp");
+        Manager::ScoresManager::getInstance()->releaseScores();
+        
+        for (int i = 0; i < 10; i++) {
+            this->road0SweetVector[i]->release();
+            this->road1SweetVector[i]->release();
+            this->road2SweetVector[i]->release();
+        }
+        this->spriteCache->removeSpriteFramesFromFile("image/Pig0Animation.plist");
+        this->spriteCache->removeSpriteFramesFromFile("image/Pig1Animation.plist");
+        this->spriteCache->removeSpriteFramesFromFile("image/Pig2Animation.plist");
+        this->spriteCache->removeSpriteFramesFromFile("image/MouthAnimation.plist");
     }
     
     bool PlayScene::getIsPaused()
@@ -303,57 +261,28 @@ namespace GameScene
         return this->alreadyComplete;
     }
     
-    void PlayScene::releaseScene()
-    {
-        unscheduleAllCallbacks();
-        unschedule(CC_SCHEDULE_SELECTOR(PlayScene::prepareUpdate));
-        unschedule(CC_SCHEDULE_SELECTOR(PlayScene::gameUpdate));
-        unschedule(CC_SCHEDULE_SELECTOR(PlayScene::road0Update));
-        unschedule(CC_SCHEDULE_SELECTOR(PlayScene::road1Update));
-        unschedule(CC_SCHEDULE_SELECTOR(PlayScene::road2Update));
-        this->removeAllChildren();
-        auto spriteManager = Manager::SpriteManager::getInstance();
-        spriteManager->releaseByKey("PlayScene_Background");
-        spriteManager->releaseByKey("PlayScene_ProgressBarDown");
-        spriteManager->releaseByKey("PlayScene_ProgressBarUp");
-        this->timeBar->release();
-        spriteManager->releaseByKey("PlayScene_ProgressNumber");
-        spriteManager->releaseByKey("PlayScene_Ghost");
-        spriteManager->releaseByKey("PlayScene_Road0Pig");
-        spriteManager->releaseByKey("PlayScene_Road1Pig");
-        spriteManager->releaseByKey("PlayScene_Road2Pig");
-        spriteManager->releaseByKey("PlayScene_Road0Cloud");
-        spriteManager->releaseByKey("PlayScene_Road1Cloud");
-        spriteManager->releaseByKey("PlayScene_Road2Cloud");
-
-        spriteManager->releaseByKey("PlayScene_Road0EatBlock");
-        spriteManager->releaseByKey("PlayScene_Road1EatBlock");
-        spriteManager->releaseByKey("PlayScene_Road2EatBlock");
-
-        spriteManager->releaseByKey("PlayScene_ScoreHalo");
-        spriteManager->releaseByKey("PlayScene_ScoreRightStar");
-        spriteManager->releaseByKey("PlayScene_ScoreLeftStar");
-        spriteManager->releaseByKey("PlayScene_ScoreMiddleStar");
-        spriteManager->releaseByKey("PlayScene_TimesUp");
-        Manager::ScoresManager::getInstance()->releaseScores();
-        
-        for (int i = 0; i < 10; i++) {
-            this->road0SweetVector[i]->release();
-            this->road1SweetVector[i]->release();
-            this->road2SweetVector[i]->release();
-        }
-        this->spriteCache->removeSpriteFramesFromFile("image/Pig0Animation.plist");
-        this->spriteCache->removeSpriteFramesFromFile("image/Pig1Animation.plist");
-        this->spriteCache->removeSpriteFramesFromFile("image/Pig2Animation.plist");
-        this->spriteCache->removeSpriteFramesFromFile("image/MouthAnimation.plist");
-    }
-    
     void PlayScene::play()
     {
         this->isPaused = false;
         this->prepareTime = 4;
         
         schedule(CC_SCHEDULE_SELECTOR(PlayScene::prepareUpdate), 1.f);
+    }
+    
+    void PlayScene::addWinScene()
+    {
+        int newScore = this->calculateScores();
+        Controller::GameController::getInstance()->addVictorySceneToCurrentScene(newScore);
+        Manager::SoundsManager::getInstance()->playSound("audio/sounds/Victory.caf");
+    }
+    
+    void PlayScene::addLoseScene()
+    {
+        auto controller = Controller::GameController::getInstance();
+        this->deadExplode->release();
+        this->deadPig->release();
+        controller->addLoseSceneToCurrentScene();
+        Manager::SoundsManager::getInstance()->playSound("audio/sounds/Lose.caf");
     }
     
     void PlayScene::pauseScene()
@@ -452,10 +381,98 @@ namespace GameScene
         this->road1Pig->wink();
         this->road2Pig->wink();
     }
-    
-    void PlayScene::removePrepareNumber()
+
+    void PlayScene::gameUpdate(float delta)
     {
-        this->removeChild(this->prepareNumber);
+        if (! this->isPaused) {
+            this->playTime += delta;
+            // 時間結束玩家尚未lose，代表玩家獲勝
+            if (this->playTime > this->overGameTime) {
+                unschedule(schedule_selector(PlayScene::gameUpdate));
+                unschedule(schedule_selector(PlayScene::road0Update));
+                unschedule(schedule_selector(PlayScene::road1Update));
+                unschedule(schedule_selector(PlayScene::road2Update));
+                for (const auto &child : this->getChildren()) {
+                    child->pause();
+                }
+                log("Victory!");
+                this->isVictory = true;
+                // 取得最多章節數與每章節最多的關卡數，-1主要目的是該變數要用來當作索引判斷
+                int maxStage = DB::StageSetting::getInstance()->getMax() - 1;
+                int maxEpisode = DB::EpisodeSetting::getInstance()->getMax() - 1;
+                int newStage;
+                int newEpisode;
+                int newScore = this->calculateScores();
+                
+                // 如果該關卡已經被破過了(玩家不是第一次破此關卡)
+                if (this->alreadyComplete == true) {
+                    int oldScore = DB::StarSetting::getInstance()->getStarNumber(this->episodeNumber, this->stageNumber);
+                    if (oldScore < newScore) {
+                        this->isNewHighScore = true;
+                        this->newHighScoreDiff = newScore - oldScore;
+                        DB::StarSetting::getInstance()->updateStar(this->episodeNumber, this->stageNumber, newScore);
+                    }
+                    this->showTimesUp();
+                    return;
+                    // 如果該關卡是最後一章節的最後一關
+                } else if (this->episodeNumber == maxEpisode && this->stageNumber == maxStage) {
+                    DB::StarSetting::getInstance()->insertStar(this->episodeNumber, this->stageNumber, newScore);
+                    this->isNewHighScore = true;
+                    this->newHighScoreDiff = newScore;
+                    this->showTimesUp();
+                    return;
+                    // 如果該關卡是第一章的第一關
+                } else if (this->episodeNumber == 0 && this->stageNumber == 0) {
+                    this->isNewHighScore = true;
+                    this->newHighScoreDiff = newScore;
+                    newStage = this->stageNumber + 1;
+                    newEpisode = this->episodeNumber;
+                    DB::StarSetting::getInstance()->updateStar(this->episodeNumber, this->stageNumber, newScore);
+                    DB::StageSetting::getInstance()->updateCurrent(newStage);
+                    DB::EpisodeSetting::getInstance()->updateCurrent(newEpisode);
+                    this->showTimesUp();
+                    return;
+                    // 如果該關卡是某章節的最後一關
+                } else if (this->stageNumber == maxStage) {
+                    this->isNewHighScore = false;
+                    this->newHighScoreDiff = 0;
+                    newStage = 0;
+                    newEpisode = this->episodeNumber + 1;
+                    // 非以上條件時
+                } else {
+                    this->isNewHighScore = true;
+                    this->newHighScoreDiff = newScore;
+                    newStage = this->stageNumber + 1;
+                    newEpisode = this->episodeNumber;
+                }
+                DB::StarSetting::getInstance()->insertStar(this->episodeNumber, this->stageNumber, newScore);
+                DB::StageSetting::getInstance()->updateCurrent(newStage);
+                DB::EpisodeSetting::getInstance()->updateCurrent(newEpisode);
+                this->showTimesUp();
+                return;
+            }
+            // 有任何一隻豬的生命歸0，則遊戲結束，玩家闖關失敗
+            if (this->road0Pig->hp <= 0 || this->road1Pig->hp <= 0 || this->road2Pig->hp <= 0) {
+                Manager::MusicManager::getInstance()->stopMusic();
+                unschedule(schedule_selector(PlayScene::gameUpdate));
+                unschedule(schedule_selector(PlayScene::road0Update));
+                unschedule(schedule_selector(PlayScene::road1Update));
+                unschedule(schedule_selector(PlayScene::road2Update));
+                int failRoadIndex = 0;
+                if (this->road1Pig->hp <= 0) {
+                    failRoadIndex = 1;
+                } else if (this->road2Pig->hp <= 0) {
+                    failRoadIndex = 2;
+                }
+                for (const auto &child : this->getChildren()) {
+                    child->pause();
+                }
+                log("Lose!");
+                this->isVictory = false;
+                this->failRoadIndex = failRoadIndex;
+                this->showFailAnimation();
+            }
+        }
     }
     
     void PlayScene::road0Update(float delta)
@@ -546,99 +563,6 @@ namespace GameScene
         return 0;
     }
     
-    void PlayScene::gameUpdate(float delta)
-    {
-        if (! this->isPaused) {
-            this->playTime += delta;
-            // 時間結束玩家尚未lose，代表玩家獲勝
-            if (this->playTime > this->overGameTime) {
-                unschedule(schedule_selector(PlayScene::gameUpdate));
-                unschedule(schedule_selector(PlayScene::road0Update));
-                unschedule(schedule_selector(PlayScene::road1Update));
-                unschedule(schedule_selector(PlayScene::road2Update));
-                for (const auto &child : this->getChildren()) {
-                    child->pause();
-                }
-                log("Victory!");
-                this->isVictory = true;
-                // 取得最多章節數與每章節最多的關卡數，-1主要目的是該變數要用來當作索引判斷
-                int maxStage = DB::StageSetting::getInstance()->getMax() - 1;
-                int maxEpisode = DB::EpisodeSetting::getInstance()->getMax() - 1;
-                int newStage;
-                int newEpisode;
-                int newScore = this->calculateScores();
-                
-                // 如果該關卡已經被破過了(玩家不是第一次破此關卡)
-                if (this->alreadyComplete == true) {
-                    int oldScore = DB::StarSetting::getInstance()->getStarNumber(this->episodeNumber, this->stageNumber);
-                    if (oldScore < newScore) {
-                        this->isNewHighScore = true;
-                        this->newHighScoreDiff = newScore - oldScore;
-                        DB::StarSetting::getInstance()->updateStar(this->episodeNumber, this->stageNumber, newScore);
-                    }
-                    this->showTimesUp();
-                    return;
-                // 如果該關卡是最後一章節的最後一關
-                } else if (this->episodeNumber == maxEpisode && this->stageNumber == maxStage) {
-                    DB::StarSetting::getInstance()->insertStar(this->episodeNumber, this->stageNumber, newScore);
-                    this->isNewHighScore = true;
-                    this->newHighScoreDiff = newScore;
-                    this->showTimesUp();
-                    return;
-                // 如果該關卡是第一章的第一關
-                } else if (this->episodeNumber == 0 && this->stageNumber == 0) {
-                    this->isNewHighScore = true;
-                    this->newHighScoreDiff = newScore;
-                    newStage = this->stageNumber + 1;
-                    newEpisode = this->episodeNumber;
-                    DB::StarSetting::getInstance()->updateStar(this->episodeNumber, this->stageNumber, newScore);
-                    DB::StageSetting::getInstance()->updateCurrent(newStage);
-                    DB::EpisodeSetting::getInstance()->updateCurrent(newEpisode);
-                    this->showTimesUp();
-                    return;
-                // 如果該關卡是某章節的最後一關
-                } else if (this->stageNumber == maxStage) {
-                    this->isNewHighScore = false;
-                    this->newHighScoreDiff = 0;
-                    newStage = 0;
-                    newEpisode = this->episodeNumber + 1;
-                // 非以上條件時
-                } else {
-                    this->isNewHighScore = true;
-                    this->newHighScoreDiff = newScore;
-                    newStage = this->stageNumber + 1;
-                    newEpisode = this->episodeNumber;
-                }
-                DB::StarSetting::getInstance()->insertStar(this->episodeNumber, this->stageNumber, newScore);
-                DB::StageSetting::getInstance()->updateCurrent(newStage);
-                DB::EpisodeSetting::getInstance()->updateCurrent(newEpisode);
-                this->showTimesUp();
-                return;
-            }
-            // 有任何一隻豬的生命歸0，則遊戲結束，玩家闖關失敗
-            if (this->road0Pig->hp <= 0 || this->road1Pig->hp <= 0 || this->road2Pig->hp <= 0) {
-                Manager::MusicManager::getInstance()->stopMusic();
-                unschedule(schedule_selector(PlayScene::gameUpdate));
-                unschedule(schedule_selector(PlayScene::road0Update));
-                unschedule(schedule_selector(PlayScene::road1Update));
-                unschedule(schedule_selector(PlayScene::road2Update));
-                int failRoadIndex = 0;
-                if (this->road1Pig->hp <= 0) {
-                    failRoadIndex = 1;
-                } else if (this->road2Pig->hp <= 0) {
-                    failRoadIndex = 2;
-                }
-                for (const auto &child : this->getChildren()) {
-                    child->pause();
-                }
-                log("Lose!");
-                this->isVictory = false;
-                this->failRoadIndex = failRoadIndex;
-                this->showFailAnimation();
-            }
-        }
-    }
-    
     void PlayScene::showTimesUp()
     {
         this->timesUp->setScale(0.1f);
@@ -652,152 +576,42 @@ namespace GameScene
         Manager::SoundsManager::getInstance()->playSound("audio/sounds/TimesUp.caf");
     }
     
-    void PlayScene::addWinScene()
-    {
-        int newScore = this->calculateScores();
-        Controller::GameController::getInstance()->addVictorySceneToCurrentScene(newScore);
-        Manager::SoundsManager::getInstance()->playSound("audio/sounds/Victory.caf");
-    }
-    
-    GameSprite::Pig* PlayScene::getFailedPig()
-    {
-        GameSprite::Pig* pig;
-        switch (this->failRoadIndex) {
-            case 0:
-                pig = this->road0Pig;
-                break;
-            case 1:
-                pig = this->road1Pig;
-                break;
-            case 2:
-                pig = this->road2Pig;
-                break;
-            default:
-                pig = this->road0Pig;
-                break;
-        }
-        return pig;
-    }
-    
-    std::string PlayScene::getDeadPigImagePath()
-    {
-        std::string deadImagePath;
-        switch (this->failRoadIndex) {
-            case 0:
-                deadImagePath = "image/DeadPig0.png";
-                break;
-            case 1:
-                deadImagePath = "image/DeadPig1.png";
-                break;
-            case 2:
-                deadImagePath = "image/DeadPig2.png";
-                break;
-            default:
-                deadImagePath = "image/DeadPig0.png";
-                break;
-        }
-        return deadImagePath;
-    }
-
-    void PlayScene::showDeadPig()
-    {
-        this->deadPig = new GameSprite::Image(this->getDeadPigImagePath());
-        this->deadPig->setPosition(this->getFailedPig()->getPosition());
-        this->addChild(this->deadPig, 2);
-    }
-    
-    void PlayScene::showGhost()
-    {
-        auto pig = this->getFailedPig();
-        this->ghost->setPosition(Vec2(pig->getPositionX(), pig->getPositionY() + 50));
-        this->addChild(this->ghost, 5);
-        Manager::SoundsManager::getInstance()->playSound("audio/sounds/GhostFly.caf");
-        this->ghost->runAction(Sequence::create(MoveBy::create(1.f, Vec2(0, 250)), FadeOut::create(0.1f), NULL));
-    }
-    
-    void PlayScene::addLoseScene()
-    {
-        auto controller = Controller::GameController::getInstance();
-        this->deadExplode->release();
-        this->deadPig->release();
-        controller->addLoseSceneToCurrentScene();
-        Manager::SoundsManager::getInstance()->playSound("audio/sounds/Lose.caf");
-    }
-    
-    
-    void PlayScene::showFailAnimation()
-    {
-        int x = rand() % 5;
-        char str[100] = {0};
-        sprintf(str, "image/Explode%d.png", x);
-        this->deadExplode = new GameSprite::Image(str);
-        this->deadExplode->setPosition(Vec2(this->getFailedPig()->getPositionX(),
-                                            this->getFailedPig()->getPositionY() + 50));
-        this->addChild(this->deadExplode, 3);
-        int randomNumber = rand() % 7;
-        std::stringstream punchName;
-        punchName << "audio/sounds/Punch" << randomNumber << ".caf";
-        Manager::SoundsManager::getInstance()->playSound(punchName.str().c_str());
-
-        this->deadExplode->runAction(Sequence::create(CallFunc::create(CC_CALLBACK_0(PlayScene::showDeadPig, this)),
-                                                      DelayTime::create(0.3f),
-                                                      CallFunc::create(CC_CALLBACK_0(PlayScene::changeDeadExplode, this)),
-                                                      MoveBy::create(0.0f, Vec2(-50, -50)),
-                                                      DelayTime::create(0.3f),
-                                                      CallFunc::create(CC_CALLBACK_0(PlayScene::changeDeadExplode, this)),
-                                                      MoveBy::create(0.0f, Vec2(100, 0)),
-                                                      DelayTime::create(0.3f),
-                                                      FadeOut::create(0.0f),
-                                                      CallFunc::create(CC_CALLBACK_0(PlayScene::showGhost, this)),
-                                                      DelayTime::create(1.5f),
-                                                      CallFunc::create(CC_CALLBACK_0(PlayScene::addLoseScene, this)),
-                                                      NULL));
-    }
-    
-    void PlayScene::changeDeadExplode()
-    {
-        int x = rand() % 5;
-        char str[100] = {0};
-        sprintf(str, "image/Explode%d.png", x);
-        TextureCreator* textureCreator = TextureCreator::getInstance();
-        Texture2D* texutre = textureCreator->getAutoSizeTexture2d(str);
-        int randomNumber = rand() % 7;
-        std::stringstream punchName;
-        punchName << "audio/sounds/Punch" << randomNumber << ".caf";
-        Manager::SoundsManager::getInstance()->playSound(punchName.str().c_str());
-        this->deadExplode->setTexture(texutre);
-    }
-    
-    GameSprite::Sweet* PlayScene::getNearestSweet(int road)
-    {
-        if (road == 0 && ! this->road0RunningIndex.empty()) {
-            return this->road0SweetVector.at(this->road0RunningIndex.front());
-        } else if (road == 1 && ! this->road1RunningIndex.empty()) {
-            return this->road1SweetVector.at(this->road1RunningIndex.front());
-        } else if (road == 2 && ! this->road2RunningIndex.empty()) {
-            return this->road2SweetVector.at(this->road2RunningIndex.front());
-        } else {
-            return nullptr;
-        }
-    }
-    
-    int PlayScene::getNearestSweetIndex(int road)
-    {
-        if (road == 0 && ! this->road0RunningIndex.empty()) {
-            return this->road0RunningIndex.front();
-        } else if (road == 1 && ! this->road1RunningIndex.empty()) {
-            return this->road1RunningIndex.front();
-        } else if (road == 2 && ! this->road2RunningIndex.empty()) {
-            return this->road2RunningIndex.front();
-        } else {
-            return -1;
-        }
-    }
-    
     void PlayScene::initLevelSetting()
     {
         this->road0TimeConfig = LevelDeisgner::getInstance()->loadSweetTimingSetting(this->episodeNumber, this->stageNumber, 0);
         this->road1TimeConfig = LevelDeisgner::getInstance()->loadSweetTimingSetting(this->episodeNumber, this->stageNumber, 1);
         this->road2TimeConfig = LevelDeisgner::getInstance()->loadSweetTimingSetting(this->episodeNumber, this->stageNumber, 2);
     }
+    
+    Vec2 PlayScene::getProgressPosition()
+    {
+        return Vec2(480, this->visibleOrigin.y + this->visibleSize.height - this->visibleSize.width / 11);
+    }
+    
+    
+    Vec2 PlayScene::getScoreStarPosition(int index)
+    {
+        int x = 0;
+        switch (index) {
+            case 0:
+                x = 865;
+                break;
+            case 1:
+                x = 925;
+                break;
+            case 2:
+                x = 985;
+                break;
+            default:
+                break;
+        }
+        
+        return Vec2(x, this->visibleOrigin.y + this->visibleSize.height - this->visibleSize.width / 11 + 40);
+    }
+    
+    Vec2 PlayScene::getTimesUpPosition()
+    {
+        return Vec2(this->center.x, this->center.y + 100);
+    }
+
 }

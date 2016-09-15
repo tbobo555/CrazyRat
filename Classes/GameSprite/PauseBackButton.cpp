@@ -1,5 +1,5 @@
 #include "PauseBackButton.h"
-#include "GameScene/PlayScene.h"
+#include "GameScene/PlayBaseScene.h"
 
 namespace GameSprite
 {
@@ -44,7 +44,7 @@ namespace GameSprite
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
             target->setScale(1.0);
-            auto scene = static_cast<GameScene::PlayScene*>(Manager::SceneManager::getInstance()->getCurrent());
+            auto scene = static_cast<GameScene::PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent());
             Manager::SpriteManager* spriteManager = Manager::SpriteManager::getInstance();
             auto pauseBackground = spriteManager->getByKey("PauseScene_PauseBackground");
             auto pauseBackButton = spriteManager->getByKey("PauseScene_PauseBackButton");

@@ -15,6 +15,7 @@
 #include "GameScene/PauseScene.h"
 #include "GameScene/VictoryScene.h"
 #include "GameScene/LoseScene.h"
+#include "GameScene/PlayInfiniteScene.h"
 #include "Manager/SceneManager.h"
 #include "Manager/SpriteManager.h"
 
@@ -92,6 +93,11 @@ namespace Controller
          @param stageNumber 關卡編號
          */
         void releasePlaySceneResource(int episodeNumber, int stageNumber);
+        
+        
+        void loadPlayInfiniteSceneResource();
+        
+        void releasePlayInfiniteSceneResource();
         
         /**
          @brief 載入PauseScene需要使用的資源到記憶體
@@ -222,6 +228,23 @@ namespace Controller
          @param unlockedEpisodeNumber 新解鎖的章節編號
          */
         void PlaySceneToSelectionScene(int episodeNumber, int stageNumber, int unlockedEpisodeNumber);
+        
+        /**
+         @brief 畫面從StartScene切換為PlayInfiniteScene
+         */
+        void startSceneToPlayInfiniteScene();
+        
+        /**
+         @brief 重新載入PlayInfiniteScene
+         @param episodeNumber 章節編號
+         @param stageNumber 關卡編號
+         */
+        void retryPlayInfiniteScene();
+        
+        /**
+         @brief 畫面從PlayInfiniteScene切換為StartScene
+         */
+        void playInfiniteSceneToStartScene();
     private:
         /**
          @brief 建構式

@@ -1,5 +1,6 @@
 #include "BackHomeButton.h"
 #include "Controller/GameController.h"
+#include "GameScene/PlayBaseScene.h"
 #include "GameScene/PlayScene.h"
 
 namespace GameSprite
@@ -45,9 +46,15 @@ namespace GameSprite
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
             target->setScale(1.0);
-            auto scene = static_cast<GameScene::PlayScene*>(SceneManager::getInstance()->getCurrent());
-            auto controller = Controller::GameController::getInstance();
-            controller->PlaySceneToEpisodeScene(scene->episodeNumber, scene->stageNumber);
+            auto current = SceneManager::getInstance()->getCurrent();
+            if (current->name == "PlayInfiniteScene") {
+                auto controller = Controller::GameController::getInstance();
+                controller->playInfiniteSceneToStartScene();
+            } else {
+                auto scene = static_cast<PlayScene*>(SceneManager::getInstance()->getCurrent());
+                auto controller = Controller::GameController::getInstance();
+                controller->PlaySceneToEpisodeScene(scene->episodeNumber, scene->stageNumber);
+            }
         } else {
             target->setScale(1.0);
         }

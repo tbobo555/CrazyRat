@@ -1,5 +1,5 @@
 #include "Pig.h"
-#include "GameScene/PlayScene.h"
+#include "GameScene/PlayBaseScene.h"
 #include "Sweet.h"
 #include <iostream>
 
@@ -65,7 +65,9 @@ namespace GameSprite
     int Pig::eat()
     {
         int scores = 0;
-        auto currentScene = static_cast<PlayScene*>(Manager::SceneManager::getInstance()->getCurrent());
+        
+        auto currentScene = static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent());
+        
         int nearestSweetIndex = currentScene->getNearestSweetIndex(this->roadIndex);
         if (nearestSweetIndex == -1) {
             this->showEatAnimation();
@@ -104,7 +106,13 @@ namespace GameSprite
             Manager::ScoresManager::getInstance()->addScores(scores);
             
             
-            auto scoreHalo = Manager::SpriteManager::getInstance()->getByKey("PlayScene_ScoreHalo");
+            std::stringstream haloKeyName;
+            if (currentScene->name == "PlayInfiniteScene") {
+                haloKeyName << "PlayInfiniteScene_ScoreHalo";
+            } else {
+                haloKeyName << "PlayScene_ScoreHalo";
+            }
+            auto scoreHalo = Manager::SpriteManager::getInstance()->getByKey(haloKeyName.str());
             scoreHalo->cleanup();
             scoreHalo->setOpacity(0);
             auto fadeIn = FadeIn::create(0.1f);

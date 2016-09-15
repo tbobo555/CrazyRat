@@ -1,26 +1,26 @@
-#include "StartButton.h"
+#include "CareerButton.h"
 #include "Controller/GameController.h"
 
 namespace GameSprite
 {
-    StartButton::StartButton(std::string image) : GameSprite::BaseSprite(image)
+    CareerButton::CareerButton(std::string image) : GameSprite::BaseSprite(image)
     {
         this->addEventListener();
     }
     
-    void StartButton::addEventListener()
+    void CareerButton::addEventListener()
     {
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);
-        listener->onTouchBegan = StartButton::onTouchBegan;
-        listener->onTouchEnded = StartButton::onTouchEnded;
-        listener->onTouchMoved = StartButton::onTouchMoved;
-        listener->onTouchCancelled = StartButton::onTouchCanceled;
+        listener->onTouchBegan = CareerButton::onTouchBegan;
+        listener->onTouchEnded = CareerButton::onTouchEnded;
+        listener->onTouchMoved = CareerButton::onTouchMoved;
+        listener->onTouchCancelled = CareerButton::onTouchCanceled;
         Director::getInstance()->getEventDispatcher()
         ->addEventListenerWithSceneGraphPriority(listener, this);        
     }
     
-    bool StartButton::onTouchBegan(Touch* touch, Event* event)
+    bool CareerButton::onTouchBegan(Touch* touch, Event* event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
@@ -41,14 +41,14 @@ namespace GameSprite
                 Director::getInstance()->getOpenGLView()->getFrameSize().width,
                 Director::getInstance()->getOpenGLView()->getFrameSize().height);
             log("contetn factor: %f  ", Director::getInstance()->getContentScaleFactor());
-            log("StartButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            log("CareerButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
             target->setScale(0.95);
             return true;
         }
         return false;
     }
     
-    void StartButton::onTouchEnded(Touch* touch, Event* event)
+    void CareerButton::onTouchEnded(Touch* touch, Event* event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
@@ -67,7 +67,7 @@ namespace GameSprite
                 Director::getInstance()->getOpenGLView()->getFrameSize().width,
                 Director::getInstance()->getOpenGLView()->getFrameSize().height);
             log("contetn factor: %f  ", Director::getInstance()->getContentScaleFactor());
-            log("StartButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            log("CareerButton began... x = %f, y = %f", locationInNode.x, locationInNode.y);
             target->setScale(1.0);
             Controller::GameController::getInstance()->startSceneToSelectionScene();
         } else {
@@ -75,11 +75,11 @@ namespace GameSprite
         }
     }
     
-    void StartButton::onTouchMoved(Touch* touch, Event* event)
+    void CareerButton::onTouchMoved(Touch* touch, Event* event)
     {
     }
 
-    void StartButton::onTouchCanceled(Touch* touch, Event* event)
+    void CareerButton::onTouchCanceled(Touch* touch, Event* event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         target->setScale(1.0);

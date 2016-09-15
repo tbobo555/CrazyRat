@@ -1,5 +1,5 @@
 #include "PauseMask.h"
-#include "GameScene/PlayScene.h"
+#include "GameScene/PlayBaseScene.h"
 
 namespace GameSprite
 {
@@ -55,7 +55,7 @@ namespace GameSprite
         if (!pauseBackgroundRect.containsPoint(locationInNode) &&
             !pauseBackButtonRect.containsPoint(locationInNode) &&
             rect.containsPoint(locationInNode)) {
-            auto scene = static_cast<GameScene::PlayScene*>(Manager::SceneManager::getInstance()->getCurrent());
+            auto scene = static_cast<GameScene::PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent());
             Manager::SpriteManager* spriteManager = Manager::SpriteManager::getInstance();
             auto pauseBackground = spriteManager->getByKey("PauseScene_PauseBackground");
             auto pauseBackButton = spriteManager->getByKey("PauseScene_PauseBackButton");
