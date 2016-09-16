@@ -1,5 +1,6 @@
 #include "NextButton.h"
 #include "Controller/GameController.h"
+#include "GameScene/PlayBaseScene.h"
 #include "GameScene/PlayScene.h"
 
 namespace GameSprite
@@ -46,9 +47,14 @@ namespace GameSprite
         if (rect.containsPoint(locationInNode)) {
             log("NextButton ended... x = %f, y = %f", locationInNode.x, locationInNode.y);
             target->setScale(1.0);
-            auto scene = static_cast<GameScene::PlayScene*>(Manager::SceneManager::getInstance()->getCurrent());
+            auto currentScene = static_cast<GameScene::PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent());
             auto controller = Controller::GameController::getInstance();
-            controller->PlaySceneToEpisodeScene(scene->episodeNumber, scene->stageNumber);
+            if (currentScene->name == "PlayInfiniteScene") {
+                controller->playInfiniteSceneToStartScene();
+            } else {
+                auto scene = static_cast<GameScene::PlayScene*>(Manager::SceneManager::getInstance()->getCurrent());
+                controller->PlaySceneToEpisodeScene(scene->episodeNumber, scene->stageNumber);
+            }
         } else {
             target->setScale(1.0);
         }

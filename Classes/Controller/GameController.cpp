@@ -145,6 +145,20 @@ namespace Controller
         SceneManager::getInstance()->releaseByKey("LoseScene");
     }
     
+    void GameController::loadFinalScoreScene(std::string score)
+    {
+        FinalScoreScene* finalScoreScene = new FinalScoreScene(score);
+        finalScoreScene->initScene();
+        SceneManager::getInstance()->setWithKey("FinalScoreScene", finalScoreScene);
+    }
+    
+    void GameController::releaseFinalScoreScene()
+    {
+        auto finalScoreScene = SceneManager::getInstance()->getByKey("FinalScoreScene");
+        finalScoreScene->releaseScene();
+        SceneManager::getInstance()->releaseByKey("FinalScoreScene");
+    }
+    
     void GameController::addMenuSceneToCurrentScene()
     {
         auto scene = SceneManager::getInstance()->getCurrent();
@@ -260,6 +274,30 @@ namespace Controller
         scene->removeChild(SpriteManager::getInstance()->getByKey("LoseScene_LoseBackground"));
         scene->removeChild(SpriteManager::getInstance()->getByKey("LoseScene_NextButton"));
         scene->removeChild(SpriteManager::getInstance()->getByKey("LoseScene_LoseTitle"));
+    }
+    
+    void GameController::addFinalScoreSceneToCurrentScene(std::string score)
+    {
+        auto finalScoreScene = static_cast<FinalScoreScene*>(SceneManager::getInstance()->getByKey("FinalScoreScene"));
+        auto scene = SceneManager::getInstance()->getCurrent();
+        finalScoreScene->setScore(score);
+        Manager::SpriteManager* spriteManager = Manager::SpriteManager::getInstance();
+        auto finalScoreBackground = spriteManager->getByKey("FinalScoreScene_FinalScoreBackground");
+        auto nextButton = spriteManager->getByKey("FinalScoreScene_NextButton");
+        auto scoreLabel = finalScoreScene->getScoreLabel();
+        scene->addChild(finalScoreBackground, 200);
+        scene->addChild(nextButton, 201);
+        scene->addChild(scoreLabel, 201);
+        finalScoreScene->runAnimation();
+    }
+    
+    void GameController::removeFinalScoreSceneFromCurrentScene()
+    {
+        auto scene = SceneManager::getInstance()->getCurrent();
+        auto finalScoreScene = static_cast<FinalScoreScene*>(SceneManager::getInstance()->getByKey("FinalScoreScene"));
+        scene->removeChild(SpriteManager::getInstance()->getByKey("FinalScoreScene_FinalScoreBackground"));
+        scene->removeChild(SpriteManager::getInstance()->getByKey("FinalScoreScene_NextButton"));
+        scene->removeChild(finalScoreScene->getScoreLabel());
     }
     
     void GameController::runStartScene()
@@ -457,6 +495,7 @@ namespace Controller
         // 將一些被cocos2d核心程式快取，殘留在記憶體沒有被釋放的物件做記憶體釋放
         Director::getInstance()->purgeCachedData();
         this->loadPauseSceneResource();
+        this->loadFinalScoreScene("0");
         this->loadPlayInfiniteSceneResource();
         PlayInfiniteScene *scene = static_cast<PlayInfiniteScene*>(SceneManager::getInstance()->getByKey("PlayInfiniteScene"));
         SceneManager::getInstance()->setCurrent(scene);
@@ -469,10 +508,12 @@ namespace Controller
     {
         this->removePauseSceneFromCurrentScene();
         this->releasePauseSceneResource();
+        this->releaseFinalScoreScene();
         this->releasePlayInfiniteSceneResource();
         // 將一些被cocos2d核心程式快取，殘留在記憶體沒有被釋放的物件做記憶體釋放
         Director::getInstance()->purgeCachedData();
         this->loadPauseSceneResource();
+        this->loadFinalScoreScene("0");
         this->loadPlayInfiniteSceneResource();
         PlayInfiniteScene *scene = static_cast<PlayInfiniteScene*>(SceneManager::getInstance()->getByKey("PlayInfiniteScene"));
         SceneManager::getInstance()->setCurrent(scene);
@@ -485,6 +526,7 @@ namespace Controller
     {
         this->removePauseSceneFromCurrentScene();
         this->releasePauseSceneResource();
+        this->releaseFinalScoreScene();
         this->releasePlayInfiniteSceneResource();
         // 將一些被cocos2d核心程式快取，殘留在記憶體沒有被釋放的物件做記憶體釋放
         Director::getInstance()->purgeCachedData();

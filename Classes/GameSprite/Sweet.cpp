@@ -40,8 +40,10 @@ namespace GameSprite
     void Sweet::missEat()
     {
         this->eaten();
+        auto current = static_cast<GameScene::PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent());
+        std::string sceneName = current->name;
         std::stringstream key;
-        key << "PlayScene_Road" << this->roadIndex << "Pig";
+        key << sceneName << "_Road" << this->roadIndex << "Pig";
         auto pig = static_cast<Pig*>(Manager::SpriteManager::getInstance()->getByKey(key.str()));
         pig->hurt();
         CCLOG("missEat hurt!!!");

@@ -15,6 +15,7 @@
 #include "GameScene/PauseScene.h"
 #include "GameScene/VictoryScene.h"
 #include "GameScene/LoseScene.h"
+#include "GameScene/FinalScoreScene.h"
 #include "GameScene/PlayInfiniteScene.h"
 #include "Manager/SceneManager.h"
 #include "Manager/SpriteManager.h"
@@ -94,9 +95,14 @@ namespace Controller
          */
         void releasePlaySceneResource(int episodeNumber, int stageNumber);
         
-        
+        /**
+         @brief 載入PlayInfiniteScene需要使用的資源到記憶體
+         */
         void loadPlayInfiniteSceneResource();
         
+        /**
+         @brief 釋放PlayInfiniteScene有用到的所有資源
+         */
         void releasePlayInfiniteSceneResource();
         
         /**
@@ -128,6 +134,17 @@ namespace Controller
          @brief 釋放LoseScene有用到的所有資源
          */
         void releaseLoseSceneResource();
+        
+        /**
+         @brief 載入FinalScoreScene需要使用的資源到記憶體
+         @param score 在場景要顯示的分數
+         */
+        void loadFinalScoreScene(std::string score);
+        
+        /**
+         @brief 釋放FinalScoreScene有用到的所有資源
+         */
+        void releaseFinalScoreScene();
         
         /**
          @brief 將MenuScene放到目前的場景
@@ -169,6 +186,17 @@ namespace Controller
          @brief 將LoseScene從目前的場景中移除
          */
         void removeLoseSceneFromCurrentScene();
+        
+        /**
+         @brief 將FinalScoreScene放到目前的場景
+         @param score 要顯示的分數
+         */
+        void addFinalScoreSceneToCurrentScene(std::string score);
+        
+        /**
+         @brief 將FinalScoreScene從目前的場景中移除
+         */
+        void removeFinalScoreSceneFromCurrentScene();
         
         /**
          @brief 顯示StartScene，此方法在App開啟時會被呼叫

@@ -1,5 +1,5 @@
 #include "PlayInfiniteScene.h"
-
+#include "Controller/GameController.h"
 
 namespace GameScene
 {
@@ -145,7 +145,7 @@ namespace GameScene
         this->removeAllChildren();
         auto spriteManager = Manager::SpriteManager::getInstance();
         spriteManager->releaseByKey("PlayInfiniteScene_Background");
-        spriteManager->releaseByKey("PlayInfiniteScene_ProgressNumber");
+        spriteManager->releaseByKey("PlayInfiniteScene_PrepareNumber");
         spriteManager->releaseByKey("PlayInfiniteScene_Ghost");
         spriteManager->releaseByKey("PlayInfiniteScene_Road0Pig");
         spriteManager->releaseByKey("PlayInfiniteScene_Road1Pig");
@@ -173,7 +173,10 @@ namespace GameScene
     
     void PlayInfiniteScene::addLoseScene()
     {
-        
+        auto controller = Controller::GameController::getInstance();
+        this->deadExplode->release();
+        this->deadPig->release();
+        controller->addFinalScoreSceneToCurrentScene(this->scores->getString());
     }
     
     void PlayInfiniteScene::pauseScene()
