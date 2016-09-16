@@ -8,6 +8,7 @@
 #include "Db/EpisodeSetting.h"
 #include "Db/StageSetting.h"
 #include "Db/StarSetting.h"
+#include "Db/NewHighScoreSetting.h"
 #include "PluginIAP/PluginIAP.h"
 
 USING_NS_CC;

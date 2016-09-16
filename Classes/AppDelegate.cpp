@@ -44,7 +44,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 
     // turn on display FPS
-    director->setDisplayStats(true);
+    director->setDisplayStats(false);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
@@ -70,6 +70,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     EpisodeSetting *episodeSetting = EpisodeSetting::getInstance();
     StageSetting *stageSetting = StageSetting::getInstance();
     StarSetting *starSetting = StarSetting::getInstance();
+    NewHighScoreSetting* newHighScoreSetting = NewHighScoreSetting::getInstance();
     
     if (Sqlite3Engine::getInstance()->getIsFirstCreate()) {
         switchSetting->createTable();
@@ -80,7 +81,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
         stageSetting->initTable();
         starSetting->createTable();
         starSetting->initTable();
+        newHighScoreSetting->createTable();
+        newHighScoreSetting->initTable();
     }
+    
     episodeSetting->updateMax(2);
     stageSetting->updateMax(20);
     sdkbox::IAP::init();

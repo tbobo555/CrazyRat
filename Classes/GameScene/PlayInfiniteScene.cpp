@@ -5,6 +5,7 @@ namespace GameScene
 {
     PlayInfiniteScene::PlayInfiniteScene() : GameScene::PlayBaseScene()
     {
+        this->level = 1;
         this->name = "PlayInfiniteScene";
     }
     
@@ -137,7 +138,13 @@ namespace GameScene
         this->scores->setPosition(this->getScoresPosition());
         this->scores->setColor(Color3B(255, 114, 18));
         this->addChild(this->scores, 23);
-
+        
+        this->levelUpNotification = Label::createWithTTF("Level 1", "fonts/KOMIKAX.ttf", 250);
+        this->levelUpNotification->setPosition(Vec2(this->center.x, this->center.y + 150));
+        this->levelUpNotification->setColor(Color3B(255, 53, 6));
+        this->levelUpNotification->retain();
+        this->addChild(this->levelUpNotification, 24);
+        this->levelUpNotification->setOpacity(0);
     }
     
     void PlayInfiniteScene::releaseScene()
@@ -167,6 +174,7 @@ namespace GameScene
         this->spriteCache->removeSpriteFramesFromFile("image/Pig1Animation.plist");
         this->spriteCache->removeSpriteFramesFromFile("image/Pig2Animation.plist");
         this->spriteCache->removeSpriteFramesFromFile("image/MouthAnimation.plist");
+        this->levelUpNotification->release();
     }
     
     void PlayInfiniteScene::addWinScene(){}
@@ -211,6 +219,9 @@ namespace GameScene
         this->sweetRunSpeed = 3.0f;
         this->sweetPerSecond = 1.6f;
         this->addSweetTime = 1 / this->sweetPerSecond;
+        this->levelUpSweetNumber = 20;
+        this->levelUpSweetCounter = 0;
+        this->levelUpNow = false;
         schedule(CC_SCHEDULE_SELECTOR(PlayInfiniteScene::prepareUpdate), 1.f);
     }
     
@@ -320,10 +331,21 @@ namespace GameScene
     void PlayInfiniteScene::gameUpdate(float delta)
     {
         if (! this->isPaused) {
-            this->playTime += delta;
+            if (! this->levelUpNow) {
+                this->playTime += delta;
+            }
             if (this->playTime > this->addSweetTime) {
                 this->playTime = 0;
                 this->addSweetRoad = rand() % 3;
+                this->levelUpSweetCounter ++;
+                if (this->levelUpSweetCounter >= this->levelUpSweetNumber) {
+                    this->levelUpNow = true;
+                    this->runAction(Sequence::create(
+                                        DelayTime::create(this->sweetRunSpeed),
+                                        CallFunc::create(CC_CALLBACK_0(PlayInfiniteScene::levelUp, this)),
+                                        NULL)
+                                    );
+                }
             }
         }
         if (! this->isPaused) {
@@ -344,6 +366,11 @@ namespace GameScene
                     child->pause();
                 }
                 this->failRoadIndex = failRoadIndex;
+                int highScore = DB::NewHighScoreSetting::getInstance()->getHighScore();
+                int currentScore = atoi(this->scores->getString().c_str());
+                if (highScore < currentScore) {
+                    DB::NewHighScoreSetting::getInstance()->updateHighScore(currentScore);
+                }
                 this->showFailAnimation();
             }
         }
@@ -355,10 +382,23 @@ namespace GameScene
     
     void PlayInfiniteScene::levelUp()
     {
+        this->level ++;
+        std::stringstream levelString;
+        levelString << "Level " << this->level;
+        this->levelUpNotification->setString(levelString.str());
+        this->levelUpNotification->setOpacity(255);
+        this->levelUpNotification->setScale(0.1f);
+        this->levelUpNotification->runAction(Sequence::create(ScaleTo::create(0.3f, 1.f), FadeOut::create(0.3f) ,NULL));
         this->sweetRunSpeed = this->sweetRunSpeed - this->sweetRunSpeed / 10;
-        
         this->sweetPerSecond = this->sweetRunSpeed + 0.3;
-        
         this->addSweetTime = 1 / this->sweetPerSecond;
+        this->levelUpSweetCounter = 0;
+        this->levelUpSweetNumber += 5;
+        for (int i = 0; i < 10; i++) {
+            this->road0SweetVector[i]->setRunningTime(this->sweetRunSpeed);
+            this->road1SweetVector[i]->setRunningTime(this->sweetRunSpeed);
+            this->road2SweetVector[i]->setRunningTime(this->sweetRunSpeed);
+        }
+        this->levelUpNow = false;
     }
 }

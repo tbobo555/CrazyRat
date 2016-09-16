@@ -14,6 +14,7 @@
 #include "GameSprite/Cloud.h"
 #include "GameSprite/Image.h"
 #include "Lib/LevelDesigner.h"
+#include "Db/NewHighScoreSetting.h"
 
 USING_NS_CC;
 
@@ -94,6 +95,21 @@ namespace GameScene
         
         // 遊戲時間
         float playTime;
+        
+        // 目前遊戲難度
+        int level;
+        
+        // 進入下一級前，目前累積的甜點數
+        int levelUpSweetCounter;
+        
+        // 進入下一等級所需要的甜點數
+        int levelUpSweetNumber;
+        
+        // 是否正在進行level up
+        bool levelUpNow;
+        
+        // 難度提升的提示訊息
+        Label* levelUpNotification;
         
         /**
          @brief 更新倒數時間的schedule
