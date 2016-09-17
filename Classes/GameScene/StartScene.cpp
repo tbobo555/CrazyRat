@@ -18,6 +18,7 @@ namespace GameScene
         std::string startTitleImage = "image/StartTitle.png";
         std::string movePig0Image = "image/StartSceneMovePig0.png";
         std::string movePig1Image = "image/StartSceneMovePig1.png";
+        std::string highScoreMaskImage = "image/HighScoreRecordBackground.png";
         this->startBackground = new GameSprite::Background(backgroundImage);
         this->startBackground->setPosition(this->center);
         
@@ -36,6 +37,18 @@ namespace GameScene
         this->movePig0->setPosition(this->getMovePig0EndPosition());
         this->movePig1 = new GameSprite::Image(movePig1Image);
         this->movePig1->setPosition(this->getMovePig1EndPosition());
+        
+        this->highScoreMask = new GameSprite::HighScoreMask(highScoreMaskImage);
+        this->highScoreMask->setPosition(this->center);
+        
+        int newHighScore = DB::NewHighScoreSetting::getInstance()->getHighScore();
+        std::stringstream scoreKey;
+        scoreKey << newHighScore;
+        this->highScore = Label::createWithTTF(scoreKey.str(), "fonts/KOMIKAX.ttf", 170);
+        this->highScore->setPosition(this->center);
+        this->highScore->setColor(Color3B(249, 249, 21));
+        this->highScore->retain();
+
         this->addChild(this->startBackground, 0);
         this->addChild(this->playButton, 3);
         this->addChild(this->careerButton, 3);
@@ -43,6 +56,8 @@ namespace GameScene
         this->addChild(this->startTitle, 3);
         this->addChild(this->movePig0, 2);
         this->addChild(this->movePig1, 1);
+        this->addChild(this->highScoreMask, -2);
+        this->addChild(this->highScore, -1);
         spriteManager->setWithKey("StartScene_Background", this->startBackground);
         spriteManager->setWithKey("StartScene_PlayButton", this->playButton);
         spriteManager->setWithKey("StartScene_CareerButton", this->careerButton);
@@ -50,6 +65,7 @@ namespace GameScene
         spriteManager->setWithKey("StartScene_StartTitle", this->startTitle);
         spriteManager->setWithKey("StartScene_MovePig0", this->movePig0);
         spriteManager->setWithKey("StartScene_MovePig1", this->movePig1);
+        spriteManager->setWithKey("StartScene_HighScoreMask", this->highScoreMask);
         Manager::MusicManager::getInstance()->playMusic("audio/music/LivelyLumpsucker.caf");
     }
     
@@ -64,7 +80,8 @@ namespace GameScene
         spriteManager->releaseByKey("StartScene_StartTitle");
         spriteManager->releaseByKey("StartScene_MovePig0");
         spriteManager->releaseByKey("StartScene_MovePig1");
-
+        spriteManager->releaseByKey("StartScene_HighScoreMask");
+        this->highScore->release();
     }
     
     void StartScene::runAnimation()
@@ -103,6 +120,18 @@ namespace GameScene
         this->careerButton->cocos2d::Node::setVisible(true);
         this->highScoresButton->cocos2d::Node::setVisible(true);
         Director::getInstance()->getEventDispatcher()->setEnabled(true);
+    }
+    
+    void StartScene::showHighScore()
+    {
+        this->highScoreMask->setLocalZOrder(100);
+        this->highScore->setLocalZOrder(101);
+    }
+    
+    void StartScene::hideHighScore()
+    {
+        this->highScoreMask->setLocalZOrder(-2);
+        this->highScore->setLocalZOrder(-1);
     }
     
     Vec2 StartScene::getPlayButtonPosition()

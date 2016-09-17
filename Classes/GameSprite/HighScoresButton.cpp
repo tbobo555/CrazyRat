@@ -1,5 +1,5 @@
 #include "HighScoresButton.h"
-
+#include "GameScene/StartScene.h"
 
 namespace GameSprite
 {
@@ -43,6 +43,8 @@ namespace GameSprite
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
             target->setScale(1.0);
+            auto current = static_cast<StartScene*>(Manager::SceneManager::getInstance()->getCurrent());
+            current->showHighScore();
         } else {
             target->setScale(1.0);
         }

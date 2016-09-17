@@ -7,9 +7,11 @@
 #include "GameSprite/HighScoresButton.h"
 #include "GameSprite/StartTitle.h"
 #include "GameSprite/image.h"
+#include "GameSprite/HighScoreMask.h"
 #include "Manager/SpriteManager.h"
 #include "BaseScene.h"
 #include "Manager/MusicManager.h"
+#include "Db/NewHighScoreSetting.h"
 
 namespace GameScene
 {
@@ -46,6 +48,16 @@ namespace GameScene
          */
         void animationCallback();
         
+        /**
+         @brief 顯示最高得分紀錄畫面
+         */
+        void showHighScore();
+        
+        /**
+         @brief 隱藏最高得分紀錄畫面
+         */
+        void hideHighScore();
+        
         // 背景圖檔物件
         GameSprite::Background* startBackground;
         
@@ -66,6 +78,12 @@ namespace GameScene
         
         // 粉紅豬
         GameSprite::Image* movePig1;
+        
+        // 最高得分背景圖檔
+        GameSprite::HighScoreMask* highScoreMask;
+        
+        // 最高得分
+        Label* highScore;
     private:
         /**
          @brief 取得遊玩按鈕的座標位置
