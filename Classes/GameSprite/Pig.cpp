@@ -6,34 +6,42 @@
 namespace GameSprite
 {
     
-    Pig::Pig(std::string image, int pRoadIndex, int pigType) : GameSprite::BaseSprite(image, true)
+    Pig::Pig(std::string image, int pRoadIndex, int pigType) : GameSprite::BaseSprite()
     {
+        this->initWithCache(image);
+        this->setScale(Director::getInstance()->getContentScaleFactor());
         this->roadIndex = pRoadIndex;
         this->hp = 3;
         this->pigType = pigType;
+        
         this->mouth = new Mouth("MouthAnimation_0.png");
         this->mouth->setVisible(false);
         this->mouth->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height/2));
+        this->mouth->setScale(1);
         this->addChild(this->mouth);
+        
         this->explode = new GameSprite::Image("image/Explode0.png");
         this->explode->setPosition(Vec2(this->getContentSize().width/2, this->getContentSize().height*2/3));
+        this->explode->setScale(1 / Director::getInstance()->getContentScaleFactor());
         this->addChild(this->explode);
         this->explode->setVisible(false);
         
         this->goodEffect = new Image("image/Good.png");
         this->goodEffect->setGlobalZOrder(4);
+        this->goodEffect->setScale(1 / Director::getInstance()->getContentScaleFactor());
         this->addChild(this->goodEffect);
         
         this->greatEffect = new Image("image/Great.png");
         this->greatEffect->setGlobalZOrder(4);
+        this->greatEffect->setScale(1 / Director::getInstance()->getContentScaleFactor());
         this->addChild(this->greatEffect);
 
         this->perfectEffect = new Image("image/Perfect.png");
         this->perfectEffect->setGlobalZOrder(4);
+        this->perfectEffect->setScale(1 / Director::getInstance()->getContentScaleFactor());
         this->addChild(this->perfectEffect);
         
         this->initAllScoreEffect();
-
     }
     
     Pig::~Pig()
@@ -105,7 +113,6 @@ namespace GameSprite
             nearestSweet->eaten();
             Manager::ScoresManager::getInstance()->addScores(scores);
             
-            
             std::stringstream haloKeyName;
             if (currentScene->name == "PlayInfiniteScene") {
                 haloKeyName << "PlayInfiniteScene_ScoreHalo";
@@ -127,16 +134,9 @@ namespace GameSprite
         if (this->hp == 0) {
             return;
         }
-        auto cache = SpriteFrameCache::getInstance();
         this->mouth->stopAllActions();
         this->mouth->setVisible(true);
-        Vector<SpriteFrame*> animFrames(1);
-        char str[100] = {0};
-        sprintf(str, "MouthAnimation_%d.png", 0);
-        auto autoSizeFrame = TextureCreator::getInstance()->getAutoSizeFrame(cache->getSpriteFrameByName(str));
-        animFrames.pushBack(autoSizeFrame);
-        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        this->mouth->runAction(Sequence::create(Animate::create(animation), CallFunc::create(CC_CALLBACK_0(Pig::hideMouth, this)) , NULL));
+        this->mouth->runAction(Sequence::create(DelayTime::create(0.2f), CallFunc::create(CC_CALLBACK_0(Pig::hideMouth, this)) , NULL));
         
         this->resetPigPosition();
         auto move = MoveBy::create(0.1f, Vec2(0, 150));
@@ -172,8 +172,8 @@ namespace GameSprite
             status = 4;
         }
         sprintf(str, "Pig%dAnimation_%d.png", this->pigType, status);
-        auto autoSizeFrame = TextureCreator::getInstance()->getAutoSizeFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(str));
-        this->setSpriteFrame(autoSizeFrame);
+        auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(str);
+        this->setSpriteFrame(frame);
         this->resetPigPosition();
         this->wink();
     }
@@ -205,7 +205,6 @@ namespace GameSprite
         }
         this->stopAllActions();
         auto cache = SpriteFrameCache::getInstance();
-        Vector<SpriteFrame*> animFrames(3);
         char str[100] = {0};
         int status = 0;
         if (this->hp == 2) {
@@ -214,19 +213,21 @@ namespace GameSprite
         if (this->hp == 1) {
             status = 4;
         }
+        Animation* animation = Animation::create();
+        
         sprintf(str, "Pig%dAnimation_%d.png", this->pigType, status);
-        auto autoSizeFrame = TextureCreator::getInstance()->getAutoSizeFrame(cache->getSpriteFrameByName(str));
-        animFrames.pushBack(autoSizeFrame);
+        auto frame = cache->getSpriteFrameByName(str);
+        animation->addSpriteFrame(frame);
         
         sprintf(str, "Pig%dAnimation_%d.png", this->pigType, status + 1);
-        autoSizeFrame = TextureCreator::getInstance()->getAutoSizeFrame(cache->getSpriteFrameByName(str));
-        animFrames.pushBack(autoSizeFrame);
+        frame = cache->getSpriteFrameByName(str);
+        animation->addSpriteFrame(frame);
         
         sprintf(str, "Pig%dAnimation_%d.png", this->pigType, status);
-        autoSizeFrame = TextureCreator::getInstance()->getAutoSizeFrame(cache->getSpriteFrameByName(str));
-        animFrames.pushBack(autoSizeFrame);
+        frame = cache->getSpriteFrameByName(str);
+        animation->addSpriteFrame(frame);
         
-        auto animation = Animation::createWithSpriteFrames(animFrames, 0.1f);
+        animation->setDelayPerUnit(0.1f);
         this->runAction(RepeatForever::create(Sequence::create(DelayTime::create(rand() % 5 + 1), Animate::create(animation), NULL)));
     }
     

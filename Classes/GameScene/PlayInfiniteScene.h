@@ -67,11 +67,6 @@ namespace GameScene
          @brief 將遊戲的難度升級
          */
         void levelUp();
-
-        /**
-         @brief 切換背景音樂
-         */
-        void switchMusic();
         
         /**
          @brief 依據玩家目前取得的分數來更新記分板上的星星狀態(亮或暗)
@@ -111,6 +106,30 @@ namespace GameScene
         // 難度提升的提示訊息
         Label* levelUpNotification;
         
+        // 目前音樂播放的時間
+        float musicTime;
+        
+        // 正在播放的音樂編號
+        int playingMusicId;
+        
+        // 正在播放的音樂長度
+        int playingMusicLength;
+        
+        // 音樂 Batty Mc Faddin 的長度
+        int battyMcFaddinMusicLength;
+        
+        // 音樂 Merry Go 的長度
+        int merryGoMusicLength;
+        
+        // 音樂 Royal Banana 的長度
+        int royalBananaMusicLength;
+        
+        // 音樂 Run Amok 的長度
+        int runAmokMusicLength;
+        
+        // 音樂 Wagon Wheel 的長度
+        int wagonWheelMusicLength;
+        
         /**
          @brief 更新倒數時間的schedule
          @param delta 多久執行一次schedule
@@ -149,6 +168,18 @@ namespace GameScene
          @param shedule多久執行一次的時間
          */
         void road2Update(float delta);
+        
+        /**
+         @brief 播放背景音樂
+          @param musicId 要播放的音樂編號
+         */
+        void playMusic(int muiscId);
+        
+        /**
+         @brief 切換背景音樂
+         @param delta 多久執行一次schedule
+         */
+        void switchMusic(float delta);
     };
 }
 

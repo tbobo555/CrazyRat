@@ -213,6 +213,7 @@ namespace GameScene
     
     void PlayInfiniteScene::play()
     {
+        this->isPaused= false;
         this->prepareTime = 4;
         this->addSweetRoad = -1;
         this->playTime = 0;
@@ -222,6 +223,12 @@ namespace GameScene
         this->levelUpSweetNumber = 20;
         this->levelUpSweetCounter = 0;
         this->levelUpNow = false;
+        this->battyMcFaddinMusicLength = 201;
+        this->merryGoMusicLength = 120;
+        this->royalBananaMusicLength = 131;
+        this->runAmokMusicLength = 107;
+        this->wagonWheelMusicLength = 304;
+        
         schedule(CC_SCHEDULE_SELECTOR(PlayInfiniteScene::prepareUpdate), 1.f);
     }
     
@@ -270,14 +277,71 @@ namespace GameScene
         this->road1Pig->addEventListener();
         this->road2Pig->addEventListener();
         
-        Manager::MusicManager::getInstance()->playMusic("audio/music/MerryGo(30s).caf");
+        this->musicTime = 0;
+        int randomMusic = rand() % 5;
+        this->playingMusicId = randomMusic;
+        this->playMusic(randomMusic);
+        
         schedule(CC_SCHEDULE_SELECTOR(PlayInfiniteScene::gameUpdate), 0.1f);
         schedule(CC_SCHEDULE_SELECTOR(PlayInfiniteScene::road0Update), 0.1f);
         schedule(CC_SCHEDULE_SELECTOR(PlayInfiniteScene::road1Update), 0.1f);
         schedule(CC_SCHEDULE_SELECTOR(PlayInfiniteScene::road2Update), 0.1f);
+        schedule(CC_SCHEDULE_SELECTOR(PlayInfiniteScene::switchMusic), 0.5f);
         this->road0Pig->wink();
         this->road1Pig->wink();
         this->road2Pig->wink();
+    }
+    
+    void PlayInfiniteScene::playMusic(int muiscId)
+    {
+        switch (muiscId) {
+            case 0:
+                CCLOG("play BattyMcFaddin.caf");
+                this->playingMusicLength = this->battyMcFaddinMusicLength;
+                Manager::MusicManager::getInstance()->playMusicNoLoop("audio/music/BattyMcFaddin.caf");
+                break;
+            case 1:
+                CCLOG("play MerryGo.caf");
+                this->playingMusicLength = this->merryGoMusicLength;
+                Manager::MusicManager::getInstance()->playMusicNoLoop("audio/music/MerryGo.caf");
+                break;
+            case 2:
+                CCLOG("play RoyalBanana.caf");
+                this->playingMusicLength = this->royalBananaMusicLength;
+                Manager::MusicManager::getInstance()->playMusicNoLoop("audio/music/RoyalBanana.caf");
+                break;
+            case 3:
+                CCLOG("play RunAmok.caf");
+                this->playingMusicLength = this->runAmokMusicLength;
+                Manager::MusicManager::getInstance()->playMusicNoLoop("audio/music/RunAmok.caf");
+                break;
+            case 4:
+                CCLOG("play WagonWheel.caf");
+                this->playingMusicLength = this->wagonWheelMusicLength;
+                Manager::MusicManager::getInstance()->playMusicNoLoop("audio/music/WagonWheel.caf");
+                break;
+        }
+    }
+    
+    void PlayInfiniteScene::switchMusic(float delta)
+    {
+        if (! this->isPaused) {
+            this->musicTime += delta;
+            if (this->musicTime >= this->playingMusicLength) {
+                int randomMusic;
+                while (true) {
+                    randomMusic = rand() % 5;
+                    if (randomMusic != this->playingMusicId) {
+                        break;
+                    }
+                }
+                this->musicTime = 0;
+                this->playingMusicId = randomMusic;
+                
+                Manager::MusicManager::getInstance()->stopMusic();
+                this->playMusic(randomMusic);
+            }
+        }
     }
     
     void PlayInfiniteScene::road0Update(float delta)
@@ -356,6 +420,7 @@ namespace GameScene
                 unschedule(schedule_selector(PlayInfiniteScene::road0Update));
                 unschedule(schedule_selector(PlayInfiniteScene::road1Update));
                 unschedule(schedule_selector(PlayInfiniteScene::road2Update));
+                unschedule(schedule_selector(PlayInfiniteScene::switchMusic));
                 int failRoadIndex = 0;
                 if (this->road1Pig->hp <= 0) {
                     failRoadIndex = 1;
@@ -390,7 +455,7 @@ namespace GameScene
         this->levelUpNotification->setScale(0.1f);
         this->levelUpNotification->runAction(Sequence::create(ScaleTo::create(0.3f, 1.f), FadeOut::create(0.3f) ,NULL));
         this->sweetRunSpeed = this->sweetRunSpeed - this->sweetRunSpeed / 10;
-        this->sweetPerSecond = this->sweetRunSpeed + 0.3;
+        this->sweetPerSecond = this->sweetPerSecond + 0.3;
         this->addSweetTime = 1 / this->sweetPerSecond;
         this->levelUpSweetCounter = 0;
         this->levelUpSweetNumber += 5;

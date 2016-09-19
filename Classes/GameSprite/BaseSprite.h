@@ -31,11 +31,10 @@ namespace GameSprite
         BaseSprite(std::string image);
 
         /**
-         @brief 建構式
+         @brief 從 cache 初始化精靈
          @param image 精靈要套用的圖檔
-         @param fromCache 若設置此參數，圖檔會從cache抓取
          */
-        BaseSprite(std::string image, bool fromCache);
+        void initWithCache(std::string image);
 
         /**
          @brief 將精靈加入事件監聽，精靈會開始偵測觸控輸入

@@ -2,6 +2,7 @@
 #define _Lib_TextureCreator_H_
 
 #include "cocos2d.h"
+#include <math.h>
 
 USING_NS_CC;
 
@@ -16,13 +17,6 @@ public:
      @brief 取得實體物件
      */
     static TextureCreator* getInstance();
-
-    /**
-     @brief 依裝置解析度來縮放指定圖紋的尺寸
-     @param texture 原始圖紋
-     @return 縮放過的圖紋
-     */
-    Texture2D* getAutoSizeTexture2d(Texture2D* texture);
     
     /**
      @brief 依裝置解析度來縮放指定圖紋的尺寸
@@ -30,13 +24,6 @@ public:
      @return 縮放過的圖紋
      */
     Texture2D* getAutoSizeTexture2d(std::string img);
-    
-    /**
-     @brief 依裝置解析度來縮放指定的精靈影格
-     @param fram 原始影格
-     @return 縮放過的影格
-     */
-    SpriteFrame* getAutoSizeFrame(SpriteFrame* frame);
 private:
     /**
      @brief 建構式
@@ -45,6 +32,9 @@ private:
 
     // 靜態實例
     static TextureCreator* instance;
+    
+    // Rect的預設保留空間，當sprite被縮方後，會因浮點數導致圖片邊緣被裁切，此變數則用來增大容納sprite的rect以避免圖騙被裁切
+    float rectPadding;
 };
 
 

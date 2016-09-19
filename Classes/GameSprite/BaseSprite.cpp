@@ -17,21 +17,16 @@ namespace GameSprite
         this->retain();
     }
     
-    BaseSprite::BaseSprite(std::string image, bool fromCache) : Sprite()
+    void BaseSprite::initWithCache(std::string image)
     {
         SpriteFrame* frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(image);
-        
-        auto autoSizeFrame = TextureCreator::getInstance()->getAutoSizeFrame(frame);
-        
         #if COCOS2D_DEBUG > 0
             char msg[256] = {0};
             sprintf(msg, "Invalid spriteFrameName: %s", image.c_str());
             CCASSERT(frame != nullptr, msg);
         #endif
-        this->initWithTexture(autoSizeFrame->getTexture(), autoSizeFrame->getRect());
-        this->setSpriteFrame(autoSizeFrame);
-        this->autorelease();
-        this->retain();
+        this->initWithTexture(frame->getTexture(), frame->getRect());
+        this->setSpriteFrame(frame);
     }
     
     BaseSprite::~BaseSprite(){}
