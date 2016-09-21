@@ -19,7 +19,18 @@ namespace GameScene
         this->spriteCache->addSpriteFramesWithFile("image/Pig2Animation.plist");
         this->spriteCache->addSpriteFramesWithFile("image/MouthAnimation.plist");
         auto spriteManager = Manager::SpriteManager::getInstance();
-        std::string backgroundImage = "image/PlayBackground.png";
+        std::vector<int> backgroundNumberVector = {
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            3, 3, 3, 3, 3,
+            4, 4, 4, 4, 4,
+            5,
+            6};
+        int randomBackgroundId = backgroundNumberVector.at(rand() % 42);
+        std::stringstream backgroundKey;
+        backgroundKey << "image/PlayBackground_" << randomBackgroundId << ".png";
+        std::string backgroundImage = backgroundKey.str();
         std::string pauseButtonImage = "image/PauseButton.png";
         std::string pauseBackgroundImage = "image/SettingBackground.png";
         std::string musicButtonImage = "image/MusicOnButton.png";
