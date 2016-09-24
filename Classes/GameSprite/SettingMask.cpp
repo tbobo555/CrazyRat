@@ -1,4 +1,5 @@
 #include "SettingMask.h"
+#include "GameScene/MenuScene.h"
 
 namespace GameSprite
 {
@@ -54,30 +55,8 @@ namespace GameSprite
             !settingBackgroundRect.containsPoint(locationInNode) &&
             rect.containsPoint(locationInNode)) {
             auto sceneManager = Manager::SceneManager::getInstance();
-            auto spriteManager = Manager::SpriteManager::getInstance();
-            auto scene = sceneManager->getCurrent();
-            auto settingBackground = spriteManager->getByKey("MenuScene_SettingBackground");
-            auto settingBackButton = spriteManager->getByKey("MenuScene_SettingBackButton");
-            auto musicButton = spriteManager->getByKey("MenuScene_MusicButton");
-            auto soundsButton = spriteManager->getByKey("MenuScene_SoundsButton");
-            auto aboutButton = spriteManager->getByKey("MenuScene_AboutButton");
-            auto donateButton = spriteManager->getByKey("MenuScene_DonateButton");
-            auto settingMask = spriteManager->getByKey("MenuScene_SettingMask");
-            auto donateTitle = spriteManager->getByKey("MenuScene_DonateTitle");
-            auto donate2Button = spriteManager->getByKey("MenuScene_Donate2Button");
-            auto donate5Button = spriteManager->getByKey("MenuScene_Donate5Button");
-            auto donateBackButton = spriteManager->getByKey("MenuScene_DonateBackButton");
-            settingBackground->GameScene::BaseScene::removeChild(soundsButton);
-            settingBackground->GameScene::BaseScene::removeChild(musicButton);
-            settingBackground->GameScene::BaseScene::removeChild(settingBackButton);
-            settingBackground->GameScene::BaseScene::removeChild(aboutButton);
-            settingBackground->GameScene::BaseScene::removeChild(donateButton);
-            settingBackground->GameScene::BaseScene::removeChild(donateTitle);
-            settingBackground->GameScene::BaseScene::removeChild(donate2Button);
-            settingBackground->GameScene::BaseScene::removeChild(donate5Button);
-            settingBackground->GameScene::BaseScene::removeChild(donateBackButton);
-            scene->removeChild(settingBackground);
-            scene->removeChild(settingMask);
+            MenuScene* menuScene = static_cast<MenuScene*>(sceneManager->getByKey("MenuScene"));
+            menuScene->closeMenu();
         }
     }
     

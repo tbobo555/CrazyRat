@@ -14,6 +14,7 @@
 #include "GameSprite/DonateBackButton.h"
 #include "GameSprite/AboutButton.h"
 #include "GameSprite/Image.h"
+#include "GameSprite/CreditMask.h"
 #include "Config/ImageConfig.h"
 #include "Manager/SpriteManager.h"
 
@@ -39,6 +40,16 @@ namespace GameScene
          @brief 釋放場景的所有資源
          */
         void releaseScene();
+
+        /**
+         @brief 打開設定選單
+         */
+        void openMenu();
+
+        /**
+         @brief 關閉設定選單
+         */
+        void closeMenu();
 
         // 選單場景的背景圖
         GameSprite::Background* settingBackground;
@@ -75,6 +86,9 @@ namespace GameScene
         
         // 捐贈畫面標題
         GameSprite::Image* donateTitle;
+        
+        // 製作與感謝名單
+        GameSprite::CreditMask* creditMask;
         
     private:
         /**

@@ -176,6 +176,7 @@ namespace Controller
         scene->removeChild(SpriteManager::getInstance()->getByKey("MenuScene_MusicButton"));
         scene->removeChild(SpriteManager::getInstance()->getByKey("MenuScene_SoundsButton"));
         scene->removeChild(SpriteManager::getInstance()->getByKey("MenuScene_SettingMask"));
+        scene->removeChild(SpriteManager::getInstance()->getByKey("MenuScene_CreditMask"));
     }
     
     void GameController::addPauseSceneToCurrentScene()

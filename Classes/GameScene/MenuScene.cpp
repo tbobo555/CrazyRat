@@ -57,6 +57,10 @@ namespace GameScene
         this->donateBackButton = new DonateBackButton("image/DonateBackButton.png");
         this->donateBackButton->setPosition(this->getDonateBackButtonPosition());
         spriteManager->setWithKey("MenuScene_DonateBackButton", this->donateBackButton);
+        
+        this->creditMask = new CreditMask("image/Credits.png");
+        this->creditMask->setPosition(this->center);
+        spriteManager->setWithKey("MenuScene_CreditMask", this->creditMask);
     }
     
     void MenuScene::releaseScene()
@@ -74,6 +78,56 @@ namespace GameScene
         spriteManager->releaseByKey("MenuScene_Donate2Button");
         spriteManager->releaseByKey("MenuScene_Donate5Button");
         spriteManager->releaseByKey("MenuScene_DonateBackButton");
+        spriteManager->releaseByKey("MenuScene_CreditMask");
+    }
+    
+    void MenuScene::openMenu()
+    {
+        Manager::SceneManager* sceneManager = Manager::SceneManager::getInstance();
+        auto currentScene = sceneManager->getCurrent();
+        this->musicButton->setVisible(true);
+        this->soundsButton->setVisible(true);
+        this->aboutButton->setVisible(true);
+        this->donateButton->setVisible(true);
+        this->settingBackground->addChild(this->settingBackButton, 101, 2);
+        this->settingBackground->addChild(this->musicButton, 101, 3);
+        this->settingBackground->addChild(this->soundsButton, 101, 4);
+        this->settingBackground->addChild(this->aboutButton, 101, 5);
+        this->settingBackground->addChild(this->donateButton, 101, 6);
+        this->settingBackground->addChild(this->donateTitle, 101, 7);
+        this->settingBackground->addChild(this->donate2MoneyButton, 101, 8);
+        this->settingBackground->addChild(this->donate5MoneyButton, 101, 9);
+        this->settingBackground->addChild(this->donateBackButton, 101, 10);
+        this->donateTitle->setVisible(false);
+        this->donateTitle->setLocalZOrder(-99);
+        this->donate2MoneyButton->setVisible(false);
+        this->donate2MoneyButton->setLocalZOrder(-99);
+        this->donate5MoneyButton->setVisible(false);
+        this->donate5MoneyButton->setLocalZOrder(-99);
+        this->donateBackButton->setVisible(false);
+        this->donateBackButton->setLocalZOrder(-99);
+        this->creditMask->setVisible(false);
+        currentScene->addChild(this->settingBackground, 100, 1);
+        currentScene->addChild(this->settingMask, 99);
+        currentScene->addChild(this->creditMask, -99);
+    }
+    
+    void MenuScene::closeMenu()
+    {
+        auto sceneManager = Manager::SceneManager::getInstance();
+        auto scene = sceneManager->getCurrent();
+        this->settingBackground->BaseScene::removeChild(this->soundsButton);
+        this->settingBackground->BaseScene::removeChild(this->musicButton);
+        this->settingBackground->BaseScene::removeChild(this->settingBackButton);
+        this->settingBackground->BaseScene::removeChild(this->aboutButton);
+        this->settingBackground->BaseScene::removeChild(this->donateButton);
+        this->settingBackground->BaseScene::removeChild(this->donateTitle);
+        this->settingBackground->BaseScene::removeChild(this->donate2MoneyButton);
+        this->settingBackground->BaseScene::removeChild(this->donate5MoneyButton);
+        this->settingBackground->BaseScene::removeChild(this->donateBackButton);
+        scene->removeChild(this->settingBackground);
+        scene->removeChild(this->settingMask);
+        scene->removeChild(this->creditMask);
     }
     
     Vec2 MenuScene::getSettingBackgroundPosition()

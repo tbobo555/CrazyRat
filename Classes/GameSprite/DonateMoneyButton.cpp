@@ -6,6 +6,9 @@ namespace GameSprite
     {
         this->addEventListener();
         this->money = money;
+        
+        //get products list and set price with local currency.
+        //sdkbox::IAP::getProducts();
     }
     
     void DonateMoneyButton::addEventListener()

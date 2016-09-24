@@ -43,6 +43,10 @@ namespace GameSprite
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
             log("AboutButton ended... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            Manager::SpriteManager* spriteManager = Manager::SpriteManager::getInstance();
+            auto creditMask = spriteManager->getByKey("MenuScene_CreditMask");
+            creditMask->setVisible(true);
+            creditMask->setLocalZOrder(102);
             target->setScale(1.0);
         } else {
             target->setScale(1.0);
