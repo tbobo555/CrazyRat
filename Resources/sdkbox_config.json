@@ -5,16 +5,16 @@
             },
             "key": ""
         }
-    }, 
+    },
     "ios": {
         "iap": {
             "items": {
                 "donate2": {
-                    "id": "idv.GameDeisgner555.Dev.Donate2"
-                }, 
+                    "id": "idv.GameDeisgner555.Pro.Donate2"
+                },
                 "donate5": {
-                    "id": "idv.GameDeisgner555.Dev.Donate5"
-                }, 
+                    "id": "idv.GameDeisgner555.Pro.Donate5"
+                }
             }
         }
     }

@@ -46,11 +46,11 @@ namespace GameScene
         this->donateTitle->setPosition(this->getDonateTitlePosition());
         spriteManager->setWithKey("MenuScene_DonateTitle", this->donateTitle);
 
-        this->donate2MoneyButton = new DonateMoneyButton("image/Donate2Button.png", 2);
+        this->donate2MoneyButton = new DonateMoneyButton("image/DonateMoneyButton.png", 2);
         this->donate2MoneyButton->setPosition(this->getDonate2ButtonPoition());
         spriteManager->setWithKey("MenuScene_Donate2Button", this->donate2MoneyButton);
         
-        this->donate5MoneyButton = new DonateMoneyButton("image/Donate5Button.png", 5);
+        this->donate5MoneyButton = new DonateMoneyButton("image/DonateMoneyButton.png", 5);
         this->donate5MoneyButton->setPosition(this->getDonate5ButtonPoition());
         spriteManager->setWithKey("MenuScene_Donate5Button", this->donate5MoneyButton);
         

@@ -68,6 +68,10 @@ namespace GameSprite
             donate5Button->setLocalZOrder(101);
             donateBackButton->setVisible(true);
             donateBackButton->setLocalZOrder(101);
+            auto donate2 = static_cast<DonateMoneyButton*>(Manager::SpriteManager::getInstance()->getByKey("MenuScene_Donate2Button"));
+            auto donate5 = static_cast<DonateMoneyButton*>(Manager::SpriteManager::getInstance()->getByKey("MenuScene_Donate5Button"));
+            donate2->setMoneyTextWithLocalCurrency();
+            donate5->setMoneyTextWithLocalCurrency();
         } else {
             target->setScale(1.0);
         }

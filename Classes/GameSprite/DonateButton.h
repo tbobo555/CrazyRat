@@ -6,6 +6,8 @@
 #include "Manager/SoundsManager.h"
 #include "Manager/SpriteManager.h"
 #include "Manager/SoundsManager.h"
+#include "GameSprite/DonateMoneyButton.h"
+
 
 namespace GameSprite
 {

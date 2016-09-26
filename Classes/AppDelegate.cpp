@@ -87,7 +87,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     episodeSetting->updateMax(2);
     stageSetting->updateMax(20);
+    
+    InAppPurchase* listener = new InAppPurchase();
+    sdkbox::IAP::setListener(listener);
     sdkbox::IAP::init();
+    sdkbox::IAP::refresh();
+    
     //stageSetting->updateCurrent(0);
     Director::getInstance()->getEventDispatcher()->setEnabled(true);
     Controller::GameController* controller = Controller::GameController::getInstance();

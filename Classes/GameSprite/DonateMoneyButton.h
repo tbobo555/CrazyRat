@@ -6,6 +6,8 @@
 #include "PluginIAP/PluginIAP.h"
 #include "Manager/SoundsManager.h"
 
+USING_NS_CC;
+
 namespace GameSprite
 {
     class DonateMoneyButton : public BaseSprite
@@ -19,12 +21,40 @@ namespace GameSprite
         DonateMoneyButton(std::string image, int money);
         
         /**
+         @brief 解構式
+         */
+        ~DonateMoneyButton();
+        
+        // 金額文字是否已被設置當地幣別
+        bool isSetLocalCurrency;
+        
+        /**
+         @brief 取得金額
+         @return 金額
+         */
+        int getMoney();
+        
+        /**
+         @brief 將金額文字顯示成當地幣別
+         */
+        void setMoneyTextWithLocalCurrency();
+        
+        /**
          @brief 將精靈加入事件監聽，精靈會開始偵測觸控輸入
          */
         void addEventListener();
     private:
         // 捐贈金額
         int money;
+        
+        // 會依不同幣別顯示，金額的顯示字串，預設為美金
+        Label* moneyText;
+        
+        /**
+         @brief 取得金額文字的座標位置
+         @return 二維坐標
+         */
+        Vec2 getMoneyTextPoition();
         
         /**
          @brief 偵測捐贈按鈕被按下的狀態，按鈕會變小

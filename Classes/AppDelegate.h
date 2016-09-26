@@ -10,6 +10,7 @@
 #include "Db/StarSetting.h"
 #include "Db/NewHighScoreSetting.h"
 #include "PluginIAP/PluginIAP.h"
+#include "Lib/InAppPurchase.h"
 
 USING_NS_CC;
 
