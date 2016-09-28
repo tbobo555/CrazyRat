@@ -78,7 +78,7 @@ namespace GameScene
                 for (int j = 0; j < starNum; j++) {
                     auto star = new GameSprite::Star(starImage);
                     star->setPosition(this->getStarPosition(i, j));
-                    stageButton->addChild(star, 3);
+                    stageButton->addChild(star, 4);
                     key << "EpisodeScene_Star_" << this->episodeNumber << "_" << i << "_" << j;
                     spriteManager->setWithKey(key.str(), star);
                     key.clear();
@@ -168,7 +168,7 @@ namespace GameScene
                 key << "EpisodeScene_Star_" << this->episodeNumber << "_" << this->newHighScoreStage << "_" << i;
                 auto star = spriteManager->getByKey(key.str());
                 star->setScale(3.0f);
-                star->setPosition(Vec2(this->center.x - buttonPosition.x, this->center.y - buttonPosition.y));
+                star->setPosition(Vec2(this->centerBottom.x - buttonPosition.x, this->centerBottom.y - buttonPosition.y));
                 star->runAction(RotateBy::create(0.3f, 1080));
                 star->runAction(ScaleTo::create(0.3f, 1.0f));
                 star->runAction(MoveTo::create(0.3f, this->getStarPosition(this->newHighScoreStage, i)));
