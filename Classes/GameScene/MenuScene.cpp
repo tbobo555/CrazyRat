@@ -174,7 +174,7 @@ namespace GameScene
     
     Vec2 MenuScene::getSettingButtonPosition()
     {
-        return Vec2(this->visibleOrigin.x + this->visibleSize.height / 12, this->visibleOrigin.y + this->visibleSize.height / 12);
+        return Vec2(this->visibleOrigin.x + 150, this->visibleOrigin.y + 150);
     }
     
     Vec2 MenuScene::getDonateTitlePosition()

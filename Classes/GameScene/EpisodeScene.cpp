@@ -251,8 +251,7 @@ namespace GameScene
     Vec2 EpisodeScene::getBackButtonPosition()
     {
         float width = this->visibleSize.width;
-        float height = this->visibleSize.height;
-        return Vec2(this->visibleOrigin.x + (width - height / 12), this->visibleOrigin.y + height / 12);
+        return Vec2(this->visibleOrigin.x + (width - 150), this->visibleOrigin.y + 150);
     }
     
     Vec2 EpisodeScene::getBackgroundPosition()
