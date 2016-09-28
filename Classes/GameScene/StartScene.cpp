@@ -151,7 +151,7 @@ namespace GameScene
     
     Vec2 StartScene::getStartTitlePosition()
     {
-        return Vec2(this->center.x, this->visibleOrigin.y + this->visibleSize.height * 0.85);
+        return Vec2(this->center.x, this->visibleOrigin.y + this->visibleSize.height * 0.83);
     }
     
     Vec2 StartScene::getMovePig0StartPosition()
