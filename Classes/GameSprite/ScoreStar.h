@@ -19,6 +19,11 @@ namespace GameSprite
         ScoreStar();
         
         /**
+         @brief 解構式
+         */
+        ~ScoreStar();
+        
+        /**
          @brief 將星星點亮
          */
         void setLight();
@@ -30,6 +35,12 @@ namespace GameSprite
 
         // 星星是否被點亮
         bool isLight;
+    private:
+        // 黑星星圖紋
+        Texture2D* darkTexture;
+        
+        // 亮星星圖紋
+        Texture2D* lightTexture;
     };
 }
 

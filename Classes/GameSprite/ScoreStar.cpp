@@ -6,23 +6,28 @@ namespace GameSprite
     {
         this->isLight = false;
         TextureCreator* textureCreator = TextureCreator::getInstance();
-        Texture2D* texutre = textureCreator->getAutoSizeTexture2d("image/ScoreStarDark.png");
-        this->initWithTexture(texutre);
+        this->darkTexture = textureCreator->getAutoSizeTexture2d("image/ScoreStarDark.png");
+        this->lightTexture = textureCreator->getAutoSizeTexture2d("image/ScoreStarLight.png");
+        this->darkTexture->retain();
+        this->lightTexture->retain();
+        this->initWithTexture(this->darkTexture);
+    }
+    
+    ScoreStar::~ScoreStar()
+    {
+        this->darkTexture->release();
+        this->lightTexture->release();
     }
     
     void ScoreStar::setLight()
     {
-        TextureCreator* textureCreator = TextureCreator::getInstance();
-        Texture2D* texutre = textureCreator->getAutoSizeTexture2d("image/ScoreStarLight.png");
-        this->setTexture(texutre);
+        this->setTexture(this->lightTexture);
         this->isLight = true;
     }
     
     void ScoreStar::setDark()
     {
-        TextureCreator* textureCreator = TextureCreator::getInstance();
-        Texture2D* texutre = textureCreator->getAutoSizeTexture2d("image/ScoreStarDark.png");
-        this->setTexture(texutre);
+        this->setTexture(this->darkTexture);
         this->isLight = false;
     }
     
