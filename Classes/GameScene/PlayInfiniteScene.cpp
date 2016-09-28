@@ -477,4 +477,9 @@ namespace GameScene
         }
         this->levelUpNow = false;
     }
+    
+    Vec2 PlayInfiniteScene::getScoresPosition()
+    {
+        return Vec2(925, this->visibleOrigin.y + this->visibleSize.height - this->visibleSize.width / 12);
+    }
 }

@@ -180,6 +180,12 @@ namespace GameScene
          @param delta 多久執行一次schedule
          */
         void switchMusic(float delta);
+        
+        /**
+         @brief 取得記分板分數的座標位置
+         @return 一個二維向量，代表分數的二維坐標
+         */
+        Vec2 getScoresPosition();
     };
 }
 

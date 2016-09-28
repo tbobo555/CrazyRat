@@ -71,7 +71,7 @@ namespace GameScene
         
         this->progressBarDown = new GameSprite::ProgressBarDown(progressBarDownImage);
         this->progressBarDown->setPosition(this->getProgressPosition());
-        this->addChild(progressBarDown, 1);
+        this->addChild(progressBarDown, 6);
         spriteManager->setWithKey("PlayScene_ProgressBarDown", this->progressBarDown);
         
         this->progressBarUp = new GameSprite::ProgressBarUp(progressBarUpImage);
@@ -81,7 +81,7 @@ namespace GameScene
         this->timeBar->setType(ProgressTimer::Type::BAR);
         this->timeBar->setMidpoint(Vec2(0,0));
         this->timeBar->setBarChangeRate(Vec2(1, 0));
-        this->addChild(this->timeBar, 2);
+        this->addChild(this->timeBar, 7);
         this->timeBar->retain();
         this->timeBar->setPosition(this->getProgressPosition());
         
@@ -160,15 +160,15 @@ namespace GameScene
         
         this->road0Cloud = new Cloud(cloud0Image);
         this->road0Cloud->setPosition(this->getCloudPosition(0));
-        this->addChild(this->road0Cloud, 20);
+        this->addChild(this->road0Cloud, 5);
         spriteManager->setWithKey("PlayScene_Road0Cloud", this->road0Cloud);
         this->road1Cloud = new Cloud(cloud1Image);
         this->road1Cloud->setPosition(this->getCloudPosition(1));
-        this->addChild(this->road1Cloud, 20);
+        this->addChild(this->road1Cloud, 5);
         spriteManager->setWithKey("PlayScene_Road1Cloud", this->road1Cloud);
         this->road2Cloud = new Cloud(cloud2Image);
         this->road2Cloud->setPosition(this->getCloudPosition(2));
-        this->addChild(this->road2Cloud, 20);
+        this->addChild(this->road2Cloud, 5);
         spriteManager->setWithKey("PlayScene_Road2Cloud", this->road2Cloud);
         
         this->scoreHalo = new GameSprite::Image(scoreHaloImage);

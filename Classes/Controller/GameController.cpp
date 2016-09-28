@@ -193,7 +193,7 @@ namespace Controller
         auto backHomeButton = spriteManager->getByKey("PauseScene_BackHomeButton");
         auto retryButton = spriteManager->getByKey("PauseScene_RetryButton");
         auto pauseMask = spriteManager->getByKey("PauseScene_PauseMask");
-        scene->addChild(pauseButton, 1);
+        scene->addChild(pauseButton, 20);
         scene->addChild(pauseBackground, -100);
         scene->addChild(pauseMask, -100);
         pauseBackground->addChild(pauseBackButton, -100);
