@@ -57,7 +57,7 @@ namespace GameScene
         this->addChild(this->prepareNumber, 1);
         this->prepareNumber->setVisible(false);
         
-        float runningTime = 3;
+        float runningTime = 2.5;
         
         // 將各個路線的會用到的甜點物件初始化，每個路線都創造10個甜點。
         for (int i = 0; i < 10; i++) {
@@ -228,8 +228,8 @@ namespace GameScene
         this->prepareTime = 4;
         this->addSweetRoad = -1;
         this->playTime = 0;
-        this->sweetRunSpeed = 3.0f;
-        this->sweetPerSecond = 1.6f;
+        this->sweetRunSpeed = 2.5f;
+        this->sweetPerSecond = 2.0f;
         this->addSweetTime = 1 / this->sweetPerSecond;
         this->levelUpSweetNumber = 20;
         this->levelUpSweetCounter = 0;
@@ -465,9 +465,9 @@ namespace GameScene
         this->levelUpNotification->setOpacity(255);
         this->levelUpNotification->setScale(0.1f);
         this->levelUpNotification->runAction(Sequence::create(ScaleTo::create(0.3f, 1.f), FadeOut::create(0.3f) ,NULL));
-        this->sweetRunSpeed = this->sweetRunSpeed - this->sweetRunSpeed / 10;
-        this->sweetPerSecond = this->sweetPerSecond + 0.3;
-        this->addSweetTime = 1 / this->sweetPerSecond;
+        this->sweetRunSpeed = this->sweetRunSpeed - this->sweetRunSpeed / 8;
+        this->addSweetTime = this->sweetRunSpeed / 5;
+        this->sweetPerSecond = 1 / this->addSweetTime;
         this->levelUpSweetCounter = 0;
         this->levelUpSweetNumber += 5;
         for (int i = 0; i < 10; i++) {

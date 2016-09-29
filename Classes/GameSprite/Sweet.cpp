@@ -48,12 +48,12 @@ namespace GameSprite
     {
         this->removeEventListener();
         this->isBomb = false;
-        this->setTexture(this->sweetTexture);
+        this->initWithTexture(this->sweetTexture);
     }
     
     void Sweet::setBomb()
     {
-        this->setTexture(this->bombTexture);
+        this->initWithTexture(this->bombTexture);
         this->addEventListener();
         this->isBomb = true;
     }
