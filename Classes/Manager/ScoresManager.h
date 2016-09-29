@@ -2,6 +2,8 @@
 #define _Manager_ScoresManager_H_
 
 #include "cocos2d.h"
+#include "Manager/SceneManager.h"
+#include "Manager/SpriteManager.h"
 
 USING_NS_CC;
 

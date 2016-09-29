@@ -81,7 +81,7 @@ namespace GameSprite
             this->showEatAnimation();
             return scores;
         } else {
-            auto nearestSweet = currentScene->getNearestSweet(this->roadIndex);
+            Sweet* nearestSweet = currentScene->getNearestSweet(this->roadIndex);
             if (nearestSweet == nullptr) {
                 this->showEatAnimation();
                 return scores;
@@ -92,39 +92,35 @@ namespace GameSprite
             if (diffPosition < 0) {
                 diffPosition = diffPosition * -1;
             }
-            if (diffPosition <= 50) {
-                this->showScoreEffect(2);
-                scores =  100;
-            } else if (diffPosition > 50 && diffPosition <= 75) {
-                this->showScoreEffect(1);
-                scores =  80;
-            } else if (diffPosition > 75 && diffPosition <= 150) {
-                this->showScoreEffect(0);
-                scores =  60;
-            } else if (diffPosition > 150 && diffPosition <= 200){
+            
+            if (nearestSweet->isBomb && diffPosition <= 200) {
                 this->hideMouth();
-                this->hurt();
+                this->hurt(true);
                 CCLOG("hurt!!!");
             } else {
-                this->showEatAnimation();
-                return 0;
+                if (diffPosition <= 50) {
+                    this->showScoreEffect(2);
+                    scores =  100;
+                } else if (diffPosition > 50 && diffPosition <= 75) {
+                    this->showScoreEffect(1);
+                    scores =  80;
+                } else if (diffPosition > 75 && diffPosition <= 150) {
+                    this->showScoreEffect(0);
+                    scores =  60;
+                } else if (diffPosition > 150 && diffPosition <= 200){
+                    this->hideMouth();
+                    this->hurt();
+                    CCLOG("hurt!!!");
+                } else {
+                    this->showEatAnimation();
+                    return 0;
+                }
             }
             this->showEatAnimation();
             nearestSweet->eaten();
-            Manager::ScoresManager::getInstance()->addScores(scores);
-            
-            std::stringstream haloKeyName;
-            if (currentScene->name == "PlayInfiniteScene") {
-                haloKeyName << "PlayInfiniteScene_ScoreHalo";
-            } else {
-                haloKeyName << "PlayScene_ScoreHalo";
+            if (scores > 0) {
+                Manager::ScoresManager::getInstance()->addScores(scores);                
             }
-            auto scoreHalo = Manager::SpriteManager::getInstance()->getByKey(haloKeyName.str());
-            scoreHalo->cleanup();
-            scoreHalo->setOpacity(0);
-            auto fadeIn = FadeIn::create(0.1f);
-            scoreHalo->runAction(Sequence::create(fadeIn, fadeIn->reverse(), NULL));
-            currentScene->updateScoreBarStar();
             return scores;
         }
     }
@@ -151,11 +147,15 @@ namespace GameSprite
         this->mouth->setVisible(false);
     }
     
-    void Pig::hurt()
+    void Pig::hurt(bool byBomb)
     {
         this->unschedule(CC_SCHEDULE_SELECTOR(Pig::hideExplode));
         this->hideExplode(0);
-        this->showExplode();
+        if (byBomb) {
+            this->showBombExplode();
+        } else {
+            this->showExplode();
+        }
         this->scheduleOnce(CC_SCHEDULE_SELECTOR(Pig::hideExplode), 0.5f);
         char str[100] = {0};
         this->stopAllActions();
@@ -191,6 +191,15 @@ namespace GameSprite
         std::stringstream punchName;
         punchName << "audio/sounds/Punch" << randomNumber << ".caf";
         Manager::SoundsManager::getInstance()->playSound(punchName.str().c_str());
+    }
+    
+    void Pig::showBombExplode()
+    {
+        TextureCreator* textureCreator = TextureCreator::getInstance();
+        Texture2D* texutre = textureCreator->getAutoSizeTexture2d("image/Boom.png");
+        this->explode->setTexture(texutre);
+        this->explode->setVisible(true);
+        Manager::SoundsManager::getInstance()->playSound("audio/sounds/Punch6.caf");
     }
     
     void Pig::hideExplode(float delta)

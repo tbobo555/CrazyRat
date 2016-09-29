@@ -496,7 +496,7 @@ namespace GameScene
                     ++this->road0CurrentIndex;
                     int availabelIndex = this->road0AvailableIndex.back();
                     this->road0AvailableIndex.pop_back();
-                    this->road0RunningIndex.push(availabelIndex);
+                    this->road0RunningIndex.push_back(availabelIndex);
                     auto sweet = this->road0SweetVector.at(availabelIndex);
                     sweet->setPosition(this->getSweetPosition(0));
                     sweet->run();
@@ -515,7 +515,7 @@ namespace GameScene
                     ++this->road1CurrentIndex;
                     int availabelIndex = this->road1AvailableIndex.back();
                     this->road1AvailableIndex.pop_back();
-                    this->road1RunningIndex.push(availabelIndex);
+                    this->road1RunningIndex.push_back(availabelIndex);
                     auto sweet = this->road1SweetVector.at(availabelIndex);
                     sweet->setPosition(this->getSweetPosition(1));
                     sweet->run();
@@ -534,7 +534,7 @@ namespace GameScene
                     ++this->road2CurrentIndex;
                     int availabelIndex = this->road2AvailableIndex.back();
                     this->road2AvailableIndex.pop_back();
-                    this->road2RunningIndex.push(availabelIndex);
+                    this->road2RunningIndex.push_back(availabelIndex);
                     auto sweet = this->road2SweetVector.at(availabelIndex);
                     sweet->setPosition(this->getSweetPosition(2));
                     sweet->run();

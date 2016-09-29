@@ -49,8 +49,9 @@ namespace GameSprite
 
         /**
          @brief 豬受傷的動作，會讓hp減少
+         @param byBomb 是否被炸彈所傷
          */
-        void hurt();
+        void hurt(bool byBomb = false);
 
         /**
          @brief 豬眨眼的動作
@@ -98,6 +99,11 @@ namespace GameSprite
          @brief 顯示豬被甜點砸到的動畫
          */
         void showExplode();
+        
+        /**
+         @brief 顯示豬被炸彈砸到的動畫
+         */
+        void showBombExplode();
 
         /**
          @brief 隱藏豬被甜點砸到的動畫，這個方法會用shedule的方式來呼叫

@@ -1,7 +1,6 @@
 #ifndef _GameSprite_PlayInfiniteScene_H_
 #define _GameSprite_PlayInfiniteScene_H_
 
-#include <queue>
 #include "cocos2d.h"
 #include "PlayBaseScene.h"
 #include "Manager/SpriteManager.h"

@@ -1,6 +1,7 @@
 #ifndef _GameScene_PlayBaseScene_H_
 #define _GameScene_PlayBaseScene_H_
 
+#include <deque>
 #include "cocos2d.h"
 #include "Manager/SpriteManager.h"
 #include "Manager/ScoresManager.h"
@@ -89,13 +90,13 @@ namespace GameScene
         std::vector<int> road2AvailableIndex;
         
         // 取得路線0目前正在被使用的甜點索引
-        std::queue<int> road0RunningIndex;
+        std::deque<int> road0RunningIndex;
         
         // 取得路線1目前正在被使用的甜點索引
-        std::queue<int> road1RunningIndex;
+        std::deque<int> road1RunningIndex;
         
         // 取得路線2目前正在被使用的甜點索引
-        std::queue<int> road2RunningIndex;
+        std::deque<int> road2RunningIndex;
         
         // 失敗路線的索引
         int failRoadIndex;

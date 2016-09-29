@@ -1,7 +1,6 @@
 #ifndef _GameScene_PlayScene_H_
 #define _GameScene_PlayScene_H_
 
-#include <queue>
 #include "cocos2d.h"
 #include "PlayBaseScene.h"
 #include "Manager/SpriteManager.h"

@@ -1,5 +1,5 @@
 #include "ScoresManager.h"
-
+#include "GameScene/PlayBaseScene.h"
 
 namespace Manager
 {
@@ -60,6 +60,19 @@ namespace Manager
         this->scores->setString(buff.str());
         buff.str("");
         buff.clear();
+        auto currentScene = static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent());
+        std::stringstream haloKeyName;
+        if (currentScene->name == "PlayInfiniteScene") {
+            haloKeyName << "PlayInfiniteScene_ScoreHalo";
+        } else {
+            haloKeyName << "PlayScene_ScoreHalo";
+        }
+        auto scoreHalo = Manager::SpriteManager::getInstance()->getByKey(haloKeyName.str());
+        scoreHalo->cleanup();
+        scoreHalo->setOpacity(0);
+        auto fadeIn = FadeIn::create(0.1f);
+        scoreHalo->runAction(Sequence::create(fadeIn, fadeIn->reverse(), NULL));
+        currentScene->updateScoreBarStar();
     }
     
     void ScoresManager::resetScores()
