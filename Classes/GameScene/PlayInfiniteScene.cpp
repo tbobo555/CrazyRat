@@ -239,6 +239,8 @@ namespace GameScene
         this->royalBananaMusicLength = 131;
         this->runAmokMusicLength = 107;
         this->wagonWheelMusicLength = 304;
+        this->lastSweetRoad = -1;
+        this->sweetInSameRoadTimes = -1;
         
         schedule(CC_SCHEDULE_SELECTOR(PlayInfiniteScene::prepareUpdate), 1.f);
     }
@@ -365,6 +367,10 @@ namespace GameScene
                 this->road0AvailableIndex.pop_back();
                 this->road0RunningIndex.push_back(availabelIndex);
                 auto sweet = this->road0SweetVector.at(availabelIndex);
+                if (this->checkBombTiming(0)) {
+                    sweet->setBomb();
+                }
+                this->lastSweetRoad = 0;
                 sweet->setPosition(this->getSweetPosition(0));
                 sweet->run();
             }
@@ -381,6 +387,10 @@ namespace GameScene
                 this->road1AvailableIndex.pop_back();
                 this->road1RunningIndex.push_back(availabelIndex);
                 auto sweet = this->road1SweetVector.at(availabelIndex);
+                if (this->checkBombTiming(1)) {
+                    sweet->setBomb();
+                }
+                this->lastSweetRoad = 1;
                 sweet->setPosition(this->getSweetPosition(1));
                 sweet->run();
             }
@@ -397,6 +407,10 @@ namespace GameScene
                 this->road2AvailableIndex.pop_back();
                 this->road2RunningIndex.push_back(availabelIndex);
                 auto sweet = this->road2SweetVector.at(availabelIndex);
+                if (this->checkBombTiming(2)) {
+                    sweet->setBomb();
+                }
+                this->lastSweetRoad = 2;
                 sweet->setPosition(this->getSweetPosition(2));
                 sweet->run();
             }
@@ -411,7 +425,15 @@ namespace GameScene
             }
             if (this->playTime > this->addSweetTime) {
                 this->playTime = 0;
-                this->addSweetRoad = rand() % 3;
+                int road = rand() % 3;
+                if (road == this->lastSweetRoad) {
+                    this->sweetInSameRoadTimes ++;
+                }
+                if (this->sweetInSameRoadTimes >= 3) {
+                    road = (road + 1) % 3;
+                    this->sweetInSameRoadTimes = 0;
+                }
+                this->addSweetRoad = road;
                 this->levelUpSweetCounter ++;
                 if (this->levelUpSweetCounter >= this->levelUpSweetNumber) {
                     this->levelUpNow = true;
@@ -465,9 +487,11 @@ namespace GameScene
         this->levelUpNotification->setOpacity(255);
         this->levelUpNotification->setScale(0.1f);
         this->levelUpNotification->runAction(Sequence::create(ScaleTo::create(0.3f, 1.f), FadeOut::create(0.3f) ,NULL));
-        this->sweetRunSpeed = this->sweetRunSpeed - this->sweetRunSpeed / 8;
-        this->addSweetTime = this->sweetRunSpeed / 5;
-        this->sweetPerSecond = 1 / this->addSweetTime;
+        if (this->level < 21) {
+            this->sweetRunSpeed = this->sweetRunSpeed - this->sweetRunSpeed / 8.5;
+            this->addSweetTime = this->sweetRunSpeed / 5;
+            this->sweetPerSecond = 1 / this->addSweetTime;
+        }
         this->levelUpSweetCounter = 0;
         this->levelUpSweetNumber += 5;
         for (int i = 0; i < 10; i++) {
@@ -481,5 +505,18 @@ namespace GameScene
     Vec2 PlayInfiniteScene::getScoresPosition()
     {
         return Vec2(925, this->visibleOrigin.y + this->visibleSize.height - this->visibleSize.width / 12);
+    }
+    
+    bool PlayInfiniteScene::checkBombTiming(int road)
+    {
+        if (this->lastSweetRoad == road) {
+            return false;
+        } else {
+            int bombRandom = rand() % 7;
+            if (bombRandom == 4) {
+                return true;
+            }
+        }
+        return false;
     }
 }

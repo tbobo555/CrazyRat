@@ -276,6 +276,7 @@ namespace GameScene
     {
         this->isPaused = false;
         this->prepareTime = 4;
+        this->lastSweetRoad = -1;
         
         schedule(CC_SCHEDULE_SELECTOR(PlayScene::prepareUpdate), 1.f);
     }
@@ -498,6 +499,10 @@ namespace GameScene
                     this->road0AvailableIndex.pop_back();
                     this->road0RunningIndex.push_back(availabelIndex);
                     auto sweet = this->road0SweetVector.at(availabelIndex);
+                    if (this->checkBombTiming(0)) {
+                        sweet->setBomb();
+                    }
+                    this->lastSweetRoad = 0;
                     sweet->setPosition(this->getSweetPosition(0));
                     sweet->run();
                 }
@@ -517,6 +522,10 @@ namespace GameScene
                     this->road1AvailableIndex.pop_back();
                     this->road1RunningIndex.push_back(availabelIndex);
                     auto sweet = this->road1SweetVector.at(availabelIndex);
+                    if (this->checkBombTiming(1)) {
+                        sweet->setBomb();
+                    }
+                    this->lastSweetRoad = 1;
                     sweet->setPosition(this->getSweetPosition(1));
                     sweet->run();
                 }
@@ -536,6 +545,10 @@ namespace GameScene
                     this->road2AvailableIndex.pop_back();
                     this->road2RunningIndex.push_back(availabelIndex);
                     auto sweet = this->road2SweetVector.at(availabelIndex);
+                    if (this->checkBombTiming(2)) {
+                        sweet->setBomb();
+                    }
+                    this->lastSweetRoad = 2;
                     sweet->setPosition(this->getSweetPosition(2));
                     sweet->run();
                 }
@@ -625,4 +638,16 @@ namespace GameScene
         return Vec2(this->center.x, this->center.y + 100);
     }
 
+    bool PlayScene::checkBombTiming(int road)
+    {
+        if (this->lastSweetRoad == road) {
+            return false;
+        } else {
+            int bombRandom = rand() % 7;
+            if (bombRandom == 4) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

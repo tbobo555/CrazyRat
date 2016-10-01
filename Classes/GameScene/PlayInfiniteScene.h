@@ -170,7 +170,7 @@ namespace GameScene
         
         /**
          @brief 播放背景音樂
-          @param musicId 要播放的音樂編號
+         @param musicId 要播放的音樂編號
          */
         void playMusic(int muiscId);
         
@@ -185,6 +185,19 @@ namespace GameScene
          @return 一個二維向量，代表分數的二維坐標
          */
         Vec2 getScoresPosition();
+        
+        // 上一個甜點的路線
+        int lastSweetRoad;
+        
+        // 甜點在同一路線出現的次數
+        int sweetInSameRoadTimes;
+        
+        /**
+         @brief 檢查此時機點是否可以設置炸彈
+         @param road 本次甜點出現的路線
+         @return 是否要將甜點改為炸彈
+         */
+        bool checkBombTiming(int road);
     };
 }
 

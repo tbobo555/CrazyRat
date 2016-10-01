@@ -121,11 +121,6 @@ namespace GameSprite
     
     void Sweet::run()
     {
-        int bombRandom = rand() % 7;
-        if (bombRandom == 4) {
-            this->setBomb();
-        }
-
         Size visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 visibleOrigin = Director::getInstance()->getVisibleOrigin();
 

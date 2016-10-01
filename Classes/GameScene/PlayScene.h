@@ -242,6 +242,16 @@ namespace GameScene
          */
         Vec2 getTimesUpPosition();
 
+        // 上一個甜點的路線
+        int lastSweetRoad;
+
+        /**
+         @brief 檢查此時機點是否可以設置炸彈
+         @param road 本次甜點出現的路線
+         @return 是否要將甜點改為炸彈
+         */
+        bool checkBombTiming(int road);
+
     };
 }
 
