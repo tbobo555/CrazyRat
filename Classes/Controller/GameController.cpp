@@ -502,7 +502,6 @@ namespace Controller
         SceneManager::getInstance()->setCurrent(scene);
         this->addPauseSceneToCurrentScene();
         Director::getInstance()->replaceScene(scene);
-        scene->play();
     }
     
     void GameController::retryPlayInfiniteScene()
@@ -519,6 +518,7 @@ namespace Controller
         PlayInfiniteScene *scene = static_cast<PlayInfiniteScene*>(SceneManager::getInstance()->getByKey("PlayInfiniteScene"));
         SceneManager::getInstance()->setCurrent(scene);
         this->addPauseSceneToCurrentScene();
+        scene->hideTipBlock();
         Director::getInstance()->replaceScene(scene);
         scene->play();
     }

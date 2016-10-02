@@ -159,6 +159,9 @@ namespace GameScene
         // 新分數與舊分數的差
         int newHighScoreDiff;
         
+        // 上一個甜點的路線
+        int lastSweetRoad;
+
         // 存放線路0會落下甜點的時間點
         std::vector<float> road0TimeConfig;
         
@@ -241,9 +244,6 @@ namespace GameScene
          @return 一個二維向量，代表時間終止標示的二維坐標
          */
         Vec2 getTimesUpPosition();
-
-        // 上一個甜點的路線
-        int lastSweetRoad;
 
         /**
          @brief 檢查此時機點是否可以設置炸彈

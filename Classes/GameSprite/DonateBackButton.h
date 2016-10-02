@@ -34,7 +34,6 @@ namespace GameSprite
         
         /**
          @brief 偵測捐贈返回按鈕點擊結束的狀態
-         會將場景切換至episode scene
          @param touch 觸控區塊資訊
          @param event 事件監聽物件
          */

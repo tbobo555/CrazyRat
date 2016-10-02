@@ -156,6 +156,16 @@ namespace GameScene
         this->levelUpNotification->retain();
         this->addChild(this->levelUpNotification, 24);
         this->levelUpNotification->setOpacity(0);
+        
+        this->okButton = new OkButton("image/OkButton.png");
+        this->okButton->setPosition(this->getOkButtonPosition());
+        this->addChild(this->okButton, 25);
+        spriteManager->setWithKey("PlayInfiniteScene_OkButton", this->okButton);
+        
+        this->tipBlock = new GameSprite::Background("image/TipBlock.png");
+        this->tipBlock->setPosition(this->getTipBlockPosition());
+        this->addChild(this->tipBlock, 24);
+        spriteManager->setWithKey("PlayInfiniteScene_TipBlock", this->tipBlock);
     }
     
     void PlayInfiniteScene::releaseScene()
@@ -175,6 +185,8 @@ namespace GameScene
         spriteManager->releaseByKey("PlayInfiniteScene_Road1EatBlock");
         spriteManager->releaseByKey("PlayInfiniteScene_Road2EatBlock");
         spriteManager->releaseByKey("PlayInfiniteScene_ScoreHalo");
+        spriteManager->releaseByKey("PlayInfiniteScene_OkButton");
+        spriteManager->releaseByKey("PlayInfiniteScene_TipBlock");
         Manager::ScoresManager::getInstance()->releaseScores();
         for (int i = 0; i < 10; i++) {
             this->road0SweetVector[i]->release();
@@ -241,6 +253,7 @@ namespace GameScene
         this->wagonWheelMusicLength = 304;
         this->lastSweetRoad = -1;
         this->sweetInSameRoadTimes = -1;
+        this->hideTipBlock();
         
         schedule(CC_SCHEDULE_SELECTOR(PlayInfiniteScene::prepareUpdate), 1.f);
     }
@@ -502,9 +515,27 @@ namespace GameScene
         this->levelUpNow = false;
     }
     
+    void PlayInfiniteScene::hideTipBlock()
+    {
+        this->okButton->setVisible(false);
+        this->okButton->setLocalZOrder(-1);
+        this->tipBlock->setVisible(false);
+        this->tipBlock->setLocalZOrder(-1);
+    }
+    
     Vec2 PlayInfiniteScene::getScoresPosition()
     {
         return Vec2(925, this->visibleOrigin.y + this->visibleSize.height - this->visibleSize.width / 12);
+    }
+    
+    Vec2 PlayInfiniteScene::getTipBlockPosition()
+    {
+        return this->center;
+    }
+    
+    Vec2 PlayInfiniteScene::getOkButtonPosition()
+    {
+        return Vec2(this->center.x, 1920 - 888);
     }
     
     bool PlayInfiniteScene::checkBombTiming(int road)

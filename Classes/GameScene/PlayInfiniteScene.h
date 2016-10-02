@@ -12,6 +12,7 @@
 #include "GameSprite/Pig.h"
 #include "GameSprite/Cloud.h"
 #include "GameSprite/Image.h"
+#include "GameSprite/OkButton.h"
 #include "Lib/LevelDesigner.h"
 #include "Db/NewHighScoreSetting.h"
 
@@ -71,6 +72,11 @@ namespace GameScene
          @brief 依據玩家目前取得的分數來更新記分板上的星星狀態(亮或暗)
          */
         void updateScoreBarStar();
+        
+        /**
+         @brief 隱藏提示面板
+         */
+        void hideTipBlock();
     private:
         // 是否暫停
         bool isPaused;
@@ -129,6 +135,18 @@ namespace GameScene
         // 音樂 Wagon Wheel 的長度
         int wagonWheelMusicLength;
         
+        // 上一個甜點的路線
+        int lastSweetRoad;
+        
+        // 甜點在同一路線出現的次數
+        int sweetInSameRoadTimes;
+        
+        // 提示ok按鈕
+        GameSprite::OkButton* okButton;
+        
+        // 遊戲提示面板
+        GameSprite::Background* tipBlock;
+
         /**
          @brief 更新倒數時間的schedule
          @param delta 多久執行一次schedule
@@ -186,11 +204,17 @@ namespace GameScene
          */
         Vec2 getScoresPosition();
         
-        // 上一個甜點的路線
-        int lastSweetRoad;
+        /**
+         @brief 取得ok按鈕的座標位置
+         @return 一個二維向量，代表ok按鈕的二維坐標
+         */
+        Vec2 getOkButtonPosition();
         
-        // 甜點在同一路線出現的次數
-        int sweetInSameRoadTimes;
+        /**
+         @brief 取得提示面板的座標位置
+         @return 一個二維向量，代表提示面板的二維坐標
+         */
+        Vec2 getTipBlockPosition();
         
         /**
          @brief 檢查此時機點是否可以設置炸彈
