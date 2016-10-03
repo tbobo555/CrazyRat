@@ -375,11 +375,11 @@ namespace GameScene
         std::vector<std::string> musicMap = {"BattyMcFaddin", "MerryGo", "RoyalBanana", "RunAmok", "WagonWheel"};
         int randMusicId = rand() % 5;
         if (this->overGameTime == 30) {
-            Manager::MusicManager::getInstance()->playMusicNoLoop("audio/music/MerryGo(30s).caf");
+            Manager::MusicManager::getInstance()->playMusicNoLoop("audio/music/MerryGo(30s).mp3");
         } else {
             std::stringstream musicName;
             int musicLength = (int)this->overGameTime;
-            musicName << "audio/music/" << musicMap.at(randMusicId) << "(" <<  musicLength << "s).caf";
+            musicName << "audio/music/" << musicMap.at(randMusicId) << "(" <<  musicLength << "s).mp3";
             Manager::MusicManager::getInstance()->playMusicNoLoop(musicName.str().c_str());
             CCLOG("Play Game Music : %s", musicName.str().c_str());
         }

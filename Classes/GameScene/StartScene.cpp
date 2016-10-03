@@ -66,7 +66,7 @@ namespace GameScene
         spriteManager->setWithKey("StartScene_MovePig0", this->movePig0);
         spriteManager->setWithKey("StartScene_MovePig1", this->movePig1);
         spriteManager->setWithKey("StartScene_HighScoreMask", this->highScoreMask);
-        Manager::MusicManager::getInstance()->playMusic("audio/music/LivelyLumpsucker.caf");
+        Manager::MusicManager::getInstance()->playMusic("audio/music/LivelyLumpsucker.mp3");
     }
     
     void StartScene::releaseScene()

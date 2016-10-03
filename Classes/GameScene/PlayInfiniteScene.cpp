@@ -322,29 +322,29 @@ namespace GameScene
     {
         switch (muiscId) {
             case 0:
-                CCLOG("play BattyMcFaddin.caf");
+                CCLOG("play BattyMcFaddin.mp3");
                 this->playingMusicLength = this->battyMcFaddinMusicLength;
-                Manager::MusicManager::getInstance()->playMusicNoLoop("audio/music/BattyMcFaddin.caf");
+                Manager::MusicManager::getInstance()->playMusicNoLoop("audio/music/BattyMcFaddin.mp3");
                 break;
             case 1:
-                CCLOG("play MerryGo.caf");
+                CCLOG("play MerryGo.mp3");
                 this->playingMusicLength = this->merryGoMusicLength;
-                Manager::MusicManager::getInstance()->playMusicNoLoop("audio/music/MerryGo.caf");
+                Manager::MusicManager::getInstance()->playMusicNoLoop("audio/music/MerryGo.mp3");
                 break;
             case 2:
-                CCLOG("play RoyalBanana.caf");
+                CCLOG("play RoyalBanana.mp3");
                 this->playingMusicLength = this->royalBananaMusicLength;
-                Manager::MusicManager::getInstance()->playMusicNoLoop("audio/music/RoyalBanana.caf");
+                Manager::MusicManager::getInstance()->playMusicNoLoop("audio/music/RoyalBanana.mp3");
                 break;
             case 3:
-                CCLOG("play RunAmok.caf");
+                CCLOG("play RunAmok.mp3");
                 this->playingMusicLength = this->runAmokMusicLength;
-                Manager::MusicManager::getInstance()->playMusicNoLoop("audio/music/RunAmok.caf");
+                Manager::MusicManager::getInstance()->playMusicNoLoop("audio/music/RunAmok.mp3");
                 break;
             case 4:
-                CCLOG("play WagonWheel.caf");
+                CCLOG("play WagonWheel.mp3");
                 this->playingMusicLength = this->wagonWheelMusicLength;
-                Manager::MusicManager::getInstance()->playMusicNoLoop("audio/music/WagonWheel.caf");
+                Manager::MusicManager::getInstance()->playMusicNoLoop("audio/music/WagonWheel.mp3");
                 break;
         }
     }
