@@ -18,7 +18,7 @@ namespace GameSprite
     {
     public:
         /**
-         @brief 返回主選單的按鈕，點擊後場景會切換至原本的EpisodeScene
+         @brief 返回主選單的按鈕
          @param image 按鈕要使用的圖檔
          */
         BackHomeButton(std::string image);
@@ -38,7 +38,7 @@ namespace GameSprite
         static bool onTouchBegan(Touch* touch, Event* event);
 
         /**
-         @brief 偵測返回主選單按鈕點擊結束的狀態，場景會切換回原本的EpisodeScene
+         @brief 偵測返回主選單按鈕點擊結束的狀態
          @param touch 觸控區塊資訊
          @param event 事件監聽物件
          */

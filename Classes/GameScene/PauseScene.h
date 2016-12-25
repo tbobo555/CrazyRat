@@ -4,7 +4,6 @@
 #include "cocos2d.h"
 #include "BaseScene.h"
 #include "Manager/SpriteManager.h"
-#include "Config/ImageConfig.h"
 #include "GameSprite/Background.h"
 #include "GameSprite/BackHomeButton.h"
 #include "GameSprite/RetryButton.h"
@@ -42,7 +41,7 @@ namespace GameScene
         // 暫停場景的背景物件
         GameSprite::Background* pauseBackground;
         
-        // 返回主畫面的按鈕，按下會返回原本的EpisodeScene
+        // 返回主畫面的按鈕
         GameSprite::BackHomeButton* backHomeButton;
         
         // 重新開始遊戲

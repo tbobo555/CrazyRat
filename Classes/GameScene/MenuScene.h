@@ -15,7 +15,6 @@
 #include "GameSprite/AboutButton.h"
 #include "GameSprite/Image.h"
 #include "GameSprite/CreditMask.h"
-#include "Config/ImageConfig.h"
 #include "Manager/SpriteManager.h"
 
 namespace GameScene

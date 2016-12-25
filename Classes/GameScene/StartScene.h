@@ -3,7 +3,6 @@
 
 #include "GameSprite/Background.h"
 #include "GameSprite/PlayButton.h"
-#include "GameSprite/CareerButton.h"
 #include "GameSprite/HighScoresButton.h"
 #include "GameSprite/ChallengeButton.h"
 #include "GameSprite/StartTitle.h"
@@ -66,8 +65,6 @@ namespace GameScene
         // 遊玩按鈕
         GameSprite::PlayButton* playButton;
         
-        // 生涯按鈕
-        GameSprite::CareerButton* careerButton;
         
         // 高分成就按鈕
         GameSprite::HighScoresButton* highScoresButton;
@@ -96,11 +93,6 @@ namespace GameScene
          */
         Vec2 getPlayButtonPosition();
         
-        /**
-         @brief 取得生涯按鈕的座標位置
-         @return 一個二維向量，代表生涯按鈕的座標
-         */
-        Vec2 getCareerButtonPosition();
         
         /**
          @brief 取得高分成就按鈕的座標位置

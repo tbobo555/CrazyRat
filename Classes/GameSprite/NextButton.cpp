@@ -1,7 +1,6 @@
 #include "NextButton.h"
 #include "Controller/GameController.h"
 #include "GameScene/PlayBaseScene.h"
-#include "GameScene/PlayScene.h"
 
 namespace GameSprite
 {
@@ -51,9 +50,6 @@ namespace GameSprite
             auto controller = Controller::GameController::getInstance();
             if (currentScene->name == "PlayInfiniteScene") {
                 controller->playInfiniteSceneToStartScene();
-            } else {
-                auto scene = static_cast<GameScene::PlayScene*>(Manager::SceneManager::getInstance()->getCurrent());
-                controller->PlaySceneToEpisodeScene(scene->episodeNumber, scene->stageNumber);
             }
         } else {
             target->setScale(1.0);

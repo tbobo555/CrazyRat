@@ -67,33 +67,19 @@ bool AppDelegate::applicationDidFinishLaunching() {
     Sqlite3Engine::getInstance()->initEngine();
     Sqlite3Engine::getInstance()->connect();
     SwitchSetting *switchSetting = SwitchSetting::getInstance();
-    EpisodeSetting *episodeSetting = EpisodeSetting::getInstance();
-    StageSetting *stageSetting = StageSetting::getInstance();
-    StarSetting *starSetting = StarSetting::getInstance();
     NewHighScoreSetting* newHighScoreSetting = NewHighScoreSetting::getInstance();
     
     if (Sqlite3Engine::getInstance()->getIsFirstCreate()) {
         switchSetting->createTable();
         switchSetting->initTable();
-        episodeSetting->createTable();
-        episodeSetting->initTable();
-        stageSetting->createTable();
-        stageSetting->initTable();
-        starSetting->createTable();
-        starSetting->initTable();
         newHighScoreSetting->createTable();
         newHighScoreSetting->initTable();
     }
-    
-    episodeSetting->updateMax(2);
-    stageSetting->updateMax(20);
-    
     InAppPurchase* listener = new InAppPurchase();
     sdkbox::IAP::setListener(listener);
     sdkbox::IAP::init();
     sdkbox::IAP::refresh();
     
-    //stageSetting->updateCurrent(0);
     Director::getInstance()->getEventDispatcher()->setEnabled(true);
     Controller::GameController* controller = Controller::GameController::getInstance();
     controller->runStartScene();

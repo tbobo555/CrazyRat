@@ -45,14 +45,7 @@ namespace GameSprite {
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
             log("BackButton ended... x = %f, y = %f", locationInNode.x, locationInNode.y);
-            auto scene = SceneManager::getInstance()->getCurrent();
-            auto controller = Controller::GameController::getInstance();
             target->setScale(1.0);
-            if (scene->name == "EpisodeScene") {
-                controller->EpisodeSceneToSelectionScene(static_cast<EpisodeScene*>(scene)->episodeNumber);
-            } else if (scene->name == "SelectionScene") {
-                controller->selectionSceneToStartScene();
-            }
         } else {
             target->setScale(1.0);
         }

@@ -16,7 +16,7 @@ private:
     virtual void onRestored(sdkbox::Product const& p) override;
     virtual void onProductRequestSuccess(std::vector<sdkbox::Product> const &products) override;
     virtual void onProductRequestFailure(const std::string &msg) override;
-    void onRestoreComplete(bool ok, const std::string &msg);
+    virtual void onRestoreComplete(bool ok, const std::string &msg);
 };
 
 #endif /* _Lib_InAppPurchase_H_ */

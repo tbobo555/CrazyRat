@@ -1,7 +1,6 @@
 #include "RetryButton.h"
 #include "Controller/GameController.h"
 #include "GameScene/PlayBaseScene.h"
-#include "GameScene/PlayScene.h"
 
 namespace GameSprite
 {
@@ -52,9 +51,6 @@ namespace GameSprite
                 controller->retryPlayInfiniteScene();
             } else if (current->name == "ChallengePlayScene") {
                 controller->retryChallengePlayScene();
-            } else {
-                auto scene = static_cast<PlayScene*>(SceneManager::getInstance()->getCurrent());
-                controller->RetryPlayScene(scene->episodeNumber, scene->stageNumber);
             }
         } else {
             target->setScale(1.0);

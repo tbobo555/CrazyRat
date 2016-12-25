@@ -13,7 +13,6 @@
 #include "GameSprite/Cloud.h"
 #include "GameSprite/Image.h"
 #include "GameSprite/OkButton.h"
-#include "Lib/LevelDesigner.h"
 #include "Db/NewHighScoreSetting.h"
 
 USING_NS_CC;

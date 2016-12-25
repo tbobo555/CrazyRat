@@ -1,7 +1,6 @@
 #include "BackHomeButton.h"
 #include "Controller/GameController.h"
 #include "GameScene/PlayBaseScene.h"
-#include "GameScene/PlayScene.h"
 
 namespace GameSprite
 {
@@ -53,10 +52,6 @@ namespace GameSprite
             } else if (current->name == "ChallengePlayScene") {
                 auto controller = Controller::GameController::getInstance();
                 controller->challengePlaySceneToChallengeScene();
-            } else {
-                auto scene = static_cast<PlayScene*>(SceneManager::getInstance()->getCurrent());
-                auto controller = Controller::GameController::getInstance();
-                controller->PlaySceneToEpisodeScene(scene->episodeNumber, scene->stageNumber);
             }
         } else {
             target->setScale(1.0);
