@@ -1,6 +1,7 @@
 #ifndef _GameSprite_Pig_H_
 #define _GameSprite_Pig_H_
 
+#include <deque>
 #include "cocos2d.h"
 #include "BaseSprite.h"
 #include "Mouth.h"
@@ -39,6 +40,9 @@ namespace GameSprite
 
         // 豬的生命值
         int hp;
+        
+        // 長壓的時間
+        float presstTime;
 
         /**
          @brief 豬吃東西的動作
@@ -63,6 +67,21 @@ namespace GameSprite
         void recordPigPosition(Vec2 position);
 
         /**
+         @brief 發射衝擊波
+         */
+        void runEnergyBlast();
+        
+        /**
+         @brief 衝擊波是否正在發射
+         */
+        void isEnergyBlastTouchBoss(float delta);
+        
+        /**
+         @brief 是否正有在排程檢查衝擊波的攻擊狀態
+         */
+        bool isCheckBlast;
+        
+        /**
          @brief 將按鈕加入事件監聽，按鈕會開始偵測觸控輸入
          */
         void addEventListener();
@@ -83,6 +102,9 @@ namespace GameSprite
 
         // 豬的嘴巴圖片，吃東西時會顯示
         Mouth* mouth;
+        
+        // 已被創建的衝擊波列表
+        std::deque<Image*> energyBlastList;
 
         /**
          @brief 隱藏豬的嘴巴
@@ -130,6 +152,11 @@ namespace GameSprite
          @brief 得分特效的座標位置
          */
         Vec2 getEffectPosition();
+        
+        /**
+         @brief 豬被長壓的效果
+         */
+        void longTouch(float delta);
 
         /**
          @brief 偵測豬被按下的狀態，會顯示豬吃東西的動畫

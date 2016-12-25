@@ -82,13 +82,7 @@ namespace GameScene
         
         // 甜點在同一路線出現的次數
         int sweetInSameRoadTimes;
-        
-        // 魔王圖片
-        GameSprite::Image* boss;
-        
-        // 魔王的生命值
-        int bossLife;
-        
+
         /**
          @brief 更新倒數時間的schedule
          @param delta 多久執行一次schedule

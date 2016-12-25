@@ -155,6 +155,12 @@ namespace GameScene
          */
         GameSprite::Sweet* getNearestSweet(int road);
         
+        // 魔王圖片
+        GameSprite::Image* boss;
+        
+        // 魔王的生命值
+        int bossLife;
+
     protected:
         // 存放sprite sheet的快取物件
         SpriteFrameCache* spriteCache;

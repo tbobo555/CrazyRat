@@ -42,6 +42,8 @@ namespace GameSprite
         this->addChild(this->perfectEffect);
         
         this->initAllScoreEffect();
+        
+        this->isCheckBlast = false;
     }
     
     Pig::~Pig()
@@ -263,6 +265,70 @@ namespace GameSprite
         this->perfectEffect->setOpacity(0);
     }
     
+    void Pig::runEnergyBlast()
+    {
+        auto scene = static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent());
+        auto energyBlast = new Image("image/EnergyBlast.png");
+        energyBlast->setPosition(this->getPosition());
+        scene->addChild(energyBlast, 4);
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        log("visibleSize.height  %f", visibleSize.height);
+        this->energyBlastList.push_back(energyBlast);
+        energyBlast->runAction(Sequence::create(MoveTo::create(1.f, Vec2(energyBlast->getPosition().x, visibleSize.height)),
+                                                NULL));
+        if (this->isCheckBlast == false) {
+            this->isCheckBlast = true;
+            schedule(CC_SCHEDULE_SELECTOR(Pig::isEnergyBlastTouchBoss), 0.1f);
+        }
+        
+    }
+    
+    void Pig::isEnergyBlastTouchBoss(float delta)
+    {
+        Vec2 bossPosition = static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent())->boss->getPosition();
+        for (auto i = this->energyBlastList.begin(); i != this->energyBlastList.end();) {
+            if (*i == nullptr) {
+                i = this->energyBlastList.erase(i);
+            } else {
+                if (static_cast<Image*>(*i)->getNumberOfRunningActions() == 0) {
+                    static_cast<Image*>(*i)->stopAllActions();
+                    static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent())->removeChild(static_cast<Image*>(*i));
+                    static_cast<Image*>(*i)->release();
+                    this->energyBlastList.erase(i);
+                    ++i;
+                    continue;
+                }
+                float xDiff = static_cast<Image*>(*i)->getPosition().x - bossPosition.x;
+                float yDiff = static_cast<Image*>(*i)->getPosition().y - bossPosition.y;
+                if (xDiff < 0) {
+                    xDiff = xDiff * -1;
+                }
+                if (yDiff < 0) {
+                    yDiff = yDiff * -1;
+                }
+                if (yDiff < 100 && xDiff < 100) {
+                    log("fuck it");
+                    static_cast<Image*>(*i)->stopAllActions();
+                    static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent())->removeChild(static_cast<Image*>(*i));
+                    static_cast<Image*>(*i)->release();
+                    static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent())->boss->setOpacity(150);
+                    this->energyBlastList.erase(i);
+                }
+            }
+            ++i;
+        }
+        if (this->energyBlastList.empty()) {
+            unschedule(CC_SCHEDULE_SELECTOR(Pig::isEnergyBlastTouchBoss));
+            log("empty");
+            this->isCheckBlast = false;
+        }
+    }
+    
+    void Pig::longTouch(float delta)
+    {
+        this->presstTime += delta;
+    }
+    
     void Pig::showScoreEffect(int type)
     {
         Manager::SoundsManager::getInstance()->playSound("audio/sounds/GotScores.caf");
@@ -294,17 +360,50 @@ namespace GameSprite
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
+            auto scene = static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent());
             log("Pig began... x = %f, y = %f", locationInNode.x, locationInNode.y);
-            int point = target->eat();
-            std::cout << point << std::endl;
+            if (scene->name == "ChallengePlayScene") {
+                target->presstTime = 0.f;
+                target->schedule(CC_SCHEDULE_SELECTOR(Pig::longTouch), 0.1f);
+            }
             return true;
         }
         return false;
     }
     
-    void Pig::onTouchEnded(Touch* touch, Event* event){}
+    void Pig::onTouchEnded(Touch* touch, Event* event)
+    {
+        auto target = static_cast<Pig*>(event->getCurrentTarget());
+        target->unschedule(CC_SCHEDULE_SELECTOR(Pig::longTouch));
+        auto scene = static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent());
+        if (scene->name == "ChallengePlayScene") {
+            if (target->presstTime < 0.35f) {
+                int point = target->eat();
+                std::cout << point << std::endl;
+            } else {
+                target->runEnergyBlast();
+                log("shoot");
+            }
+        } else {
+            int point = target->eat();
+            std::cout << point << std::endl;
+        }
+    }
     
-    void Pig::onTouchMoved(Touch* touch, Event* event){}
+    void Pig::onTouchMoved(Touch* touch, Event* event)
+    {
+        auto target = static_cast<Pig*>(event->getCurrentTarget());
+        Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
+        Size s = target->getContentSize();
+        Rect rect = Rect(0, 0, s.width, s.height);
+        if (! rect.containsPoint(locationInNode)) {
+            auto scene = static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent());
+            if (scene->name == "ChallengePlayScene") {
+                target->presstTime = 0.f;
+                target->unschedule(CC_SCHEDULE_SELECTOR(Pig::longTouch));
+            }
+        }
+    }
     
     void Pig::onTouchCanceled(Touch* touch, Event* event){}
 
