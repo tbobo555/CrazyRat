@@ -8,6 +8,7 @@
 #include "GameSprite/MusicButton.h"
 #include "GameSprite/SoundsButton.h"
 #include "GameScene/StartScene.h"
+#include "GameScene/ChallengeScene.h"
 #include "GameScene/SelectionScene.h"
 #include "GameScene/EpisodeScene.h"
 #include "GameScene/MenuScene.h"
@@ -17,6 +18,7 @@
 #include "GameScene/LoseScene.h"
 #include "GameScene/FinalScoreScene.h"
 #include "GameScene/PlayInfiniteScene.h"
+#include "GameScene/ChallengePlayScene.h"
 #include "Manager/SceneManager.h"
 #include "Manager/SpriteManager.h"
 
@@ -58,6 +60,16 @@ namespace Controller
          @brief 釋放StartScene有用到的所有資源
          */
         void releaseStartSceneResource();
+        
+        /**
+         @brief 載入ChallengeScene需要使用的資源到記憶體
+         */
+        void loadChallengeSceneResource();
+        
+        /**
+         @brief 釋放ChallengeScene有用到的所有資源
+         */
+        void releaseChallengeSceneResource();
         
         /**
          @brief 載入SelectionScene需要使用的資源到記憶體
@@ -104,6 +116,16 @@ namespace Controller
          @brief 釋放PlayInfiniteScene有用到的所有資源
          */
         void releasePlayInfiniteSceneResource();
+        
+        /**
+         @brief 載入ChallengePlayScene需要使用的資源到記憶體
+         */
+        void loadChallengePlaySceneResource();
+        
+        /**
+         @brief 釋放ChallengePlayScene有用到的所有資源
+         */
+        void releaseChallengePlaySceneResource();
         
         /**
          @brief 載入PauseScene需要使用的資源到記憶體
@@ -273,6 +295,18 @@ namespace Controller
          @brief 畫面從PlayInfiniteScene切換為StartScene
          */
         void playInfiniteSceneToStartScene();
+        
+        /**
+         @brief 畫面從StartScene切換為ChallengeScene
+         */
+        void startSceneToChallengeScene();
+        
+        void challengeSceneToChallengePlayScene();
+        
+        void challengePlaySceneToChallengeScene();
+        
+        void retryChallengePlayScene();
+        
     private:
         /**
          @brief 建構式

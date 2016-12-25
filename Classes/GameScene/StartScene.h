@@ -5,6 +5,7 @@
 #include "GameSprite/PlayButton.h"
 #include "GameSprite/CareerButton.h"
 #include "GameSprite/HighScoresButton.h"
+#include "GameSprite/ChallengeButton.h"
 #include "GameSprite/StartTitle.h"
 #include "GameSprite/image.h"
 #include "GameSprite/HighScoreMask.h"
@@ -12,6 +13,7 @@
 #include "BaseScene.h"
 #include "Manager/MusicManager.h"
 #include "Db/NewHighScoreSetting.h"
+
 
 namespace GameScene
 {
@@ -69,6 +71,9 @@ namespace GameScene
         
         // 高分成就按鈕
         GameSprite::HighScoresButton* highScoresButton;
+        
+        // 闖關按鈕
+        GameSprite::ChallengeButton* challengeButton;
         
         // 開始場景的標題
         GameSprite::StartTitle* startTitle;
@@ -132,6 +137,12 @@ namespace GameScene
          @return 一個二維向量，代表粉紅豬動畫結束的座標
          */
         Vec2 getMovePig1EndPosition();
+        
+        /**
+         @brief 取得challenge button的座標位置
+         @return 一個二維向量，代表challenge button的座標
+         */
+        Vec2 getChallengeButtonPosition();
     };
 }
 

@@ -19,6 +19,7 @@ namespace GameScene
         std::string movePig0Image = "image/StartSceneMovePig0.png";
         std::string movePig1Image = "image/StartSceneMovePig1.png";
         std::string highScoreMaskImage = "image/HighScoreRecordBackground.png";
+        std::string challengeButtonImage = "image/ChallengeButton.png";
         this->startBackground = new GameSprite::Background(backgroundImage);
         this->startBackground->setPosition(this->center);
         
@@ -30,6 +31,9 @@ namespace GameScene
         
         this->highScoresButton = new GameSprite::HighScoresButton(highScoresButtonImage);
         this->highScoresButton->setPosition(this->getHighScoresButtonPosition());
+        
+        this->challengeButton = new GameSprite::ChallengeButton(challengeButtonImage);
+        this->challengeButton->setPosition(this->getChallengeButtonPosition());
         
         this->startTitle = new GameSprite::StartTitle(startTitleImage);
         this->startTitle->setPosition(this->getStartTitlePosition());
@@ -53,6 +57,7 @@ namespace GameScene
         this->addChild(this->playButton, 3);
         this->addChild(this->careerButton, 3);
         this->addChild(this->highScoresButton, 3);
+        this->addChild(this->challengeButton, 3);
         this->addChild(this->startTitle, 3);
         this->addChild(this->movePig0, 2);
         this->addChild(this->movePig1, 1);
@@ -62,6 +67,7 @@ namespace GameScene
         spriteManager->setWithKey("StartScene_PlayButton", this->playButton);
         spriteManager->setWithKey("StartScene_CareerButton", this->careerButton);
         spriteManager->setWithKey("StartScene_HighScoresButton", this->highScoresButton);
+        spriteManager->setWithKey("StartScene_ChallengeButton", this->challengeButton);
         spriteManager->setWithKey("StartScene_StartTitle", this->startTitle);
         spriteManager->setWithKey("StartScene_MovePig0", this->movePig0);
         spriteManager->setWithKey("StartScene_MovePig1", this->movePig1);
@@ -77,6 +83,7 @@ namespace GameScene
         spriteManager->releaseByKey("StartScene_PlayButton");
         spriteManager->releaseByKey("StartScene_CareerButton");
         spriteManager->releaseByKey("StartScene_HighScoresButton");
+        spriteManager->releaseByKey("StartScene_ChallengeButton");
         spriteManager->releaseByKey("StartScene_StartTitle");
         spriteManager->releaseByKey("StartScene_MovePig0");
         spriteManager->releaseByKey("StartScene_MovePig1");
@@ -103,6 +110,7 @@ namespace GameScene
         this->playButton->cocos2d::Node::setVisible(false);
         this->careerButton->cocos2d::Node::setVisible(false);
         this->highScoresButton->cocos2d::Node::setVisible(false);
+        this->challengeButton->cocos2d::Node::setVisible(false);
         this->startTitle->runAction(Sequence::create(actionTo, actionBy0, actionBy1, actionBy2, actionBy3, actionBy4, DelayTime::create(0.1f),
                                                      CallFunc::create( CC_CALLBACK_0(StartScene::animationCallback, this)),nullptr));
         actionTo = MoveTo::create(0.5, this->getMovePig0EndPosition());
@@ -119,6 +127,7 @@ namespace GameScene
         this->playButton->cocos2d::Node::setVisible(true);
         this->careerButton->cocos2d::Node::setVisible(true);
         this->highScoresButton->cocos2d::Node::setVisible(true);
+        this->challengeButton->cocos2d::Node::setVisible(true);
         Director::getInstance()->getEventDispatcher()->setEnabled(true);
     }
     
@@ -173,4 +182,10 @@ namespace GameScene
     {
         return Vec2(890, 810);
     }
+    
+    Vec2 StartScene::getChallengeButtonPosition()
+    {
+        return Vec2(this->center.x + 10, this->visibleOrigin.y + this->visibleSize.height * 0.35 - 400);
+    }
+    
 }

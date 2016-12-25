@@ -64,7 +64,10 @@ namespace Manager
         std::stringstream haloKeyName;
         if (currentScene->name == "PlayInfiniteScene") {
             haloKeyName << "PlayInfiniteScene_ScoreHalo";
-        } else {
+        } else if (currentScene->name == "ChallengePlayScene") {
+            return;
+        }
+        else {
             haloKeyName << "PlayScene_ScoreHalo";
         }
         auto scoreHalo = Manager::SpriteManager::getInstance()->getByKey(haloKeyName.str());

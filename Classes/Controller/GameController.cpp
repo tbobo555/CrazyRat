@@ -38,6 +38,20 @@ namespace Controller
         startScene->releaseScene();
         SceneManager::getInstance()->releaseByKey("StartScene");
     }
+    
+    void GameController::loadChallengeSceneResource()
+    {
+        ChallengeScene *challengeScene = new ChallengeScene();
+        challengeScene->initScene();
+        SceneManager::getInstance()->setWithKey("ChallengeScene", challengeScene);
+    }
+    
+    void GameController::releaseChallengeSceneResource()
+    {
+        auto challengeScene = SceneManager::getInstance()->getByKey("ChallengeScene");
+        challengeScene->releaseScene();
+        SceneManager::getInstance()->releaseByKey("ChallengeScene");
+    }
 
     void GameController::loadSelectionSceneResource()
     {
@@ -101,6 +115,20 @@ namespace Controller
         auto playInfiniteScene = SceneManager::getInstance()->getByKey("PlayInfiniteScene");
         playInfiniteScene->releaseScene();
         SceneManager::getInstance()->releaseByKey("PlayInfiniteScene");
+    }
+    
+    void GameController::loadChallengePlaySceneResource()
+    {
+        ChallengePlayScene *challengePlayScene = new ChallengePlayScene();
+        challengePlayScene->initScene();
+        SceneManager::getInstance()->setWithKey("ChallengePlayScene", challengePlayScene);
+    }
+    
+    void GameController::releaseChallengePlaySceneResource()
+    {
+        auto challengePlayScene = SceneManager::getInstance()->getByKey("ChallengePlayScene");
+        challengePlayScene->releaseScene();
+        SceneManager::getInstance()->releaseByKey("ChallengePlayScene");
     }
     
     void GameController::loadPauseSceneResource()
@@ -306,6 +334,7 @@ namespace Controller
         this->loadMenuSceneResource();
         this->loadStartSceneResource();
         this->loadSelectionSceneResource();
+        this->loadChallengeSceneResource();
         StartScene *scene = static_cast<StartScene*>(
             SceneManager::getInstance()->getByKey("StartScene"));
         SceneManager::getInstance()->setCurrent(scene);
@@ -363,6 +392,7 @@ namespace Controller
     void GameController::EpisodeSceneToPlayScene(int episodeNumber, int stageNumber)
     {
         this->releaseStartSceneResource();
+        this->releaseChallengeSceneResource();
         this->releaseMenuSceneResource();
         this->releaseEpisodeSceneResource(episodeNumber);
         this->releaseSelectionSceneResource();
@@ -429,6 +459,7 @@ namespace Controller
         Director::getInstance()->purgeCachedData();
         this->loadMenuSceneResource();
         this->loadStartSceneResource();
+        this->loadChallengeSceneResource();
         this->loadSelectionSceneResource();
         this->loadEpisodeSceneResource(newEpisodeNumber);
         std::stringstream key;
@@ -479,6 +510,7 @@ namespace Controller
         Director::getInstance()->purgeCachedData();
         this->loadMenuSceneResource();
         this->loadStartSceneResource();
+        this->loadChallengeSceneResource();
         this->loadSelectionSceneResource();
         SelectionScene* selectionScene = static_cast<SelectionScene*>(SceneManager::getInstance()->getByKey("SelectionScene"));
         SceneManager::getInstance()->setCurrent(selectionScene);
@@ -491,6 +523,7 @@ namespace Controller
     void GameController::startSceneToPlayInfiniteScene()
     {
         this->releaseStartSceneResource();
+        this->releaseChallengeSceneResource();
         this->releaseMenuSceneResource();
         this->releaseSelectionSceneResource();
         // 將一些被cocos2d核心程式快取，殘留在記憶體沒有被釋放的物件做記憶體釋放
@@ -533,10 +566,71 @@ namespace Controller
         Director::getInstance()->purgeCachedData();
         this->loadMenuSceneResource();
         this->loadStartSceneResource();
+        this->loadChallengeSceneResource();
         this->loadSelectionSceneResource();
         StartScene* startScene = static_cast<StartScene*>(SceneManager::getInstance()->getByKey("StartScene"));
         SceneManager::getInstance()->setCurrent(startScene);
         this->addMenuSceneToCurrentScene();
         Director::getInstance()->replaceScene(startScene);
     }
+    
+    void GameController::startSceneToChallengeScene()
+    {
+        ChallengeScene *scene = static_cast<ChallengeScene*>(SceneManager::getInstance()->getByKey("ChallengeScene"));
+        this->removeMenuSceneFromCurrentScene();
+        SceneManager::getInstance()->setCurrent(scene);
+        this->addMenuSceneToCurrentScene();
+        Director::getInstance()->replaceScene(scene);
+    }
+    
+    void GameController::challengeSceneToChallengePlayScene()
+    {
+        this->releaseStartSceneResource();
+        this->releaseChallengeSceneResource();
+        this->releaseMenuSceneResource();
+        this->releaseSelectionSceneResource();
+        // 將一些被cocos2d核心程式快取，殘留在記憶體沒有被釋放的物件做記憶體釋放
+        Director::getInstance()->purgeCachedData();
+        this->loadPauseSceneResource();
+        this->loadChallengePlaySceneResource();
+        ChallengePlayScene *scene = static_cast<ChallengePlayScene*>(SceneManager::getInstance()->getByKey("ChallengePlayScene"));
+        SceneManager::getInstance()->setCurrent(scene);
+        this->addPauseSceneToCurrentScene();
+        Director::getInstance()->replaceScene(scene);
+        scene->play();
+    }
+    
+    void GameController::retryChallengePlayScene()
+    {
+        this->removePauseSceneFromCurrentScene();
+        this->releasePauseSceneResource();
+        this->releaseChallengePlaySceneResource();
+        // 將一些被cocos2d核心程式快取，殘留在記憶體沒有被釋放的物件做記憶體釋放
+        Director::getInstance()->purgeCachedData();
+        this->loadPauseSceneResource();
+        this->loadChallengePlaySceneResource();
+        ChallengePlayScene *scene = static_cast<ChallengePlayScene*>(SceneManager::getInstance()->getByKey("ChallengePlayScene"));
+        SceneManager::getInstance()->setCurrent(scene);
+        this->addPauseSceneToCurrentScene();
+        Director::getInstance()->replaceScene(scene);
+        scene->play();
+    }
+    
+    void GameController::challengePlaySceneToChallengeScene()
+    {
+        this->removePauseSceneFromCurrentScene();
+        this->releasePauseSceneResource();
+        this->releaseChallengePlaySceneResource();
+        // 將一些被cocos2d核心程式快取，殘留在記憶體沒有被釋放的物件做記憶體釋放
+        Director::getInstance()->purgeCachedData();
+        this->loadMenuSceneResource();
+        this->loadStartSceneResource();
+        this->loadChallengeSceneResource();
+        this->loadSelectionSceneResource();
+        ChallengeScene* challengeScene = static_cast<ChallengeScene*>(SceneManager::getInstance()->getByKey("ChallengeScene"));
+        SceneManager::getInstance()->setCurrent(challengeScene);
+        this->addMenuSceneToCurrentScene();
+        Director::getInstance()->replaceScene(challengeScene);
+    }
+
 }
