@@ -28,6 +28,7 @@ namespace GameScene
         std::string backHomeButtonImage = "image/BackHomeButton.png";
         std::string retryButtonImage = "image/RetryButton.png";
         std::string pauseBackButtonImage = "image/BackButton.png";
+        std::string whiteMaskImage = "image/WhiteMask.png";
         std::string pig0Image = "Pig0Animation_0.png";
         std::string pig1Image = "Pig1Animation_0.png";
         std::string pig2Image = "Pig2Animation_0.png";
@@ -36,6 +37,7 @@ namespace GameScene
         this->playBackground = new GameSprite::Background(backgroundImage);
         this->playBackground->setPosition(this->getBackgroundPosition());
         this->addChild(this->playBackground, 0);
+        this->playBackground->setName("PlayBackground");
         spriteManager->setWithKey("ChallengePlayScene_Background", this->playBackground);
         
         this->prepareNumber = new GameSprite::Image("image/PrepareThree.png");
@@ -46,8 +48,14 @@ namespace GameScene
         
         this->boss = new GameSprite::Boss(bossImage);
         this->boss->setPosition(this->getCloudPosition(1));
-        this->addChild(this->boss, 2);
+        this->addChild(this->boss, 5);
         spriteManager->setWithKey("ChallengePlayScene_Boss", this->boss);
+        
+        this->whiteMask = new GameSprite::Image(whiteMaskImage);
+        this->whiteMask->setPosition(this->center);
+        this->addChild(this->whiteMask, 4);
+        this->whiteMask->setVisible(false);
+        spriteManager->setWithKey("ChallengePlayScene_WhiteMask", this->whiteMask);
         
         float runningTime = 2.5;
         
@@ -133,6 +141,7 @@ namespace GameScene
         spriteManager->releaseByKey("ChallengePlayScene_Road0EatBlock");
         spriteManager->releaseByKey("ChallengePlayScene_Road1EatBlock");
         spriteManager->releaseByKey("ChallengePlayScene_Road2EatBlock");
+        spriteManager->releaseByKey("ChallengePlayScene_WhiteMask");
         Manager::ScoresManager::getInstance()->releaseScores();
         for (int i = 0; i < 10; i++) {
             this->road0SweetVector[i]->release();
@@ -155,7 +164,7 @@ namespace GameScene
             if (child->getName() != "MusicButton" && child->getName() != "SoundsButton" &&
                 child->getName() != "PauseBackButton" && child->getName() != "BackHomeButton" &&
                 child->getName() != "RetryButton" && child->getName() != "PauseMask" &&
-                child->getName() != "PauseBackground") {
+                child->getName() != "PauseBackground" && child->getName() != "PlayBackground") {
                 child->pause();
             }
         }
@@ -170,7 +179,10 @@ namespace GameScene
         }
     }
     
-    void ChallengePlayScene::addWinScene(){}
+    void ChallengePlayScene::addWinScene()
+    {
+        log("Win");
+    }
     
     void ChallengePlayScene::addLoseScene(){}
 
@@ -186,6 +198,8 @@ namespace GameScene
         this->addSweetTime = 1 / this->sweetPerSecond;
         this->lastSweetRoad = -1;
         this->sweetInSameRoadTimes = -1;
+        this->bossIsDead = false;
+        this->bossIsHurting = false;
         
         schedule(CC_SCHEDULE_SELECTOR(ChallengePlayScene::prepareUpdate), 1.f);
     }
@@ -329,6 +343,24 @@ namespace GameScene
                 }
             }
         }
+        
+        if (! this->isPaused) {
+            if (this->boss->life <= 0) {
+                this->bossIsDead = true;
+                this->boss->dead();
+                unschedule(schedule_selector(ChallengePlayScene::gameUpdate));
+                unschedule(schedule_selector(ChallengePlayScene::road0Update));
+                unschedule(schedule_selector(ChallengePlayScene::road1Update));
+                unschedule(schedule_selector(ChallengePlayScene::road2Update));
+                for (const auto &child : this->getChildren()) {
+                    if (child->getName() != "PauseBackground" && child->getName() != "PlayBackground") {
+                        child->pause();
+                    }
+                }
+                this->showBossDeadAnimation();
+            }
+        }
+        
         if (! this->isPaused) {
             // 有任何一隻豬的生命歸0，則遊戲結束，玩家闖關失敗
             if (this->road0Pig->hp <= 0 || this->road1Pig->hp <= 0 || this->road2Pig->hp <= 0) {
@@ -343,7 +375,9 @@ namespace GameScene
                     failRoadIndex = 2;
                 }
                 for (const auto &child : this->getChildren()) {
-                    child->pause();
+                    if (child->getName() != "PauseBackground" && child->getName() != "PlayBackground") {
+                        child->pause();
+                    }
                 }
                 this->failRoadIndex = failRoadIndex;
                 this->showFailAnimation();

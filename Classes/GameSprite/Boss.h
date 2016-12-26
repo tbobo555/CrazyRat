@@ -35,6 +35,11 @@ namespace GameSprite
         void hurt();
         
         /**
+         @brief 魔王陣亡所觸發的方法
+         */
+        void dead();
+        
+        /**
          @brief 從快取設置魔王的受傷圖檔
          @param index 圖檔在快取中的參數
          */

@@ -159,6 +159,9 @@ namespace GameScene
         // 魔王圖片
         GameSprite::Boss* boss;
         
+        // 白霧遮罩
+        GameSprite::Image* whiteMask;
+        
         /**
          @brief 魔王被擊中
          */
@@ -183,6 +186,12 @@ namespace GameScene
          @brief 魔王是否被攻擊
          */
         bool bossIsHurting;
+        
+        bool bossIsDead;
+        
+        void showBossDeadAnimation();
+        
+        void removeBoss();
     protected:
         // 存放sprite sheet的快取物件
         SpriteFrameCache* spriteCache;

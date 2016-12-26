@@ -183,6 +183,61 @@ namespace  GameScene
         this->bossIsHurting = false;
     }
     
+    void PlayBaseScene::showBossDeadAnimation()
+    {
+        int x = rand() % 5;
+        char str[100] = {0};
+        sprintf(str, "image/Explode%d.png", x);
+        this->deadExplode = new GameSprite::Image(str);
+        this->deadExplode->setPosition(Vec2(this->boss->getPositionX(),
+                                            this->boss->getPositionY() + 50));
+        this->addChild(this->deadExplode, 5);
+        int randomNumber = rand() % 7;
+        std::stringstream punchName;
+        punchName << "audio/sounds/Punch" << randomNumber << ".caf";
+        Manager::SoundsManager::getInstance()->playSound(punchName.str().c_str());
+        
+        this->whiteMask->setOpacity(0);
+        this->whiteMask->setVisible(true);
+        this->whiteMask->runAction(Sequence::create(FadeIn::create(4.f), DelayTime::create(0.5f), FadeOut::create(0.5f), NULL));
+        this->boss->runAction(TintTo::create(3.5f, 0, 0, 0));
+        float xP = this->boss->getPositionX();
+        float yP = this->boss->getPositionY();
+        this->deadExplode->runAction(Sequence::create(
+        DelayTime::create(0.3f), CallFunc::create(CC_CALLBACK_0(PlayBaseScene::changeDeadExplode, this)),
+        MoveTo::create(0.0f, Vec2(xP + (rand() % 100), yP + (rand() % 100))),
+        DelayTime::create(0.3f), CallFunc::create(CC_CALLBACK_0(PlayBaseScene::changeDeadExplode, this)),
+        MoveTo::create(0.0f, Vec2(xP + ((-1) * rand() % 100), yP + ((-1) * rand() % 100))),
+        DelayTime::create(0.3f), CallFunc::create(CC_CALLBACK_0(PlayBaseScene::changeDeadExplode, this)),
+        MoveTo::create(0.0f, Vec2(xP + (rand() % 100), yP + ((-1) * rand() % 100))),
+        DelayTime::create(0.3f), CallFunc::create(CC_CALLBACK_0(PlayBaseScene::changeDeadExplode, this)),
+        MoveTo::create(0.0f, Vec2(xP + (rand() % 100), yP + (rand() % 100))),
+        DelayTime::create(0.3f), CallFunc::create(CC_CALLBACK_0(PlayBaseScene::changeDeadExplode, this)),
+        MoveTo::create(0.0f, Vec2(xP + ((-1) * rand() % 100), yP + (rand() % 100))),
+        DelayTime::create(0.3f), CallFunc::create(CC_CALLBACK_0(PlayBaseScene::changeDeadExplode, this)),
+        MoveTo::create(0.0f, Vec2(xP + ((-1) * rand() % 100), yP + ((-1) * rand() % 100))),
+        DelayTime::create(0.3f), CallFunc::create(CC_CALLBACK_0(PlayBaseScene::changeDeadExplode, this)),
+        MoveTo::create(0.0f, Vec2(xP + (rand() % 100), yP + ((-1) * rand() % 100))),
+        DelayTime::create(0.3f), CallFunc::create(CC_CALLBACK_0(PlayBaseScene::changeDeadExplode, this)),
+        MoveTo::create(0.0f, Vec2(xP + (rand() % 100), yP + (rand() % 100))),
+        DelayTime::create(0.3f), CallFunc::create(CC_CALLBACK_0(PlayBaseScene::changeDeadExplode, this)),
+        MoveTo::create(0.0f, Vec2(xP + ((-1) * rand() % 100), yP + ((-1) * rand() % 100))),
+        DelayTime::create(0.3f), CallFunc::create(CC_CALLBACK_0(PlayBaseScene::changeDeadExplode, this)),
+        MoveTo::create(0.0f, Vec2(xP + ((-1) * rand() % 100), yP + (rand() % 100))),
+        DelayTime::create(0.3f), CallFunc::create(CC_CALLBACK_0(PlayBaseScene::changeDeadExplode, this)),
+        MoveTo::create(0.0f, Vec2(xP + (rand() % 100), yP + ((-1) * rand() % 100))),
+        DelayTime::create(0.3f), CallFunc::create(CC_CALLBACK_0(PlayBaseScene::changeDeadExplode, this)),
+        MoveTo::create(0.0f, Vec2(xP + ((-1) * rand() % 100), yP + (rand() % 100))),
+        DelayTime::create(0.3f), FadeOut::create(0.0f),
+        CallFunc::create(CC_CALLBACK_0(PlayBaseScene::removeBoss, this)),
+        CallFunc::create(CC_CALLBACK_0(PlayBaseScene::addWinScene, this)), NULL));
+    }
+    
+    void PlayBaseScene::removeBoss()
+    {
+        this->boss->setVisible(false);
+    }
+    
     Vec2 PlayBaseScene::getPigPosition(int roadNumber)
     {
         float height = Director::getInstance()->getWinSize().height;

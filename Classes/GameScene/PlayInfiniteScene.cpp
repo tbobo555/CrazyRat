@@ -49,6 +49,7 @@ namespace GameScene
         this->playBackground = new GameSprite::Background(backgroundImage);
         this->playBackground->setPosition(this->getBackgroundPosition());
         this->addChild(this->playBackground, 0);
+        this->playBackground->setName("PlayBackground");
         spriteManager->setWithKey("PlayInfiniteScene_Background", this->playBackground);
         
         this->prepareNumber = new GameSprite::Image("image/PrepareThree.png");
@@ -219,7 +220,7 @@ namespace GameScene
             if (child->getName() != "MusicButton" && child->getName() != "SoundsButton" &&
                 child->getName() != "PauseBackButton" && child->getName() != "BackHomeButton" &&
                 child->getName() != "RetryButton" && child->getName() != "PauseMask" &&
-                child->getName() != "PauseBackground") {
+                child->getName() != "PauseBackground" && child->getName() != "PlayBackground") {
                 child->pause();
             }
         }
@@ -474,7 +475,9 @@ namespace GameScene
                     failRoadIndex = 2;
                 }
                 for (const auto &child : this->getChildren()) {
-                    child->pause();
+                    if (child->getName() != "PauseBackground" && child->getName() != "PlayBackground") {
+                        child->pause();
+                    }
                 }
                 this->failRoadIndex = failRoadIndex;
                 int highScore = DB::NewHighScoreSetting::getInstance()->getHighScore();

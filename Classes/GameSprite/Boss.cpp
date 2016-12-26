@@ -5,7 +5,7 @@ namespace GameSprite
 {
     Boss::Boss(std::string image) : BaseSprite()
     {
-        this->life = 30;
+        this->life = 1;
         this->initWithCache(image);
         this->setScale(Director::getInstance()->getContentScaleFactor());
         
@@ -29,6 +29,13 @@ namespace GameSprite
         this->showExplode();
         static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent())->bossHurted();
         this->scheduleOnce(CC_SCHEDULE_SELECTOR(Boss::hideExplode), 0.5f);
+    }
+    
+    void Boss::dead()
+    {
+        this->stopAllActions();
+        this->explode->setVisible(false);
+        this->setHurtImage(3);
     }
     
     void Boss::setHurtImage(int index)
