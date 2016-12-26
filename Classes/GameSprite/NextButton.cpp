@@ -50,6 +50,8 @@ namespace GameSprite
             auto controller = Controller::GameController::getInstance();
             if (currentScene->name == "PlayInfiniteScene") {
                 controller->playInfiniteSceneToStartScene();
+            } else if (currentScene->name == "ChallengePlayScene") {
+                controller->challengePlaySceneToChallengeScene();
             }
         } else {
             target->setScale(1.0);

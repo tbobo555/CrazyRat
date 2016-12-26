@@ -14,6 +14,7 @@
 #include "GameSprite/Cloud.h"
 #include "GameSprite/Image.h"
 #include "GameSprite/Boss.h"
+#include "GameSprite/NextButton.h"
 
 USING_NS_CC;
 
@@ -29,6 +30,15 @@ namespace GameScene
         
         // 背景物件
         GameSprite::Background* playBackground;
+        
+        // 勝利背景
+        GameSprite::Background* winBackground;
+        
+        // 失敗背景
+        GameSprite::Background* loseBackground;
+        
+        // 遊戲結束的繼續按鈕
+        GameSprite::NextButton* nextButton;
         
         // 豬陣亡的爆破圖片
         GameSprite::Image* deadExplode;
@@ -101,6 +111,17 @@ namespace GameScene
         
         // 失敗路線的索引
         int failRoadIndex;
+        
+        /**
+         @brief 在魔王被擊中後，重置攻擊路線
+         */
+        int resetBossRoad;
+        
+        // 魔王是否正在被攻擊
+        bool bossIsHurting;
+        
+        // 魔王是否陣亡
+        bool bossIsDead;
         
         /**
          @brief 初始化場景
@@ -178,19 +199,13 @@ namespace GameScene
         void setBossNotHurt();
         
         /**
-         @brief 在魔王被擊中後，重置攻擊路線
+         @brief 顯示魔王陣亡的動畫
          */
-        int resetBossRoad;
-
-        /**
-         @brief 魔王是否被攻擊
-         */
-        bool bossIsHurting;
-        
-        bool bossIsDead;
-        
         void showBossDeadAnimation();
         
+        /**
+         @brief 將魔王移除遊戲畫面
+         */
         void removeBoss();
     protected:
         // 存放sprite sheet的快取物件
@@ -295,8 +310,12 @@ namespace GameScene
         std::string getDeadPigImagePath();
         
         /**
+         @brief 顯示勝利動畫
+         */
+        void showWinAnimation();
+        
+        /**
          @brief 顯示失敗動畫
-         @param failRoadIndex 造成遊戲失敗的路線索引
          */
         void showFailAnimation();
         

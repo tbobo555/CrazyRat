@@ -21,6 +21,9 @@ namespace GameScene
         std::stringstream backgroundKey;
         backgroundKey << "image/PlayBackground_" << 0 << ".png";
         std::string backgroundImage = backgroundKey.str();
+        std::string winBackgroundImage = "image/VictroyBackground.png";
+        std::string loseBackgroundImage = "image/LoseBackground.png";
+        std::string nextButtonImage = "image/NextButton.png";
         std::string pauseButtonImage = "image/PauseButton.png";
         std::string pauseBackgroundImage = "image/SettingBackground.png";
         std::string musicButtonImage = "image/MusicOnButton.png";
@@ -125,6 +128,24 @@ namespace GameScene
         this->road2Pig->recordPigPosition(this->road2Pig->getPosition());
         this->addChild(this->road2Pig, 2);
         spriteManager->setWithKey("ChallengePlayScene_Road2Pig", this->road2Pig);
+        
+        this->winBackground = new Background(winBackgroundImage);
+        this->winBackground->setPosition(this->center);
+        this->addChild(this->winBackground, -100);
+        this->winBackground->setVisible(false);
+        spriteManager->setWithKey("ChallengePlayScene_WinBackground", this->winBackground);
+        
+        this->loseBackground = new Background(loseBackgroundImage);
+        this->loseBackground->setPosition(this->center);
+        this->addChild(this->loseBackground, -100);
+        this->loseBackground->setVisible(false);
+        spriteManager->setWithKey("ChallengePlayScene_LoseBackground", this->loseBackground);
+
+        this->nextButton = new NextButton(nextButtonImage);
+        this->nextButton->setPosition(Vec2(this->center.x, this->center.y / 2));
+        this->addChild(this->nextButton, -100);
+        this->nextButton->setVisible(false);
+        spriteManager->setWithKey("ChallengePlayScene_NextButton", this->nextButton);
     }
     
     void ChallengePlayScene::releaseScene()
@@ -142,6 +163,9 @@ namespace GameScene
         spriteManager->releaseByKey("ChallengePlayScene_Road1EatBlock");
         spriteManager->releaseByKey("ChallengePlayScene_Road2EatBlock");
         spriteManager->releaseByKey("ChallengePlayScene_WhiteMask");
+        spriteManager->releaseByKey("ChallengePlayScene_WinBackground");
+        spriteManager->releaseByKey("ChallengePlayScene_LoseBackground");
+        spriteManager->releaseByKey("ChallengePlayScene_NextButton");
         Manager::ScoresManager::getInstance()->releaseScores();
         for (int i = 0; i < 10; i++) {
             this->road0SweetVector[i]->release();
@@ -182,9 +206,24 @@ namespace GameScene
     void ChallengePlayScene::addWinScene()
     {
         log("Win");
+        this->winBackground->setVisible(true);
+        this->winBackground->setLocalZOrder(100);
+        this->winBackground->resume();
+        this->nextButton->setVisible(true);
+        this->nextButton->setLocalZOrder(101);
+        this->nextButton->resume();
     }
     
-    void ChallengePlayScene::addLoseScene(){}
+    void ChallengePlayScene::addLoseScene()
+    {
+        log("Lose");
+        this->loseBackground->setVisible(true);
+        this->loseBackground->setLocalZOrder(100);
+        this->loseBackground->resume();
+        this->nextButton->setVisible(true);
+        this->nextButton->setLocalZOrder(101);
+        this->nextButton->resume();
+    }
 
     void ChallengePlayScene::play()
     {

@@ -74,6 +74,11 @@ namespace  GameScene
         this->ghost->runAction(Sequence::create(MoveBy::create(1.f, Vec2(0, 250)), FadeOut::create(0.1f), NULL));
     }
     
+    void PlayBaseScene::showWinAnimation()
+    {
+        this->addWinScene();
+    }
+    
     void PlayBaseScene::showFailAnimation()
     {
         int x = rand() % 5;
@@ -230,6 +235,7 @@ namespace  GameScene
         MoveTo::create(0.0f, Vec2(xP + ((-1) * rand() % 100), yP + (rand() % 100))),
         DelayTime::create(0.3f), FadeOut::create(0.0f),
         CallFunc::create(CC_CALLBACK_0(PlayBaseScene::removeBoss, this)),
+        DelayTime::create(1.3f),
         CallFunc::create(CC_CALLBACK_0(PlayBaseScene::addWinScene, this)), NULL));
     }
     
