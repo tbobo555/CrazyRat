@@ -16,6 +16,7 @@ namespace GameScene
         this->spriteCache->addSpriteFramesWithFile("image/Pig1Animation.plist");
         this->spriteCache->addSpriteFramesWithFile("image/Pig2Animation.plist");
         this->spriteCache->addSpriteFramesWithFile("image/MouthAnimation.plist");
+        this->spriteCache->addSpriteFramesWithFile("image/Boss01Animation.plist");
         auto spriteManager = Manager::SpriteManager::getInstance();
         std::stringstream backgroundKey;
         backgroundKey << "image/PlayBackground_" << 0 << ".png";
@@ -30,7 +31,7 @@ namespace GameScene
         std::string pig0Image = "Pig0Animation_0.png";
         std::string pig1Image = "Pig1Animation_0.png";
         std::string pig2Image = "Pig2Animation_0.png";
-        std::string bossImage = "image/Boss01.png";
+        std::string bossImage = "Boss01Animation_0.png";
         
         this->playBackground = new GameSprite::Background(backgroundImage);
         this->playBackground->setPosition(this->getBackgroundPosition());
@@ -43,7 +44,7 @@ namespace GameScene
         this->addChild(this->prepareNumber, 1);
         this->prepareNumber->setVisible(false);
         
-        this->boss = new GameSprite::Image(bossImage);
+        this->boss = new GameSprite::Boss(bossImage);
         this->boss->setPosition(this->getCloudPosition(1));
         this->addChild(this->boss, 2);
         spriteManager->setWithKey("ChallengePlayScene_Boss", this->boss);
@@ -142,6 +143,7 @@ namespace GameScene
         this->spriteCache->removeSpriteFramesFromFile("image/Pig1Animation.plist");
         this->spriteCache->removeSpriteFramesFromFile("image/Pig2Animation.plist");
         this->spriteCache->removeSpriteFramesFromFile("image/MouthAnimation.plist");
+        this->spriteCache->removeSpriteFramesFromFile("image/Bosso1Animation.plist");
     }
     
     void ChallengePlayScene::pauseScene()
@@ -170,8 +172,7 @@ namespace GameScene
     
     void ChallengePlayScene::addWinScene(){}
     
-    void ChallengePlayScene::addLoseScene()
-    {}
+    void ChallengePlayScene::addLoseScene(){}
 
     void ChallengePlayScene::play()
     {
@@ -185,7 +186,6 @@ namespace GameScene
         this->addSweetTime = 1 / this->sweetPerSecond;
         this->lastSweetRoad = -1;
         this->sweetInSameRoadTimes = -1;
-        this->bossLife = 3;
         
         schedule(CC_SCHEDULE_SELECTOR(ChallengePlayScene::prepareUpdate), 1.f);
     }
@@ -309,23 +309,24 @@ namespace GameScene
     void ChallengePlayScene::gameUpdate(float delta)
     {
         if (! this->isPaused) {
-            this->playTime += delta;
-            
-            if (this->playTime > this->addSweetTime) {
-                this->playTime = 0;
-                int road = rand() % 3;
-                if (road == this->lastSweetRoad) {
-                    this->sweetInSameRoadTimes ++;
+            if (! this->bossIsHurting) {
+                this->playTime += delta;
+                if (this->playTime > this->addSweetTime) {
+                    this->playTime = 0;
+                    int road = rand() % 3;
+                    if (road == this->lastSweetRoad) {
+                        this->sweetInSameRoadTimes ++;
+                    }
+                    if (this->sweetInSameRoadTimes >= 3) {
+                        road = (road + 1) % 3;
+                        this->sweetInSameRoadTimes = 0;
+                    }
+                    if (this->addSweetRoad != road) {
+                        this->boss->runAction(MoveTo::create(this->addSweetTime, this->getCloudPosition(road)));
+                    }
+                    this->addSweetRoad = this->nextSweetRoad;
+                    this->nextSweetRoad = road;
                 }
-                if (this->sweetInSameRoadTimes >= 3) {
-                    road = (road + 1) % 3;
-                    this->sweetInSameRoadTimes = 0;
-                }
-                if (this->addSweetRoad != road) {
-                    this->boss->runAction(MoveTo::create(this->addSweetTime, this->getCloudPosition(road)));
-                }
-                this->addSweetRoad = this->nextSweetRoad;
-                this->nextSweetRoad = road;
             }
         }
         if (! this->isPaused) {

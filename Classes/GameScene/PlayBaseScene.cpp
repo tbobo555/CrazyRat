@@ -153,6 +153,36 @@ namespace  GameScene
         return this->center;
     }
     
+    void PlayBaseScene::bossHurted()
+    {
+        this->bossIsHurting = true;
+        if (this->addSweetRoad != -1) {
+            this->resetBossRoad = this->addSweetRoad;
+            
+        } else {
+            this->resetBossRoad = rand() % 3;
+        }
+        this->addSweetRoad = -1;
+        this->boss->stopAllActions();
+        this->boss->runAction(Sequence::create(
+                                               DelayTime::create(0.5f),
+                                               MoveTo::create(0.6f, this->getCloudPosition(this->resetBossRoad)),
+                                               CallFunc::create(CC_CALLBACK_0(PlayBaseScene::resetBossMotion, this)),
+                                               CallFunc::create(CC_CALLBACK_0(PlayBaseScene::setBossNotHurt, this)),
+                                               NULL));
+    }
+    
+    void PlayBaseScene::resetBossMotion()
+    {
+        this->playTime = 0;
+        this->addSweetRoad = this->resetBossRoad;
+    }
+    
+    void PlayBaseScene::setBossNotHurt()
+    {
+        this->bossIsHurting = false;
+    }
+    
     Vec2 PlayBaseScene::getPigPosition(int roadNumber)
     {
         float height = Director::getInstance()->getWinSize().height;

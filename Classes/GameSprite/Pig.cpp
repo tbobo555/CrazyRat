@@ -306,12 +306,11 @@ namespace GameSprite
                 if (yDiff < 0) {
                     yDiff = yDiff * -1;
                 }
-                if (yDiff < 100 && xDiff < 100) {
-                    log("fuck it");
+                if (yDiff < 200 && xDiff < 200) {
                     static_cast<Image*>(*i)->stopAllActions();
                     static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent())->removeChild(static_cast<Image*>(*i));
                     static_cast<Image*>(*i)->release();
-                    static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent())->boss->setOpacity(150);
+                    static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent())->boss->hurt();
                     this->energyBlastList.erase(i);
                 }
             }
@@ -377,7 +376,8 @@ namespace GameSprite
         target->unschedule(CC_SCHEDULE_SELECTOR(Pig::longTouch));
         auto scene = static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent());
         if (scene->name == "ChallengePlayScene") {
-            if (target->presstTime < 0.35f) {
+            if (target->presstTime < 0.23f) {
+                //target->runEnergyBlast();
                 int point = target->eat();
                 std::cout << point << std::endl;
             } else {

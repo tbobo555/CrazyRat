@@ -85,13 +85,7 @@ namespace GameScene
         
         // 每秒產生幾個甜點
         float sweetPerSecond;
-        
-        // 產生單一甜點的秒數
-        float addSweetTime;
-        
-        // 要加入甜點的路線
-        int addSweetRoad;
-        
+
         // 遊戲時間
         float playTime;
         

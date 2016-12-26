@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "BaseScene.h"
 #include "GameSprite/Image.h"
+#include "GameSprite/Boss.h"
 #include "GameSprite/Background.h"
 #include "PlayBaseScene.h"
 #include "Manager/MusicManager.h"
@@ -54,7 +55,6 @@ namespace GameScene
          @brief 開始遊戲迴圈，這這會新增一個schedule來更新遊戲畫面
          */
         void play();
-
     private:
         // 是否暫停
         bool isPaused;
@@ -64,13 +64,7 @@ namespace GameScene
         
         // 每秒產生幾個甜點
         float sweetPerSecond;
-        
-        // 產生單一甜點的秒數
-        float addSweetTime;
-        
-        // 要加入甜點的路線
-        int addSweetRoad;
-        
+     
         // 下一個要加入甜點的路線
         int nextSweetRoad;
         

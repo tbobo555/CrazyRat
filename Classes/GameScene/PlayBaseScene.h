@@ -13,6 +13,7 @@
 #include "GameSprite/Pig.h"
 #include "GameSprite/Cloud.h"
 #include "GameSprite/Image.h"
+#include "GameSprite/Boss.h"
 
 USING_NS_CC;
 
@@ -147,7 +148,7 @@ namespace GameScene
          @return 甜點索引
          */
         int  getNearestSweetIndex(int road);
-        
+                
         /**
          @brief 取得指定路線最靠近豬的甜點物件
          @param road 路線編號
@@ -156,11 +157,32 @@ namespace GameScene
         GameSprite::Sweet* getNearestSweet(int road);
         
         // 魔王圖片
-        GameSprite::Image* boss;
+        GameSprite::Boss* boss;
         
-        // 魔王的生命值
-        int bossLife;
+        /**
+         @brief 魔王被擊中
+         */
+        void bossHurted();
+        
+        /**
+         @brief 魔王被擊中後的回覆
+         */
+        void resetBossMotion();
+        
+        /**
+         @brief 將魔王設置為未擊中
+         */
+        void setBossNotHurt();
+        
+        /**
+         @brief 在魔王被擊中後，重置攻擊路線
+         */
+        int resetBossRoad;
 
+        /**
+         @brief 魔王是否被攻擊
+         */
+        bool bossIsHurting;
     protected:
         // 存放sprite sheet的快取物件
         SpriteFrameCache* spriteCache;
@@ -171,6 +193,12 @@ namespace GameScene
         // 遊戲開始的倒數時間
         int prepareTime;
         
+        // 產生單一甜點的秒數
+        float addSweetTime;
+        
+        // 要加入甜點的路線
+        int addSweetRoad;
+
         // 倒數時間的實體物件
         GameSprite::Image* prepareNumber;
         
