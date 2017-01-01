@@ -45,6 +45,11 @@ namespace GameSprite {
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
             log("BackButton ended... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            auto controller = Controller::GameController::getInstance();
+            auto scene = Manager::SceneManager::getInstance()->getCurrent();
+            if (scene->name == "ChallengeScene") {
+                controller->challengeSceneToStartScene();
+            }
             target->setScale(1.0);
         } else {
             target->setScale(1.0);

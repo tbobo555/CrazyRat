@@ -33,6 +33,7 @@ namespace  GameScene
     
     GameSprite::Sweet* PlayBaseScene::getNearestSweet(int road)
     {
+        //TODO: get nearest sweet by position, use for-loop to find it out.
         if (road == 0 && ! this->road0RunningIndex.empty()) {
             return this->road0SweetVector.at(this->road0RunningIndex.front());
         } else if (road == 1 && ! this->road1RunningIndex.empty()) {
@@ -242,6 +243,11 @@ namespace  GameScene
     void PlayBaseScene::removeBoss()
     {
         this->boss->setVisible(false);
+    }
+    
+    Vec2 PlayBaseScene::getBossAttackPosition(int road)
+    {
+        return this->getCloudPosition(road);
     }
     
     Vec2 PlayBaseScene::getPigPosition(int roadNumber)

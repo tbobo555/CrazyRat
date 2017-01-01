@@ -61,4 +61,39 @@ namespace GameSprite
     {
         this->explode->setVisible(false);
     }
+    
+    void Boss::attackDone()
+    {
+        this->isAttacking = false;
+    }
+    
+    void Boss::attackRoad0()
+    {
+        static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent())->addSweetToRoad0 = true;
+    }
+    
+    void Boss::attackRoad1()
+    {
+        static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent())->addSweetToRoad1 = true;
+    }
+    
+    void Boss::attackRoad2()
+    {
+        static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent())->addSweetToRoad2 = true;
+    }
+    
+    void Boss::attackMode1()
+    {
+        this->isAttacking = true;
+        auto currentScene = static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent());
+        this->runAction(Sequence::create(
+                        MoveTo::create(1.5f, currentScene->getBossAttackPosition(0)),
+                        CallFunc::create(CC_CALLBACK_0(Boss::attackRoad0, this)),
+                        MoveTo::create(1.5f, currentScene->getBossAttackPosition(1)),
+                        CallFunc::create(CC_CALLBACK_0(Boss::attackRoad1, this)),
+                        MoveTo::create(1.5f, currentScene->getBossAttackPosition(2)),
+                        CallFunc::create(CC_CALLBACK_0(Boss::attackRoad2, this)),
+                        CallFunc::create(CC_CALLBACK_0(Boss::attackDone, this)),
+                        NULL));
+    }
 }

@@ -240,7 +240,7 @@ namespace GameScene
         this->isPaused= false;
         this->prepareTime = 4;
         this->addSweetRoad = -1;
-        this->playTime = 0;
+        this->sweetPeriod = 0;
         this->sweetRunSpeed = 2.5f;
         this->sweetPerSecond = 2.0f;
         this->addSweetTime = 1 / this->sweetPerSecond;
@@ -435,10 +435,10 @@ namespace GameScene
     {
         if (! this->isPaused) {
             if (! this->levelUpNow) {
-                this->playTime += delta;
+                this->sweetPeriod += delta;
             }
-            if (this->playTime > this->addSweetTime) {
-                this->playTime = 0;
+            if (this->sweetPeriod > this->addSweetTime) {
+                this->sweetPeriod = 0;
                 int road = rand() % 3;
                 if (road == this->lastSweetRoad) {
                     this->sweetInSameRoadTimes ++;

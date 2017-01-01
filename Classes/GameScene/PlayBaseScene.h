@@ -112,6 +112,18 @@ namespace GameScene
         // 失敗路線的索引
         int failRoadIndex;
         
+        // boss是否出場
+        bool isBossTime;
+        
+        // 是否要在路線0放置甜點
+        bool addSweetToRoad0;
+        
+        // 是否要在路線1放置甜點
+        bool addSweetToRoad1;
+        
+        // 是否要在路線2放置甜點
+        bool addSweetToRoad2;
+        
         /**
          @brief 在魔王被擊中後，重置攻擊路線
          */
@@ -207,6 +219,12 @@ namespace GameScene
          @brief 將魔王移除遊戲畫面
          */
         void removeBoss();
+        
+        /**
+         @brief 取得魔王攻擊的位置
+         @param road 路線編號
+         */
+        Vec2 getBossAttackPosition(int road);
     protected:
         // 存放sprite sheet的快取物件
         SpriteFrameCache* spriteCache;
@@ -228,6 +246,9 @@ namespace GameScene
         
         // 遊戲已經開始的時間
         float playTime;
+        
+        // 甜點降落的頻率
+        float sweetPeriod;
         
         // 路線0目前的甜點索引，此索引代表已經落下的甜點數量
         int road0CurrentIndex;

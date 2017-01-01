@@ -5,6 +5,10 @@ namespace GameScene
     ChallengePlayScene::ChallengePlayScene() : PlayBaseScene()
     {
         this->name = "ChallengePlayScene";
+        this->addSweetToRoad0 = false;
+        this->addSweetToRoad1 = false;
+        this->addSweetToRoad2 = false;
+        this->isBossTime = false;
     }
     
     void ChallengePlayScene::initScene()
@@ -35,6 +39,9 @@ namespace GameScene
         std::string pig0Image = "Pig0Animation_0.png";
         std::string pig1Image = "Pig1Animation_0.png";
         std::string pig2Image = "Pig2Animation_0.png";
+        std::string cloud0Image = "image/Cloud0.png";
+        std::string cloud1Image = "image/Cloud1.png";
+        std::string cloud2Image = "image/Cloud2.png";
         std::string bossImage = "Boss01Animation_0.png";
         
         this->playBackground = new GameSprite::Background(backgroundImage);
@@ -51,6 +58,7 @@ namespace GameScene
         
         this->boss = new GameSprite::Boss(bossImage);
         this->boss->setPosition(this->getCloudPosition(1));
+        this->boss->setVisible(false);
         this->addChild(this->boss, 5);
         spriteManager->setWithKey("ChallengePlayScene_Boss", this->boss);
         
@@ -129,6 +137,20 @@ namespace GameScene
         this->addChild(this->road2Pig, 2);
         spriteManager->setWithKey("ChallengePlayScene_Road2Pig", this->road2Pig);
         
+        this->road0Cloud = new Cloud(cloud0Image);
+        this->road0Cloud->setPosition(this->getCloudPosition(0));
+        this->addChild(this->road0Cloud, 20);
+        spriteManager->setWithKey("ChallengePlayScene_Road0Cloud", this->road0Cloud);
+        this->road1Cloud = new Cloud(cloud1Image);
+        this->road1Cloud->setPosition(this->getCloudPosition(1));
+        this->addChild(this->road1Cloud, 20);
+        spriteManager->setWithKey("ChallengePlayScene_Road1Cloud", this->road1Cloud);
+        this->road2Cloud = new Cloud(cloud2Image);
+        this->road2Cloud->setPosition(this->getCloudPosition(2));
+        this->addChild(this->road2Cloud, 20);
+        spriteManager->setWithKey("ChallengePlayScene_Road2Cloud", this->road2Cloud);
+        
+        
         this->winBackground = new Background(winBackgroundImage);
         this->winBackground->setPosition(this->center);
         this->addChild(this->winBackground, -100);
@@ -158,6 +180,9 @@ namespace GameScene
         spriteManager->releaseByKey("ChallengePlayScene_Road0Pig");
         spriteManager->releaseByKey("ChallengePlayScene_Road1Pig");
         spriteManager->releaseByKey("ChallengePlayScene_Road2Pig");
+        spriteManager->releaseByKey("ChallengePlayScene_Road0Cloud");
+        spriteManager->releaseByKey("ChallengePlayScene_Road1Cloud");
+        spriteManager->releaseByKey("ChallengePlayScene_Road2Cloud");
         spriteManager->releaseByKey("ChallengePlayScene_Boss");
         spriteManager->releaseByKey("ChallengePlayScene_Road0EatBlock");
         spriteManager->releaseByKey("ChallengePlayScene_Road1EatBlock");
@@ -232,6 +257,7 @@ namespace GameScene
         this->addSweetRoad = -1;
         this->nextSweetRoad = -1;
         this->playTime = 0;
+        this->sweetPeriod = 0;
         this->sweetRunSpeed = 2.5f;
         this->sweetPerSecond = 2.0f;
         this->addSweetTime = 1 / this->sweetPerSecond;
@@ -303,7 +329,8 @@ namespace GameScene
     {
         if (! this->isPaused) {
             // 判斷是否還有甜點需要落下
-            if (this->addSweetRoad == 0) {
+            if (this->addSweetRoad == 0 || this->addSweetToRoad0 == true) {
+                this->addSweetToRoad0 = false;
                 this->addSweetRoad = -1;
                 int availabelIndex = this->road0AvailableIndex.back();
                 this->road0AvailableIndex.pop_back();
@@ -323,7 +350,8 @@ namespace GameScene
     {
         if (! this->isPaused) {
             // 判斷是否還有甜點需要落下
-            if (this->addSweetRoad == 1) {
+            if (this->addSweetRoad == 1 || this->addSweetToRoad1 == true) {
+                this->addSweetToRoad1 = false;
                 this->addSweetRoad = -1;
                 int availabelIndex = this->road1AvailableIndex.back();
                 this->road1AvailableIndex.pop_back();
@@ -343,7 +371,8 @@ namespace GameScene
     {
         if (! this->isPaused) {
             // 判斷是否還有甜點需要落下
-            if (this->addSweetRoad == 2) {
+            if (this->addSweetRoad == 2 || this->addSweetToRoad2 == true) {
+                this->addSweetToRoad2 = false;
                 this->addSweetRoad = -1;
                 int availabelIndex = this->road2AvailableIndex.back();
                 this->road2AvailableIndex.pop_back();
@@ -362,10 +391,22 @@ namespace GameScene
     void ChallengePlayScene::gameUpdate(float delta)
     {
         if (! this->isPaused) {
-            if (! this->bossIsHurting) {
-                this->playTime += delta;
-                if (this->playTime > this->addSweetTime) {
-                    this->playTime = 0;
+            this->playTime += delta;
+            if (! this->isBossTime) {
+                if (this->playTime >= 60) {
+                    this->isBossTime = true;
+                    this->road0Cloud->setVisible(false);
+                    this->road1Cloud->setVisible(false);
+                    this->road2Cloud->setVisible(false);
+                    this->boss->setVisible(true);
+                }
+            }
+        }
+        if (! this->isPaused) {
+            if (! this->isBossTime) {
+                this->sweetPeriod += delta;
+                if (this->sweetPeriod > this->addSweetTime) {
+                    this->sweetPeriod = 0;
                     int road = rand() % 3;
                     if (road == this->lastSweetRoad) {
                         this->sweetInSameRoadTimes ++;
@@ -374,11 +415,16 @@ namespace GameScene
                         road = (road + 1) % 3;
                         this->sweetInSameRoadTimes = 0;
                     }
-                    if (this->addSweetRoad != road) {
-                        this->boss->runAction(MoveTo::create(this->addSweetTime, this->getCloudPosition(road)));
-                    }
-                    this->addSweetRoad = this->nextSweetRoad;
-                    this->nextSweetRoad = road;
+                    this->addSweetRoad = road;
+                }
+            }
+        }
+        
+        if (! this->isPaused) {
+            // TODO: trigger with all roads, use three variable (addSweetRoad0 addSweetRoad1 addSweetRoad2) to finish it.
+            if (isBossTime) {
+                if (! this->boss->isAttacking) {
+                    this->boss->attackMode1();
                 }
             }
         }

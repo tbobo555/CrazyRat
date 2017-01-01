@@ -264,6 +264,16 @@ namespace Controller
         SceneManager::getInstance()->setCurrent(scene);
         this->addMenuSceneToCurrentScene();
         Director::getInstance()->replaceScene(scene);
+        scene->showBossButtonAmimation();
+    }
+    
+    void GameController::challengeSceneToStartScene()
+    {
+        StartScene *scene = static_cast<StartScene*>(SceneManager::getInstance()->getByKey("StartScene"));
+        this->removeMenuSceneFromCurrentScene();
+        SceneManager::getInstance()->setCurrent(scene);
+        this->addMenuSceneToCurrentScene();
+        Director::getInstance()->replaceScene(scene);
     }
     
     void GameController::challengeSceneToChallengePlayScene()
@@ -312,6 +322,7 @@ namespace Controller
         SceneManager::getInstance()->setCurrent(challengeScene);
         this->addMenuSceneToCurrentScene();
         Director::getInstance()->replaceScene(challengeScene);
+        challengeScene->showBossButton();
     }
 
 }

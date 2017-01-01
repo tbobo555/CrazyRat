@@ -29,6 +29,9 @@ namespace GameSprite
         // 魔王的生命值
         int life;
         
+        // 是否正在進行攻擊
+        bool isAttacking;
+        
         /**
          @brief 魔王被攻擊所觸發的方法
          */
@@ -44,10 +47,35 @@ namespace GameSprite
          @param index 圖檔在快取中的參數
          */
         void setHurtImage(int index);
+        
+        /**
+         @brief 攻擊完畢
+         */
+        void attackDone();
+        
+        /**
+         @brief 攻擊路線0
+         */
+        void attackRoad0();
+        
+        /**
+         @brief 攻擊路線1
+         */
+        void attackRoad1();
+        
+        /**
+         @brief 攻擊路線2
+         */
+        void attackRoad2();
+        
+        /**
+         @brief 攻擊模式1
+         */
+        void attackMode1();
     private:
         // 被豬攻擊的爆炸圖片
         GameSprite::Image* explode;
-
+        
         /**
          @brief 隱藏被豬攻擊的動畫
          @param delta 時間常數，代表要多久執行一次

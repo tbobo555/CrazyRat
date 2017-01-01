@@ -306,12 +306,14 @@ namespace GameSprite
                 if (yDiff < 0) {
                     yDiff = yDiff * -1;
                 }
-                if (yDiff < 200 && xDiff < 200) {
-                    static_cast<Image*>(*i)->stopAllActions();
-                    static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent())->removeChild(static_cast<Image*>(*i));
-                    static_cast<Image*>(*i)->release();
-                    static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent())->boss->hurt();
-                    this->energyBlastList.erase(i);
+                if (static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent())->isBossTime) {
+                    if (yDiff < 200 && xDiff < 200) {
+                        static_cast<Image*>(*i)->stopAllActions();
+                        static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent())->removeChild(static_cast<Image*>(*i));
+                        static_cast<Image*>(*i)->release();
+                        static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent())->boss->hurt();
+                        this->energyBlastList.erase(i);
+                    }
                 }
             }
             ++i;

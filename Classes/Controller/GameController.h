@@ -163,10 +163,24 @@ namespace Controller
          */
         void startSceneToChallengeScene();
         
+        /**
+         @brief 畫面從ChallengeScene切換為StartScene
+         */
+        void challengeSceneToStartScene();
+        
+        /**
+         @brief 畫面從ChallengeScene切換為ChallengePlayScene
+         */
         void challengeSceneToChallengePlayScene();
         
+        /**
+         @brief 畫面從ChallengePlayScene切換為ChallengeScene
+         */
         void challengePlaySceneToChallengeScene();
         
+        /**
+         @brief 重新載入ChallengePlayScene
+         */
         void retryChallengePlayScene();
         
     private:
