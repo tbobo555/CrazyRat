@@ -1,40 +1,41 @@
-#include "ChallengeButton.h"
-#include "Controller/GameController.h"
+#include "HighScoreButton.h"
+#include "GameScene/ChallengeScene.h"
 
 namespace GameSprite
 {
-    ChallengeButton::ChallengeButton(std::string image) : GameSprite::BaseSprite(image)
+    HighScoreButton::HighScoreButton(std::string image) : GameSprite::BaseSprite(image)
     {
         this->addEventListener();
     }
     
-    void ChallengeButton::addEventListener()
+    void HighScoreButton::addEventListener()
     {
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);
-        listener->onTouchBegan = ChallengeButton::onTouchBegan;
-        listener->onTouchEnded = ChallengeButton::onTouchEnded;
-        listener->onTouchMoved = ChallengeButton::onTouchMoved;
-        listener->onTouchCancelled = ChallengeButton::onTouchCanceled;
+        listener->onTouchBegan = HighScoreButton::onTouchBegan;
+        listener->onTouchEnded = HighScoreButton::onTouchEnded;
+        listener->onTouchMoved = HighScoreButton::onTouchMoved;
+        listener->onTouchCancelled = HighScoreButton::onTouchCanceled;
         Director::getInstance()->getEventDispatcher()
         ->addEventListenerWithSceneGraphPriority(listener, this);
     }
     
-    bool ChallengeButton::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event)
+    bool HighScoreButton::onTouchBegan(Touch* touch, Event* event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
         Size s = target->getContentSize();
         Rect rect = Rect(0, 0, s.width, s.height);
+        
         if (rect.containsPoint(locationInNode)) {
+            Manager::SoundsManager::getInstance()->playSound("audio/sounds/ButtonClick.caf");
             target->setScale(0.95);
             return true;
         }
         return false;
-        
     }
     
-    void ChallengeButton::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event)
+    void HighScoreButton::onTouchEnded(Touch* touch, Event* event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
@@ -42,18 +43,19 @@ namespace GameSprite
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
             target->setScale(1.0);
-            Controller::GameController::getInstance()->startSceneToChallengeScene();
+            auto current = static_cast<ChallengeScene*>(Manager::SceneManager::getInstance()->getCurrent());
+            current->showHighScore();
         } else {
             target->setScale(1.0);
         }
     }
     
-    void ChallengeButton::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event)
+    void HighScoreButton::onTouchMoved(Touch* touch, Event* event)
     {
     }
     
-    void ChallengeButton::onTouchCanceled(cocos2d::Touch *touch, cocos2d::Event *event)
+    void HighScoreButton::onTouchCanceled(Touch* touch, Event* event)
     {
     }
-
+    
 }

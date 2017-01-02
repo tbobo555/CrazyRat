@@ -43,7 +43,7 @@ namespace GameSprite
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
             target->setScale(1.0);
-            Controller::GameController::getInstance()->startSceneToPlayInfiniteScene();
+            Controller::GameController::getInstance()->startSceneToChallengeScene();
         } else {
             target->setScale(1.0);
         }

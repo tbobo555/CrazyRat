@@ -60,6 +60,27 @@ namespace GameScene
         this->bossButton7->setVisible(false);
         this->addChild(this->bossButton7, 3);
         
+        this->highScoreButton = new GameSprite::HighScoreButton("image/HighScoreButton.png");
+        this->highScoreButton->setPosition(this->getHighScoreButtonPosition());
+        this->addChild(this->highScoreButton, 3);
+
+        this->highScoreMask = new GameSprite::HighScoreMask("image/HighScoreRecordBackground.png");
+        this->highScoreMask->setPosition(this->center);
+        this->addChild(this->highScoreMask, -2);
+
+        int newHighScore = DB::NewHighScoreSetting::getInstance()->getHighScore();
+        std::stringstream scoreKey;
+        scoreKey << newHighScore;
+        this->highScore = Label::createWithTTF(scoreKey.str(), "fonts/KOMIKAX.ttf", 170);
+        this->highScore->setPosition(this->center);
+        this->highScore->setColor(Color3B(249, 249, 21));
+        this->highScore->retain();
+        this->addChild(this->highScore, -1);
+        
+        this->endlessButton = new GameSprite::EndlessButton("image/EndlessButton.png");
+        this->endlessButton->setPosition(this->getEndlessButtonPosition());
+        this->addChild(this->endlessButton, 3);
+        
         Manager::SpriteManager::getInstance()->setWithKey("ChallengeScene_Background", this->challengeBackground);
         Manager::SpriteManager::getInstance()->setWithKey("ChallengeScene_BackButton", this->backButton);
         Manager::SpriteManager::getInstance()->setWithKey("ChallengeScene_BossButton0", this->bossButton0);
@@ -70,6 +91,9 @@ namespace GameScene
         Manager::SpriteManager::getInstance()->setWithKey("ChallengeScene_BossButton5", this->bossButton5);
         Manager::SpriteManager::getInstance()->setWithKey("ChallengeScene_BossButton6", this->bossButton6);
         Manager::SpriteManager::getInstance()->setWithKey("ChallengeScene_BossButton7", this->bossButton7);
+        Manager::SpriteManager::getInstance()->setWithKey("ChallengeScene_HighScoreButton", this->highScoreButton);
+        Manager::SpriteManager::getInstance()->setWithKey("ChallengeScene_HighScoreMask", this->highScoreMask);
+        Manager::SpriteManager::getInstance()->setWithKey("ChallengeScene_EndlessButton", this->endlessButton);
     }
     
     void ChallengeScene::releaseScene()
@@ -86,10 +110,14 @@ namespace GameScene
         spriteManager->releaseByKey("ChallengeScene_BossButton5");
         spriteManager->releaseByKey("ChallengeScene_BossButton6");
         spriteManager->releaseByKey("ChallengeScene_BossButton7");
+        spriteManager->releaseByKey("ChallengeScene_HighScoreButton");
+        spriteManager->releaseByKey("ChallengeScene_HighScoreMask");
+        spriteManager->releaseByKey("ChallengeScene_EndlessButton");
     }
     
     void ChallengeScene::showBossButton()
     {
+        this->isShowBossButtonAnimation = true;
         this->bossButton0->cocos2d::Node::setVisible(true);
         this->bossButton1->cocos2d::Node::setVisible(true);
         this->bossButton2->cocos2d::Node::setVisible(true);
@@ -98,6 +126,20 @@ namespace GameScene
         this->bossButton5->cocos2d::Node::setVisible(true);
         this->bossButton6->cocos2d::Node::setVisible(true);
         this->bossButton7->cocos2d::Node::setVisible(true);
+        this->endlessButton->cocos2d::Node::setVisible(true);
+        this->highScoreButton->cocos2d::Node::setVisible(true);
+    }
+    
+    void ChallengeScene::showHighScore()
+    {
+        this->highScoreMask->setLocalZOrder(100);
+        this->highScore->setLocalZOrder(101);
+    }
+    
+    void ChallengeScene::hideHighScore()
+    {
+        this->highScoreMask->setLocalZOrder(-2);
+        this->highScore->setLocalZOrder(-1);
     }
     
     Vec2 ChallengeScene::getBossButtonPosition(int index)
@@ -140,6 +182,8 @@ namespace GameScene
         auto spriteManager = Manager::SpriteManager::getInstance();
         spriteManager->getByKey("MenuScene_SettingButton")->setVisible(false);
         this->backButton->setVisible(false);
+        this->endlessButton->setVisible(false);
+        this->highScoreButton->setVisible(false);
         this->isShowBossButtonAnimation = true;
         this->runAction(Sequence::create(
         CallFunc::create(CC_CALLBACK_0(ChallengeScene::runBossButton0, this)),
@@ -157,7 +201,7 @@ namespace GameScene
         CallFunc::create(CC_CALLBACK_0(ChallengeScene::runBossButton6, this)),
         DelayTime::create(this->bossButtonAnimationPeriod),
         CallFunc::create(CC_CALLBACK_0(ChallengeScene::runBossButton7, this)),
-        DelayTime::create(this->bossButtonAnimationPeriod),
+        DelayTime::create(0.6f),
         CallFunc::create(CC_CALLBACK_0(ChallengeScene::bossButtonAnimationDone, this)),
         NULL));
     }
@@ -224,11 +268,23 @@ namespace GameScene
         auto spriteManager = Manager::SpriteManager::getInstance();
         spriteManager->getByKey("MenuScene_SettingButton")->setVisible(true);
         this->backButton->setVisible(true);
+        this->endlessButton->setVisible(true);
+        this->highScoreButton->setVisible(true);
     }
     
     Vec2 ChallengeScene::getBackButtonPosition()
     {
         float width = this->visibleSize.width;
         return Vec2(this->visibleOrigin.x + (width - 150), this->visibleOrigin.y + 150);
+    }
+    
+    Vec2 ChallengeScene::getHighScoreButtonPosition()
+    {
+        return Vec2(672, 700);
+    }
+    
+    Vec2 ChallengeScene::getEndlessButtonPosition()
+    {
+        return Vec2(406, 700);
     }
 }

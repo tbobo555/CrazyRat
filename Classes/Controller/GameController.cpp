@@ -205,7 +205,7 @@ namespace Controller
         scene->runAnimation();
     }
 
-    void GameController::startSceneToPlayInfiniteScene()
+    void GameController::challengeSceneToPlayInfiniteScene()
     {
         this->releaseStartSceneResource();
         this->releaseChallengeSceneResource();
@@ -240,7 +240,7 @@ namespace Controller
         scene->play();
     }
     
-    void GameController::playInfiniteSceneToStartScene()
+    void GameController::playInfiniteSceneToChallengeScene()
     {
         this->removePauseSceneFromCurrentScene();
         this->releasePauseSceneResource();
@@ -251,10 +251,11 @@ namespace Controller
         this->loadMenuSceneResource();
         this->loadStartSceneResource();
         this->loadChallengeSceneResource();
-        StartScene* startScene = static_cast<StartScene*>(SceneManager::getInstance()->getByKey("StartScene"));
-        SceneManager::getInstance()->setCurrent(startScene);
+        ChallengeScene* challengeScene = static_cast<ChallengeScene*>(SceneManager::getInstance()->getByKey("ChallengeScene"));
+        SceneManager::getInstance()->setCurrent(challengeScene);
         this->addMenuSceneToCurrentScene();
-        Director::getInstance()->replaceScene(startScene);
+        Director::getInstance()->replaceScene(challengeScene);
+        challengeScene->showBossButton();
     }
     
     void GameController::startSceneToChallengeScene()

@@ -6,7 +6,11 @@
 #include "GameSprite/Background.h"
 #include "GameSprite/BossButton.h"
 #include "GameSprite/BackButton.h"
+#include "GameSprite/HighScoreButton.h"
+#include "GameSprite/HighScoreMask.h"
+#include "GameSprite/EndlessButton.h"
 #include "Manager/SpriteManager.h"
+#include "Db/NewHighScoreSetting.h"
 
 namespace GameScene
 {
@@ -40,6 +44,16 @@ namespace GameScene
          @brief 顯示魔王按鈕
          */
         void showBossButton();
+        
+        /**
+         @brief 顯示最高得分
+         */
+        void showHighScore();
+        
+        /**
+         @brief 隱藏最高得分
+         */
+        void hideHighScore();
     private:
         // 魔王按鈕動畫的飛行時間
         float bossButtonAnimationPeriod;
@@ -73,6 +87,18 @@ namespace GameScene
         
         // 第7關按鈕
         GameSprite::BossButton* bossButton7;
+        
+        // 高分成就按鈕
+        GameSprite::HighScoreButton* highScoreButton;
+        
+        // 最高得分背景圖檔
+        GameSprite::HighScoreMask* highScoreMask;
+        
+        // 無限模式按鈕
+        GameSprite::EndlessButton* endlessButton;
+        
+        // 最高得分
+        Label* highScore;
         
         /**
          @brief 取得闖關按鈕的座標位置
@@ -130,6 +156,18 @@ namespace GameScene
          @brief 取得返回按鈕的座標位置
          */
         Vec2 getBackButtonPosition();
+        
+        /**
+         @brief 取得高分成就按鈕的座標位置
+         @return 一個二維向量，代表高分成就按鈕的座標
+         */
+        Vec2 getHighScoreButtonPosition();
+        
+        /**
+         @brief 取得無限模式按鈕的座標位置
+         @return 一個二維向量，代表無限模式按鈕的座標
+         */
+        Vec2 getEndlessButtonPosition();
     };
 }
 

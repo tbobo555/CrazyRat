@@ -1,26 +1,26 @@
-#include "HighScoresButton.h"
-#include "GameScene/StartScene.h"
+#include "EndlessButton.h"
+#include "Controller/GameController.h"
 
 namespace GameSprite
 {
-    HighScoresButton::HighScoresButton(std::string image) : GameSprite::BaseSprite(image)
+    EndlessButton::EndlessButton(std::string image) : GameSprite::BaseSprite(image)
     {
         this->addEventListener();
     }
     
-    void HighScoresButton::addEventListener()
+    void EndlessButton::addEventListener()
     {
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);
-        listener->onTouchBegan = HighScoresButton::onTouchBegan;
-        listener->onTouchEnded = HighScoresButton::onTouchEnded;
-        listener->onTouchMoved = HighScoresButton::onTouchMoved;
-        listener->onTouchCancelled = HighScoresButton::onTouchCanceled;
+        listener->onTouchBegan = EndlessButton::onTouchBegan;
+        listener->onTouchEnded = EndlessButton::onTouchEnded;
+        listener->onTouchMoved = EndlessButton::onTouchMoved;
+        listener->onTouchCancelled = EndlessButton::onTouchCanceled;
         Director::getInstance()->getEventDispatcher()
         ->addEventListenerWithSceneGraphPriority(listener, this);
     }
     
-    bool HighScoresButton::onTouchBegan(Touch* touch, Event* event)
+    bool EndlessButton::onTouchBegan(Touch* touch, Event* event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
@@ -35,7 +35,7 @@ namespace GameSprite
         return false;
     }
     
-    void HighScoresButton::onTouchEnded(Touch* touch, Event* event)
+    void EndlessButton::onTouchEnded(Touch* touch, Event* event)
     {
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
@@ -43,18 +43,17 @@ namespace GameSprite
         Rect rect = Rect(0, 0, s.width, s.height);
         if (rect.containsPoint(locationInNode)) {
             target->setScale(1.0);
-            auto current = static_cast<StartScene*>(Manager::SceneManager::getInstance()->getCurrent());
-            current->showHighScore();
+            Controller::GameController::getInstance()->challengeSceneToPlayInfiniteScene();
         } else {
             target->setScale(1.0);
         }
     }
     
-    void HighScoresButton::onTouchMoved(Touch* touch, Event* event)
+    void EndlessButton::onTouchMoved(Touch* touch, Event* event)
     {
     }
     
-    void HighScoresButton::onTouchCanceled(Touch* touch, Event* event)
+    void EndlessButton::onTouchCanceled(Touch* touch, Event* event)
     {
     }
     

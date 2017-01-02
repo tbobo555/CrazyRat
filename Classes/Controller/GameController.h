@@ -142,11 +142,11 @@ namespace Controller
          @brief 顯示StartScene，此方法在App開啟時會被呼叫
          */
         void runStartScene();
-        
+
         /**
-         @brief 畫面從StartScene切換為PlayInfiniteScene
+         @brief 畫面從ChallengeScene切換為PlayInfiniteScene
          */
-        void startSceneToPlayInfiniteScene();
+        void challengeSceneToPlayInfiniteScene();
         
         /**
          @brief 重新載入PlayInfiniteScene
@@ -154,9 +154,9 @@ namespace Controller
         void retryPlayInfiniteScene();
         
         /**
-         @brief 畫面從PlayInfiniteScene切換為StartScene
+         @brief 畫面從PlayInfiniteScene切換為ChallengeScene
          */
-        void playInfiniteSceneToStartScene();
+        void playInfiniteSceneToChallengeScene();
         
         /**
          @brief 畫面從StartScene切換為ChallengeScene

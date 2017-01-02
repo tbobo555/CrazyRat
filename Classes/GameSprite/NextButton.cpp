@@ -49,7 +49,7 @@ namespace GameSprite
             auto currentScene = static_cast<GameScene::PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent());
             auto controller = Controller::GameController::getInstance();
             if (currentScene->name == "PlayInfiniteScene") {
-                controller->playInfiniteSceneToStartScene();
+                controller->playInfiniteSceneToChallengeScene();
             } else if (currentScene->name == "ChallengePlayScene") {
                 controller->challengePlaySceneToChallengeScene();
             }

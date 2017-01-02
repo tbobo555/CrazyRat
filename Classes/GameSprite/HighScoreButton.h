@@ -1,5 +1,5 @@
-#ifndef _GameSprite_HighScoresButton_H_
-#define _GameSprite_HighScoresButton_H_
+#ifndef _GameSprite_HighScoreButton_H_
+#define _GameSprite_HighScoreButton_H_
 
 #include "cocos2d.h"
 #include "BaseSprite.h"
@@ -11,14 +11,14 @@ USING_NS_CC;
 
 namespace GameSprite
 {
-    class HighScoresButton : public BaseSprite
+    class HighScoreButton : public BaseSprite
     {
     public:
         /**
          @brief 建構式
          @param image 高分成就按鈕要使用的圖片
          */
-        HighScoresButton(std::string image);
+        HighScoreButton(std::string image);
         
         /**
          @brief 加入事件監聽，物件會開始偵測觸控輸入
@@ -57,4 +57,4 @@ namespace GameSprite
     };
 }
 
-#endif /* _GameSprite_HighScoresButton_H_ */
+#endif /* _GameSprite_HighScoreButton_H_ */

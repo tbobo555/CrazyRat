@@ -1,5 +1,5 @@
 #include "HighScoreMask.h"
-#include "GameScene/StartScene.h"
+#include "GameScene/ChallengeScene.h"
 
 namespace GameSprite
 {
@@ -36,7 +36,7 @@ namespace GameSprite
     
     void HighScoreMask::onTouchEnded(Touch* touch, Event* event)
     {
-        auto current = static_cast<StartScene*>(Manager::SceneManager::getInstance()->getCurrent());
+        auto current = static_cast<ChallengeScene*>(Manager::SceneManager::getInstance()->getCurrent());
         current->hideHighScore();
     }
     
