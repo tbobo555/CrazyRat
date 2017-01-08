@@ -225,6 +225,12 @@ namespace GameScene
          @param road 路線編號
          */
         Vec2 getBossAttackPosition(int road);
+        
+        /**
+         @brief 取得魔王攻擊的最終落下位置
+         @param road 路線編號
+         */
+        Vec2 getBossAttackTargetPosition(int road);
     protected:
         // 存放sprite sheet的快取物件
         SpriteFrameCache* spriteCache;

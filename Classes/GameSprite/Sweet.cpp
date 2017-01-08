@@ -131,6 +131,21 @@ namespace GameSprite
         this->runAction(Sequence::create(actionBy, CallFunc::create(CC_CALLBACK_0(Sweet::missEat, this)), nullptr));
     }
     
+    void Sweet::runWithBoss()
+    {
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        Vec2 visibleOrigin = Director::getInstance()->getVisibleOrigin();
+        auto currentScene = static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent());
+        Vec2 targetPosition = currentScene->getBossAttackTargetPosition(this->roadIndex);
+        float standartDistance = (visibleOrigin.y + 0.87 * visibleSize.height) - (0.24 * 1920 + 130);
+        float realDistance = this->getPosition().distance(targetPosition);
+        log("standartDistance %f", standartDistance);
+        log("realDistance %f", realDistance);
+        log("runningTime %f", this->runningTime * realDistance / standartDistance);
+        auto actionTo = MoveTo::create(this->runningTime * realDistance / standartDistance, targetPosition);
+        this->runAction(Sequence::create(actionTo, CallFunc::create(CC_CALLBACK_0(Sweet::missEat, this)), nullptr));
+    }
+    
     void Sweet::addEventListener()
     {
         Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(this->listener, this);

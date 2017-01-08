@@ -30,7 +30,7 @@
 			<key>spriteSourceSize</key>
 			<string>{250,260}</string>
 			<key>textureRect</key>
-			<string>{{0,260},{250,260}}</string>
+			<string>{{250,0},{250,260}}</string>
 			<key>textureRotated</key>
 			<false/>
 		</dict>
@@ -45,7 +45,7 @@
 			<key>spriteSourceSize</key>
 			<string>{250,260}</string>
 			<key>textureRect</key>
-			<string>{{0,520},{250,260}}</string>
+			<string>{{5000,0},{250,260}}</string>
 			<key>textureRotated</key>
 			<false/>
 		</dict>
@@ -60,7 +60,82 @@
 			<key>spriteSourceSize</key>
 			<string>{250,260}</string>
 			<key>textureRect</key>
-			<string>{{0,780},{250,260}}</string>
+			<string>{{0,260},{250,260}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		<key>Boss01Animation_4.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteOffset</key>
+			<string>{0,0}</string>
+			<key>spriteSize</key>
+			<string>{250,260}</string>
+			<key>spriteSourceSize</key>
+			<string>{250,260}</string>
+			<key>textureRect</key>
+			<string>{{250,260},{250,260}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		<key>Boss01Animation_5.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteOffset</key>
+			<string>{0,0}</string>
+			<key>spriteSize</key>
+			<string>{250,260}</string>
+			<key>spriteSourceSize</key>
+			<string>{250,260}</string>
+			<key>textureRect</key>
+			<string>{{500,260},{250,260}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		<key>Boss01Animation_6.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteOffset</key>
+			<string>{0,0}</string>
+			<key>spriteSize</key>
+			<string>{250,260}</string>
+			<key>spriteSourceSize</key>
+			<string>{250,260}</string>
+			<key>textureRect</key>
+			<string>{{0,520},{250,260}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		<key>Boss01Animation_7.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteOffset</key>
+			<string>{0,0}</string>
+			<key>spriteSize</key>
+			<string>{250,260}</string>
+			<key>spriteSourceSize</key>
+			<string>{250,260}</string>
+			<key>textureRect</key>
+			<string>{{250,520},{250,260}}</string>
+			<key>textureRotated</key>
+			<false/>
+		</dict>
+		<key>Boss01Animation_8.png</key>
+		<dict>
+			<key>aliases</key>
+			<array/>
+			<key>spriteOffset</key>
+			<string>{0,0}</string>
+			<key>spriteSize</key>
+			<string>{250,260}</string>
+			<key>spriteSourceSize</key>
+			<string>{250,260}</string>
+			<key>textureRect</key>
+			<string>{{500,520},{250,260}}</string>
 			<key>textureRotated</key>
 			<false/>
 		</dict>
@@ -76,7 +151,7 @@
 		<key>realTextureFileName</key>
 		<string>Boss01Animation.png</string>
 		<key>size</key>
-		<string>{250,1040}</string>
+		<string>{750,780}</string>
 		<key>smartupdate</key>
 		<string>$TexturePacker:SmartUpdate:6ce7b10cbb8b9d8ad96d0215a75e88ab:a9883c7671f8d769e901cdc9ed61d476:47c55a2ee7b22a673745eaaa6c988c25$</string>
 		<key>textureFileName</key>

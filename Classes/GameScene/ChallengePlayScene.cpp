@@ -56,7 +56,8 @@ namespace GameScene
         this->addChild(this->prepareNumber, 1);
         this->prepareNumber->setVisible(false);
         
-        this->boss = new GameSprite::Boss(bossImage);
+        //TODO: boss type setting
+        this->boss = new GameSprite::Boss(1);
         this->boss->setPosition(this->getCloudPosition(1));
         this->boss->setVisible(false);
         this->addChild(this->boss, 5);
@@ -340,8 +341,13 @@ namespace GameScene
                     sweet->setBomb();
                 }
                 this->lastSweetRoad = 0;
-                sweet->setPosition(this->getSweetPosition(0));
-                sweet->run();
+                if (isBossTime) {
+                    sweet->setPosition(this->boss->getPosition());
+                    sweet->runWithBoss();
+                } else {
+                    sweet->setPosition(this->getSweetPosition(0));
+                    sweet->run();
+                }
             }
         }
     }
@@ -361,8 +367,13 @@ namespace GameScene
                     sweet->setBomb();
                 }
                 this->lastSweetRoad = 1;
-                sweet->setPosition(this->getSweetPosition(1));
-                sweet->run();
+                if (isBossTime) {
+                    sweet->setPosition(this->boss->getPosition());
+                    sweet->runWithBoss();
+                } else {
+                    sweet->setPosition(this->getSweetPosition(1));
+                    sweet->run();
+                }
             }
         }
     }
@@ -382,8 +393,13 @@ namespace GameScene
                     sweet->setBomb();
                 }
                 this->lastSweetRoad = 2;
-                sweet->setPosition(this->getSweetPosition(2));
-                sweet->run();
+                if (isBossTime) {
+                    sweet->setPosition(this->boss->getPosition());
+                    sweet->runWithBoss();
+                } else {
+                    sweet->setPosition(this->getSweetPosition(2));
+                    sweet->run();
+                }
             }
         }
     }
@@ -393,6 +409,7 @@ namespace GameScene
         if (! this->isPaused) {
             this->playTime += delta;
             if (! this->isBossTime) {
+                //TODO Play Time setting
                 if (this->playTime >= 60) {
                     this->isBossTime = true;
                     this->road0Cloud->setVisible(false);

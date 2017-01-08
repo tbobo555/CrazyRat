@@ -307,6 +307,7 @@ namespace GameSprite
                     yDiff = yDiff * -1;
                 }
                 if (static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent())->isBossTime) {
+                    //TODO: Setting range with different boss
                     if (yDiff < 200 && xDiff < 200) {
                         static_cast<Image*>(*i)->stopAllActions();
                         static_cast<PlayBaseScene*>(Manager::SceneManager::getInstance()->getCurrent())->removeChild(static_cast<Image*>(*i));

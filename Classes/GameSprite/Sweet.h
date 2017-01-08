@@ -89,6 +89,11 @@ namespace GameSprite
         void run();
         
         /**
+         @brief 甜點依據魔王位置降落
+         */
+        void runWithBoss();
+        
+        /**
          @param 設成甜點
          */
         void setSweet();
